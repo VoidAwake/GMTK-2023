@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using MoreLinq;
@@ -12,7 +12,7 @@ namespace DefaultNamespace
 {
     public class ObjectiveLoop : MonoBehaviour
     {
-        [SerializeField] private TMP_Text baristaText;
+        public TMP_Text baristaText;
         [SerializeField] private TMP_Text objectiveText;
 
         private UnityEvent questionDone = new();
