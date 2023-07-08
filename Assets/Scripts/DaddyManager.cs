@@ -19,6 +19,10 @@ public class DaddyManager : MonoBehaviour
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     
     
@@ -35,7 +39,7 @@ public class DaddyManager : MonoBehaviour
 
     public void GameStart()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
     }
     
     

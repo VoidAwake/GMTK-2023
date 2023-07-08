@@ -13,6 +13,22 @@ MonoBehaviour:
   m_Name: BaristaDialogue_Test
   m_EditorClassIdentifier: 
   dialogueObjects:
-  - identifier: 
-    question: 
-    response: []
+  - identifier: Style
+    questions:
+    - What would you like?
+    - What can I get you?
+    responses: []
+  - identifier: Milk
+    questions:
+    - Which milk?
+    responses: []
+  - identifier: Size
+    questions:
+    - Small, regular or large?
+    responses:
+    - Which milk?
+  - identifier: Close
+    questions:
+    - No worries, won't be long.
+    responses:
+    - Which milk?
