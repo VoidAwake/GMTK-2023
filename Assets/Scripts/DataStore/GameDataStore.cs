@@ -17,10 +17,6 @@ namespace CoffeeJitters.DataStore
 
         DialogueObject GetDialogueObjectByIdentifier(string indentifier);
 
-        string GetDialogueQuestionByIdentifier(string indentifier);
-
-        List<string> GetDialogueResponsesByIdentifier(string indentifier);
-
         #endregion Methods
 
     }
@@ -43,28 +39,6 @@ namespace CoffeeJitters.DataStore
 
             return baristaDialogueScriptableObject.dialogueObjects
                 .Where(bdo => bdo.identifier == indentifier)
-                .SingleOrDefault();
-        }
-
-        string IGameDataStore.GetDialogueQuestionByIdentifier(string indentifier)
-        {
-            if (CheckBaristaDialogueScriptableObjectIsValid())
-                return null;
-
-            return baristaDialogueScriptableObject.dialogueObjects
-                .Where(bdo => bdo.identifier == indentifier)
-                .Select(bdo => bdo.question)
-                .SingleOrDefault();
-        }
-
-        List<string> IGameDataStore.GetDialogueResponsesByIdentifier(string indentifier)
-        {
-            if (CheckBaristaDialogueScriptableObjectIsValid())
-                return null;
-
-            return baristaDialogueScriptableObject.dialogueObjects
-                .Where(bdo => bdo.identifier == indentifier)
-                .Select(bdo => bdo.response)
                 .SingleOrDefault();
         }
 
