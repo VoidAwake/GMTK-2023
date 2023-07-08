@@ -1,3 +1,5 @@
+using CoffeeJitters.DataStore.Entities;
+using CoffeeJitters.DataStore.Scriptable;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -5,73 +7,77 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public interface IGameDataStore
+namespace CoffeeJitters.DataStore
 {
 
-    #region - - - - - - Methods - - - - - -
-
-    DialogueObject GetDialogueObjectByIdentifier(string indentifier);
-
-    string GetDialogueQuestionByIdentifier(string indentifier);
-
-    List<string> GetDialogueResponsesByIdentifier(string indentifier);
-
-    #endregion Methods
-
-}
-
-public class GameDataStore : MonoBehaviour, IGameDataStore
-{
-
-    #region - - - - - - Fields - - - - - -
-
-    public BaristaDialogue baristaDialogueScriptableObject;
-
-    #endregion Fields
-
-    #region - - - - - - Methods - - - - - -
-
-    DialogueObject IGameDataStore.GetDialogueObjectByIdentifier(string indentifier)
+    public interface IGameDataStore
     {
-        if (baristaDialogueScriptableObject == null)
-        {
-            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
-            return null;
-        }
 
-        return baristaDialogueScriptableObject.dialogueObjects
-            .Where(bdo => bdo.identifier == indentifier)
-            .SingleOrDefault();
+        #region - - - - - - Methods - - - - - -
+
+        DialogueObject GetDialogueObjectByIdentifier(string indentifier);
+
+        string GetDialogueQuestionByIdentifier(string indentifier);
+
+        List<string> GetDialogueResponsesByIdentifier(string indentifier);
+
+        #endregion Methods
+
     }
 
-    string IGameDataStore.GetDialogueQuestionByIdentifier(string indentifier)
+    public class GameDataStore : MonoBehaviour, IGameDataStore
     {
-        if (baristaDialogueScriptableObject == null)
+
+        #region - - - - - - Fields - - - - - -
+
+        public BaristaDialogue baristaDialogueScriptableObject;
+
+        #endregion Fields
+
+        #region - - - - - - Methods - - - - - -
+
+        DialogueObject IGameDataStore.GetDialogueObjectByIdentifier(string indentifier)
         {
-            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
-            return null;
+            if (CheckBaristaDialogueScriptableObjectIsValid())
+                return null;
+
+            return baristaDialogueScriptableObject.dialogueObjects
+                .Where(bdo => bdo.identifier == indentifier)
+                .SingleOrDefault();
         }
 
-        return baristaDialogueScriptableObject.dialogueObjects
-            .Where(bdo => bdo.identifier == indentifier)
-            .Select(bdo => bdo.question)
-            .SingleOrDefault();
-    }
-
-    List<string> IGameDataStore.GetDialogueResponsesByIdentifier(string indentifier)
-    {
-        if (baristaDialogueScriptableObject == null)
+        string IGameDataStore.GetDialogueQuestionByIdentifier(string indentifier)
         {
-            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
-            return null;
+            if (CheckBaristaDialogueScriptableObjectIsValid())
+                return null;
+
+            return baristaDialogueScriptableObject.dialogueObjects
+                .Where(bdo => bdo.identifier == indentifier)
+                .Select(bdo => bdo.question)
+                .SingleOrDefault();
         }
 
-        return baristaDialogueScriptableObject.dialogueObjects
-            .Where(bdo => bdo.identifier == indentifier)
-            .Select(bdo => bdo.response)
-            .SingleOrDefault();
-    }
+        List<string> IGameDataStore.GetDialogueResponsesByIdentifier(string indentifier)
+        {
+            if (CheckBaristaDialogueScriptableObjectIsValid())
+                return null;
 
-    #endregion Methods
+            return baristaDialogueScriptableObject.dialogueObjects
+                .Where(bdo => bdo.identifier == indentifier)
+                .Select(bdo => bdo.response)
+                .SingleOrDefault();
+        }
+
+        bool CheckBaristaDialogueScriptableObjectIsValid()
+        {
+            if(baristaDialogueScriptableObject == null)
+                Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
+
+            return baristaDialogueScriptableObject == null;
+        }
+
+        #endregion Methods
+
+    }
 
 }

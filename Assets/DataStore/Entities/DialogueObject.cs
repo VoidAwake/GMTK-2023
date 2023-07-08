@@ -2,27 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class DialogueObject
+namespace CoffeeJitters.DataStore.Entities
 {
 
-    #region - - - - - - Fields - - - - - -
+    [System.Serializable]
+    public class DialogueObject
+    {
 
-    /// <summary>
-    /// The unique identifier for the dialogue object.
-    /// </summary>
-    public string identifier;
+        #region - - - - - - Fields - - - - - -
 
-    /// <summary>
-    /// The question literal for the dialogue.
-    /// </summary>
-    public string question;
+        /// <summary>
+        /// The unique identifier for the dialogue object.
+        /// </summary>
+        public string identifier;
 
-    /// <summary>
-    /// The optional response literals for additional dialogue.
-    /// </summary>
-    public List<string> response;
+        /// <summary>
+        /// The question literal for the dialogue.
+        /// </summary>
+        public string question;
 
-    #endregion Fields
+        /// <summary>
+        /// The optional response literals for additional dialogue.
+        /// </summary>
+        public List<string> response;
+
+        #endregion Fields
+
+    }
 
 }

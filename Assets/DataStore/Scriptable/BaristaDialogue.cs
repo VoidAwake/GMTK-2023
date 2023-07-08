@@ -1,18 +1,24 @@
+using CoffeeJitters.DataStore.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BaristaDialogue", menuName = "Barista Dialogue")]
-public class BaristaDialogue : ScriptableObject
+namespace CoffeeJitters.DataStore.Scriptable
 {
 
-    #region - - - - - - Fields - - - - - -
+    [CreateAssetMenu(fileName = "BaristaDialogue", menuName = "Barista Dialogue")]
+    public class BaristaDialogue : ScriptableObject
+    {
 
-    [Header("Barista Dialogue")]
-    [Space]
-    public List<DialogueObject> dialogueObjects;
+        #region - - - - - - Fields - - - - - -
 
-    #endregion Fields
+        [Header("Barista Dialogue")]
+        [Space]
+        public List<DialogueObject> dialogueObjects;
+
+        #endregion Fields
+
+    }
 
 }
 
