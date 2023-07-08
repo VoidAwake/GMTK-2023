@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8837239380898735640
 MonoBehaviour:
@@ -46,9 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDataStore: {fileID: 4420759496799381164}
-  test1Identifier: test1
-  test2Identifier: test2
-  test3Identifier: test3
+  inputIdentifier: test1
+  expectedResponse: This is question 1
 --- !u!114 &4420759496799381164
 MonoBehaviour:
   m_ObjectHideFlags: 0
