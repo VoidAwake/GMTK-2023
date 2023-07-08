@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _displacementMap:
-        m_Texture: {fileID: 2800000, guid: 062ed053d9185b346b27ec77cc5e77f1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0653cb999f799044399ff08e270c88e3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -59,5 +59,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _anger: 0
+    - _displacementFactor: 0.024
+    - _sample_range: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
