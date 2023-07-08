@@ -283,8 +283,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: 
-  sourceBankPath: 
+  sourceProjectPath: Audio/SFX/SFX.fspro
+  sourceBankPath: Audio/SFX/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -305,7 +305,8 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks: []
+  MasterBanks:
+  - Master
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
@@ -319,20 +320,20 @@ MonoBehaviour:
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
   CurrentVersion: 131605
-  HideSetupWizard: 0
+  HideSetupWizard: 1
   LastEventReferenceScanVersion: 131605
   Platforms:
-  - {fileID: 4531921819831741927}
-  - {fileID: 9069311746385517542}
-  - {fileID: 3065982184663447653}
-  - {fileID: -6156211298364629787}
   - {fileID: -8606125928486091234}
-  - {fileID: 2558769240108135075}
+  - {fileID: -6156211298364629787}
   - {fileID: -1893502416606072430}
-  - {fileID: 7255456662713360190}
-  - {fileID: 7102035242011810348}
-  - {fileID: 5852127737819127816}
   - {fileID: -915753521304586161}
+  - {fileID: 2558769240108135075}
+  - {fileID: 3065982184663447653}
+  - {fileID: 4531921819831741927}
+  - {fileID: 5852127737819127816}
+  - {fileID: 7102035242011810348}
+  - {fileID: 7255456662713360190}
+  - {fileID: 9069311746385517542}
   MigratedPlatforms: 0500000012000000060000000b000000080000000a000000090000000c000000150000000200000001000000
 --- !u!114 &2558769240108135075
 MonoBehaviour:
@@ -599,15 +600,15 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
-  - fd7c55dab0fce234b8c25f6ffca523c1
-  - e7a046c753c3c3d4aacc91f6597f310d
-  - c88d16e5272a4e241b0ef0ac2e53b73d
-  - 0f8eb3f400726694eb47beb1a9f94ce8
   - 2c5177b11d81d824dbb064f9ac8527da
-  - b7716510a1f36934c87976f3a81dbf3d
+  - 0f8eb3f400726694eb47beb1a9f94ce8
   - 52eb9df5db46521439908db3a29a1bbb
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
+  - b7716510a1f36934c87976f3a81dbf3d
+  - c88d16e5272a4e241b0ef0ac2e53b73d
+  - fd7c55dab0fce234b8c25f6ffca523c1
   - 46fbfdf3fc43db0458918377fd40293e
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
+  - e7a046c753c3c3d4aacc91f6597f310d
   codecChannels:
     Value: []
     HasValue: 0
