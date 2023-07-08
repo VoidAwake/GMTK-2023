@@ -32,3 +32,15 @@ MonoBehaviour:
     - No worries, won't be long.
     responses:
     - Which milk?
+  - identifier: Response Match
+    questions:
+    - Sure thing.
+    - No worries.
+    responses:
+    - Which milk?
+  - identifier: No Response Match
+    questions:
+    - Sorry?
+    - The... what?
+    responses:
+    - Which milk?
