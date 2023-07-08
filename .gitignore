@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 # JetBrains Rider IDE files
 /.idea
+
+# TextMesh Pro files
+[Aa]ssets/TextMesh*Pro/
