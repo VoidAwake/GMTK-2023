@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: I think this is safe to delete
 public class OrderManager : MonoBehaviour
 {
     [Tooltip("Press this bool during runtime to generate a new order")]
     [SerializeField] private bool generateNewOrder = false;
-
-    [Header("Assign in Inspector")]
-    [SerializeField] private TimerScript timerScript;
 
     private Queue<CoffeeOrder> coffeeOrders = new Queue<CoffeeOrder>();
     
@@ -43,8 +41,6 @@ public class OrderManager : MonoBehaviour
     // Queue a set order
     private void QueueNewOrder(COFFEE_TYPE coffeeType, COFFEE_SIZE coffeeSize, MILK_TYPE milkType)
     {
-        timerScript.StartTimer(45f);
-        
         CoffeeOrder newOrder = new CoffeeOrder(coffeeType, coffeeSize, milkType);
         
         coffeeOrders.Enqueue(newOrder);

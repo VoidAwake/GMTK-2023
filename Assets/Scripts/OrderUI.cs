@@ -32,6 +32,7 @@ public class OrderUI : MonoBehaviour
         Tween myTween = rect.DOAnchorPos(new Vector2(rect.position.x, rect.position.y + 800), _tweenTime, false).SetEase(Ease.OutCubic);
         yield return myTween.WaitForCompletion();
         DaddyManager.instance.GameStart();
+        Destroy(gameObject);
         // This log will happen after the tween has completed
         Debug.Log("Tween completed!");
     }
