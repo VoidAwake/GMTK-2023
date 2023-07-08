@@ -1,0 +1,6 @@
+public enum REMAP_TYPE
+{
+    REPLACE_VOWELS,
+    REPLACE_CONSONANTS,
+    REPLACE_ALL
+}
