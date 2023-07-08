@@ -9,7 +9,9 @@ public interface IGameDataStore
     #region - - - - - - Methods - - - - - -
 
     DialogueObject GetDialogueObjectByIdentifier(string indentifier);
+
     string GetDialogueQuestionByIdentifier(string indentifier);
+
     List<string> GetDialogueResponsesByIdentifier(string indentifier);
 
     #endregion Methods
