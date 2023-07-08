@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using MoreLinq;
 using TMPro;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = System.Random;
@@ -12,14 +13,16 @@ namespace DefaultNamespace
     {
         [SerializeField] private TMP_Text baristaText;
         
-        private UnityEvent questionGenerated;
-        private UnityEvent done;
+        private UnityEvent questionDone = new();
+        private UnityEvent coffeeDone = new();
+        private UnityEvent orderDone = new();
 
-        [NonSerialized] public string expectedResponse;
+        public string expectedResponse;
 
         private Coffee currentCoffee;
         private string currentQuestion;
         private int currentQuestionIndex;
+        private int numberOfCoffeesCompleted;
 
         private List<string> questions = new()
         {
@@ -28,18 +31,39 @@ namespace DefaultNamespace
             "Size?"
         };
 
+        // Difficulty settings
+        // public int numberOfCoffees;
+        public bool shuffleQuestionOrder; 
+
         private void Start()
         {
+            // TODO: Will be called externally by the intro animation once complete
+            // NextCoffee();
+            NextQuestion();
+        }
+
+        public void NextCoffee()
+        {
+            // if (numberOfCoffeesCompleted == numberOfCoffees)
+            // {
+            //     orderDone.Invoke();
+            //     return;
+            // }
+            
             currentCoffee = RandomCoffee();
 
             var rng = new Random();
 
-            rng.Shuffle(questions);
+            if (shuffleQuestionOrder)
+                rng.Shuffle(questions);
+
+            currentQuestionIndex = 0;
             
-            StartQuestion();
+            NextQuestion();
         }
 
-        public void StartQuestion()
+        [ContextMenu("NextQuestion")]
+        public void NextQuestion()
         {
             StartCoroutine(Question());
         }
@@ -48,7 +72,18 @@ namespace DefaultNamespace
         {
             if (currentQuestionIndex == questions.Count)
             {
-                done.Invoke();
+                coffeeDone.Invoke();
+                // TODO: Not sure if this will be called externally
+                NextCoffee();
+                
+                baristaText.text = "Anything else?";
+                
+                expectedResponse = GetExpectedResponse();
+    
+                yield return new WaitForSeconds(1);
+                
+                questionDone.Invoke();
+                            
                 yield break;
             }
 
@@ -62,7 +97,30 @@ namespace DefaultNamespace
 
             yield return new WaitForSeconds(1);
             
-            questionGenerated.Invoke();
+            questionDone.Invoke();
+        }
+
+        public void CheckResponse(string response)
+        {
+            var closestResponse = GetQuestionResponses().MaxBy(possibleResponse =>
+            {
+                long score = 0;
+
+                FuzzySearch.FuzzyMatch(response, possibleResponse, ref score);
+
+                return score;
+            });
+
+            if (closestResponse == expectedResponse)
+            {
+                // TODO: Good things happen
+            }
+            else
+            {
+                // TODO: Bad things happen
+            }
+            
+            NextQuestion();
         }
 
         private Coffee RandomCoffee()
@@ -75,16 +133,31 @@ namespace DefaultNamespace
 
             return coffee;
         }
+
+        private List<string> GetQuestionResponses()
+        {
+            switch (currentQuestion)
+            {
+                case "style?":
+                    return Coffee.styles;
+                case "milk?":
+                    return Coffee.milks;
+                case "size?":
+                    return Coffee.sizes;
+            }
+
+            return new List<string>();
+        }
         
         private string GetExpectedResponse()
         {
             switch (currentQuestion)
             {
-                case "Style?":
+                case "style?":
                     return currentCoffee.style;
-                case "Milk?":
+                case "milk?":
                     return currentCoffee.milk;
-                case "Size?":
+                case "size?":
                     return currentCoffee.size;
             }
 
