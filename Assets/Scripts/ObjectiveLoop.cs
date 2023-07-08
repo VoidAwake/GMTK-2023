@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using MoreLinq;
@@ -12,8 +12,9 @@ namespace DefaultNamespace
 {
     public class ObjectiveLoop : MonoBehaviour
     {
-        [SerializeField] private TMP_Text baristaText;
-        
+        public TMP_Text baristaText;
+        [SerializeField] private TMP_Text objectiveText;
+
         private UnityEvent questionDone = new();
         private UnityEvent coffeeDone = new();
         private UnityEvent orderDone = new();
@@ -38,24 +39,16 @@ namespace DefaultNamespace
         [Tooltip("1 requires perfect score. 0 will accept anything.")]
         public float fuzzyMatchThreshold;
 
+        public float objectiveTextDuration = 3;
+
         private IGameDataStore gameDataStore;
 
         private void Start()
         {
             gameDataStore = DaddyManager.instance.GameDataStore;
-            
+
             // TODO: Will be called externally by the intro animation once complete
-            // NextCoffee();
-            
-            currentCoffee = RandomCoffee();
-
-            var rng = new Random();
-
-            if (shuffleQuestionOrder)
-                rng.Shuffle(questions);
-
-            currentQuestionIndex = 0;
-            NextQuestion();
+            NextCoffee();
         }
 
         public void NextCoffee()
@@ -67,6 +60,8 @@ namespace DefaultNamespace
             // }
             
             currentCoffee = RandomCoffee();
+            
+            StartCoroutine(ShowObjectiveText());
 
             var rng = new Random();
 
@@ -213,6 +208,18 @@ namespace DefaultNamespace
             }
 
             return "";
+        }
+
+        private IEnumerator ShowObjectiveText()
+        {
+            objectiveText.enabled = true;
+
+            objectiveText.text = currentCoffee.size + " " + currentCoffee.milk + " milk " + currentCoffee.style;
+            
+            yield return new WaitForSeconds(objectiveTextDuration);
+
+            // TODO: Replace with an animation
+            objectiveText.enabled = false;
         }
     }
     // From https://stackoverflow.com/questions/108819/best-way-to-randomize-an-array-with-net
