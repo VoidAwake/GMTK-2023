@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   remapType: 2
-  remapPercentage: 0.05
+  remapPercentage: 0.4
   inputField: {fileID: 1663102328}
 --- !u!1 &647109139
 GameObject:
