@@ -19,6 +19,8 @@ public class DaddyManager : MonoBehaviour
     
     [Header("Assign in Inspector")]
     [SerializeField] private TimerScript timerScript;
+    [SerializeField] private int numberOfOrders = 1;
+    private int remainingOrders;
 
     private void Awake()
     {
@@ -36,18 +38,30 @@ public class DaddyManager : MonoBehaviour
     
     void Start()
     {
-        //dont destroy on load
         //call order generator
         //insantiate order ui
         OrderUI temp = Instantiate(orderUi,canvas.transform);
         
         coffeeManager = Instantiate(coffeeManager);
+
+        remainingOrders = numberOfOrders;
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
-
-        coffeeManager.GenerateCoffee();
         
-        temp.OrderInit(coffeeManager.currentCoffee.size + " " + coffeeManager.currentCoffee.milk + " milk " + coffeeManager.currentCoffee.style);
-
+        coffeeManager.GenerateCoffee(numberOfOrders);
+        
+        string coffeeOrderList = "";
+        for (int i = 0; i < coffeeManager.GetAllOrders().Count; i++)
+        {
+            coffeeOrderList += coffeeManager.GetCoffeeAtIndex(i).size
+                               + " "
+                               + coffeeManager.GetCoffeeAtIndex(i).milk
+                               + " milk "
+                               + coffeeManager.GetCoffeeAtIndex(i).style
+                               + "\n";
+        }
+        
+        temp.OrderInit(coffeeOrderList);
+        
         // TODO: Needs to be called for each new order
     }
 
@@ -77,13 +91,33 @@ public class DaddyManager : MonoBehaviour
         
         barista.NextQuestion();
 
-        if (barista.HasMoreQuestions()) yield break;
+        if (barista.HasMoreQuestions())
+        {
+            yield break;
+        }
+        else if(remainingOrders > 0)
+        {
+            remainingOrders--;
+
+            if (remainingOrders > 0)
+            {
+                // TODO: Barista to ask about the next order first
+                barista.DisplayCloseText();
+                
+                Debug.Log("You have NOT reached the end");
+                
+                coffeeManager.SetNextCoffee();
+                
+                barista.FirstQuestion();
+                
+                yield break;
+            }
+        }
         
         barista.DisplayCloseText();
-
+        
         yield return new WaitForSeconds(2);
-
-        // TODO: Next order
+        
         Debug.Log("We have reached the end");
     }
     
@@ -102,9 +136,9 @@ public class DaddyManager : MonoBehaviour
     {
         return barista.currentQuestion switch
         {
-            "Style" => coffeeManager.currentCoffee.style,
-            "Milk" => coffeeManager.currentCoffee.milk,
-            "Size" => coffeeManager.currentCoffee.size,
+            "Style" => coffeeManager.GetCurrentCoffee().style,
+            "Milk" => coffeeManager.GetCurrentCoffee().milk,
+            "Size" => coffeeManager.GetCurrentCoffee().size,
             _ => ""
         };
     }
