@@ -7,6 +7,19 @@ public class DaddyManager : MonoBehaviour
     // Start is called before the first frame update
     public OrderUI orderUi;
     public Canvas canvas;
+
+    //singleton
+    //[SerializeField] private GameDataStore _gameDataStore;
+    
+    public static DaddyManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+    
     
     void Start()
     {
