@@ -33,12 +33,23 @@ namespace DefaultNamespace
 
         // Difficulty settings
         // public int numberOfCoffees;
-        public bool shuffleQuestionOrder; 
+        public bool shuffleQuestionOrder;
+        [Tooltip("1 requires perfect score. 0 will accept anything.")]
+        public float fuzzyMatchThreshold;
 
         private void Start()
         {
             // TODO: Will be called externally by the intro animation once complete
             // NextCoffee();
+            
+            currentCoffee = RandomCoffee();
+
+            var rng = new Random();
+
+            if (shuffleQuestionOrder)
+                rng.Shuffle(questions);
+
+            currentQuestionIndex = 0;
             NextQuestion();
         }
 
@@ -70,22 +81,22 @@ namespace DefaultNamespace
 
         private IEnumerator Question()
         {
-            if (currentQuestionIndex == questions.Count)
-            {
-                coffeeDone.Invoke();
-                // TODO: Not sure if this will be called externally
-                NextCoffee();
-                
-                baristaText.text = "Anything else?";
-                
-                expectedResponse = GetExpectedResponse();
-    
-                yield return new WaitForSeconds(1);
-                
-                questionDone.Invoke();
-                            
-                yield break;
-            }
+            // if (currentQuestionIndex == questions.Count)
+            // {
+            //     coffeeDone.Invoke();
+            //     // TODO: Not sure if this will be called externally
+            //     NextCoffee();
+            //     
+            //     baristaText.text = "Anything else?";
+            //     
+            //     expectedResponse = GetExpectedResponse();
+            //
+            //     yield return new WaitForSeconds(1);
+            //     
+            //     questionDone.Invoke();
+            //                 
+            //     yield break;
+            // }
 
             currentQuestion = questions[currentQuestionIndex];
 
@@ -102,6 +113,19 @@ namespace DefaultNamespace
 
         public void CheckResponse(string response)
         {
+            StartCoroutine(CheckResponseRoutine(response));
+        }
+
+        public string tempResponse;
+
+        [ContextMenu("TempCheckResponse")]
+        public void TempCheckResponse()
+        {
+            StartCoroutine(CheckResponseRoutine(tempResponse));
+        }
+        
+        private IEnumerator CheckResponseRoutine(string response)
+        {
             var closestResponse = GetQuestionResponses().MaxBy(possibleResponse =>
             {
                 long score = 0;
@@ -110,6 +134,29 @@ namespace DefaultNamespace
 
                 return score;
             });
+            
+            long closestScore = 0;
+
+            FuzzySearch.FuzzyMatch(response, closestResponse, ref closestScore);
+
+            Debug.Log(closestScore);
+
+            
+            long perfectScore = 0;
+
+            FuzzySearch.FuzzyMatch(response, closestResponse, ref perfectScore);
+
+
+            if (perfectScore * fuzzyMatchThreshold < closestScore)
+            {
+                baristaText.text = closestResponse + "? Sure.";
+            }
+            else
+            {
+                baristaText.text = "Sorry?";
+            }
+            
+            yield return new WaitForSeconds(1);
 
             if (closestResponse == expectedResponse)
             {
@@ -138,11 +185,11 @@ namespace DefaultNamespace
         {
             switch (currentQuestion)
             {
-                case "style?":
+                case "Style?":
                     return Coffee.styles;
-                case "milk?":
+                case "Milk?":
                     return Coffee.milks;
-                case "size?":
+                case "Size?":
                     return Coffee.sizes;
             }
 
@@ -153,11 +200,11 @@ namespace DefaultNamespace
         {
             switch (currentQuestion)
             {
-                case "style?":
+                case "Style?":
                     return currentCoffee.style;
-                case "milk?":
+                case "Milk?":
                     return currentCoffee.milk;
-                case "size?":
+                case "Size?":
                     return currentCoffee.size;
             }
 
