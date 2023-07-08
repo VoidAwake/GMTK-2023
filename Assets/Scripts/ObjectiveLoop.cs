@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CoffeeJitters.DataStore;
 using MoreLinq;
 using TMPro;
 using UnityEditor.Search;
@@ -26,9 +27,9 @@ namespace DefaultNamespace
 
         private List<string> questions = new()
         {
-            "Style?",
-            "Milk?",
-            "Size?"
+            "Style",
+            "Milk",
+            "Size"
         };
 
         // Difficulty settings
@@ -37,8 +38,12 @@ namespace DefaultNamespace
         [Tooltip("1 requires perfect score. 0 will accept anything.")]
         public float fuzzyMatchThreshold;
 
+        private IGameDataStore gameDataStore;
+
         private void Start()
         {
+            gameDataStore = DaddyManager.instance.GameDataStore;
+            
             // TODO: Will be called externally by the intro animation once complete
             // NextCoffee();
             
@@ -87,7 +92,7 @@ namespace DefaultNamespace
                 // TODO: Not sure if this will be called externally
                 // NextCoffee();
                 
-                baristaText.text = "Done";
+                baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("Close").questions.Random();
                 
                 // expectedResponse = GetExpectedResponse();
                 //
@@ -102,7 +107,7 @@ namespace DefaultNamespace
 
             currentQuestionIndex++;
 
-            baristaText.text = currentQuestion;
+            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
 
             expectedResponse = GetExpectedResponse();
 
@@ -116,18 +121,8 @@ namespace DefaultNamespace
             StartCoroutine(CheckResponseRoutine(stringGameEvent.GetString()));
         }
 
-        public string tempResponse;
-
-        [ContextMenu("TempCheckResponse")]
-        public void TempCheckResponse()
-        {
-            StartCoroutine(CheckResponseRoutine(tempResponse));
-        }
-        
         private IEnumerator CheckResponseRoutine(string response)
         {
-            Debug.Log(response);
-
             foreach (var q in GetQuestionResponses())
             {
                 Debug.Log(q);
@@ -145,9 +140,6 @@ namespace DefaultNamespace
             long closestScore = 0;
 
             FuzzySearch.FuzzyMatch(response, closestResponse, ref closestScore);
-
-            Debug.Log(closestScore);
-
             
             long perfectScore = 0;
 
@@ -156,11 +148,16 @@ namespace DefaultNamespace
 
             if (perfectScore * fuzzyMatchThreshold < closestScore)
             {
-                baristaText.text = closestResponse + "? Sure.";
+                // TODO: Would be nice if the gameDataStore could take string arguments. Format?
+                //baristaText.text = closestResponse + "? Sure.";
+                baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("Response Match").questions.Random();
             }
             else
             {
-                baristaText.text = "Sorry?";
+                baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("No Response Match").questions.Random();
+                
+                // Repeat the last question
+                currentQuestionIndex--;
             }
             
             yield return new WaitForSeconds(1);
@@ -192,11 +189,11 @@ namespace DefaultNamespace
         {
             switch (currentQuestion)
             {
-                case "Style?":
+                case "Style":
                     return Coffee.styles;
-                case "Milk?":
+                case "Milk":
                     return Coffee.milks;
-                case "Size?":
+                case "Size":
                     return Coffee.sizes;
             }
 
@@ -207,11 +204,11 @@ namespace DefaultNamespace
         {
             switch (currentQuestion)
             {
-                case "Style?":
+                case "Style":
                     return currentCoffee.style;
-                case "Milk?":
+                case "Milk":
                     return currentCoffee.milk;
-                case "Size?":
+                case "Size":
                     return currentCoffee.size;
             }
 
