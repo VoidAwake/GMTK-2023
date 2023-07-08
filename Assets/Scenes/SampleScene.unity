@@ -156,6 +156,8 @@ MonoBehaviour:
   baristaText: {fileID: 1010385417}
   expectedResponse: 
   shuffleQuestionOrder: 0
+  fuzzyMatchThreshold: 0
+  tempResponse: 
 --- !u!223 &319450679
 Canvas:
   m_ObjectHideFlags: 0

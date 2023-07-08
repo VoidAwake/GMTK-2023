@@ -81,22 +81,22 @@ namespace DefaultNamespace
 
         private IEnumerator Question()
         {
-            // if (currentQuestionIndex == questions.Count)
-            // {
-            //     coffeeDone.Invoke();
-            //     // TODO: Not sure if this will be called externally
-            //     NextCoffee();
-            //     
-            //     baristaText.text = "Anything else?";
-            //     
-            //     expectedResponse = GetExpectedResponse();
-            //
-            //     yield return new WaitForSeconds(1);
-            //     
-            //     questionDone.Invoke();
-            //                 
-            //     yield break;
-            // }
+            if (currentQuestionIndex == questions.Count)
+            {
+                // coffeeDone.Invoke();
+                // TODO: Not sure if this will be called externally
+                // NextCoffee();
+                
+                baristaText.text = "Done";
+                
+                // expectedResponse = GetExpectedResponse();
+                //
+                // yield return new WaitForSeconds(1);
+                
+                questionDone.Invoke();
+                            
+                yield break;
+            }
 
             currentQuestion = questions[currentQuestionIndex];
 
@@ -111,9 +111,9 @@ namespace DefaultNamespace
             questionDone.Invoke();
         }
 
-        public void CheckResponse(string response)
+        public void CheckResponse(StringGameEvent stringGameEvent)
         {
-            StartCoroutine(CheckResponseRoutine(response));
+            StartCoroutine(CheckResponseRoutine(stringGameEvent.GetString()));
         }
 
         public string tempResponse;
@@ -126,6 +126,13 @@ namespace DefaultNamespace
         
         private IEnumerator CheckResponseRoutine(string response)
         {
+            Debug.Log(response);
+
+            foreach (var q in GetQuestionResponses())
+            {
+                Debug.Log(q);
+            }
+            
             var closestResponse = GetQuestionResponses().MaxBy(possibleResponse =>
             {
                 long score = 0;
