@@ -221,6 +221,7 @@ MonoBehaviour:
   - o
   - u
   inputField: {fileID: 1663102328}
+  sendCompletedTextEvent: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
 --- !u!1 &647109139
 GameObject:
   m_ObjectHideFlags: 0
