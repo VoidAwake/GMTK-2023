@@ -17,7 +17,7 @@ public class Barista : MonoBehaviour
     {
         "Style",
         "Milk",
-        "Size"
+        "Size",
     };
 
     private IGameDataStore gameDataStore;
