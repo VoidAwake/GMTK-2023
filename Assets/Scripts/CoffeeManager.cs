@@ -15,24 +15,56 @@ public class CoffeeManager : MonoBehaviour
     }
     
     [SerializeField] private TMP_Text objectiveText;
+    
+    private List<Coffee> coffeeOrders = new List<Coffee>();
 
     public string expectedResponse;
 
-    public Coffee currentCoffee;
+    //public Coffee currentCoffee;
     private int numberOfCoffeesCompleted;
 
     // Difficulty settings
     // public int numberOfCoffees;
+    
     [Tooltip("1 requires perfect score. 0 will accept anything.")]
     public float fuzzyMatchThreshold;
 
     public float objectiveTextDuration = 3;
 
-    public void GenerateCoffee()
+    public void GenerateCoffee(int numberOfOrders)
     {
-        currentCoffee = RandomCoffee();
+        for (int i = 0; i < numberOfOrders; i++)
+        {
+            coffeeOrders.Add(RandomCoffee());
+        }
     }
-
+    
+    public Coffee GetCoffeeAtIndex(int index)
+    {
+        return coffeeOrders[index];
+    }
+    
+    public Coffee GetCurrentCoffee()
+    {
+        if(coffeeOrders[0] != null)
+            return coffeeOrders[0];
+        else
+        {
+            Debug.LogWarning("No coffee orders remain");
+            return null;
+        }
+    }
+    
+    public List<Coffee> GetAllOrders()
+    {
+        return coffeeOrders;
+    }
+    
+    public void SetNextCoffee()
+    {
+        coffeeOrders.RemoveAt(0);
+    }
+    
     public ResponseMatch CheckResponse(string response, List<string> questionResponses)
     {
         var closestResponse = questionResponses.MaxBy(possibleResponse =>
