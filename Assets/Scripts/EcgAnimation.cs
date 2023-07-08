@@ -24,7 +24,7 @@ public class EcgAnimation : MonoBehaviour
     [SerializeField] private Gradient colorGradient;
 
     [SerializeField, Tooltip("0-distance between, 1-height")] 
-    private List<float[]> ecgCoords = new List<float[]>();
+    private List<Vector2> ecgCoords = new List<Vector2>();
     private int currentCoord = 0;
     private float coordInterpolation = 0f;
     void Start()
@@ -53,10 +53,10 @@ public class EcgAnimation : MonoBehaviour
 
     private Vector2 GetCurrentPosition()
     {
-        float[] fromCoord = ecgCoords[currentCoord];
-        float[] toCoord   = ecgCoords[(currentCoord + 1) % ecgCoords.Count];
+        var fromCoord = ecgCoords[currentCoord];
+        var toCoord   = ecgCoords[(currentCoord + 1) % ecgCoords.Count];
         // start with linear interpolation, later update to sine
-        float height = Mathf.Lerp(fromCoord[1], toCoord[1], coordInterpolation);
+        float height = Mathf.Lerp(fromCoord.y, toCoord.y, coordInterpolation);
         float outHeight = height * Mathf.Lerp(amplitudeResting, amplitudePanic, currentPanic);
 
         // calculate actual x axis distance
