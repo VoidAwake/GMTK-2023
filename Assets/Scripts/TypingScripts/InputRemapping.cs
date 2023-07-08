@@ -1,12 +1,22 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class InputRemapping : MonoBehaviour
 {
     [Header("Remap Parameters")]
     [SerializeField] private REMAP_TYPE remapType;
-    [SerializeField] private float remapPercentage = 0.05f;
-
+    
+    // [SerializeField] private float remapPercentage = 0.05f;
+    
+    // I use strings because it's nicer to store spaces
+    [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
+    private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
+    
+    private int numberOfRemaps = 1;
+    
     [Header("Assign in Inspector")]
     [SerializeField] private TMP_InputField inputField;
     
@@ -14,9 +24,30 @@ public class InputRemapping : MonoBehaviour
     private string previousText = "";
     private string lastTypedCharacter;
     private int lastTypedCharacterPosition = 0;
-
+    
     private bool isProgramChangingText;
     
+    private void Start()
+    {
+        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        {
+            for (int i = 0; i < numberOfRemaps; i++)
+            {
+                int rand1 = Random.Range(0, 5);
+                int rand2 = rand1;
+
+                while (rand2 == rand1)
+                {
+                    rand2 = Random.Range(0, 5);
+                }
+                
+                SwapItems(newVowelOrder, rand1, rand2);  
+            }
+        }
+        
+        Debug.Log(newVowelOrder);
+    }
+
     public void OnLetterTyped()
     {
         currentText = inputField.text;
@@ -24,7 +55,6 @@ public class InputRemapping : MonoBehaviour
         // If the change is made by the program, don't do anything
         if (isProgramChangingText)
         {
-            isProgramChangingText = false;
             return;
         }
         
@@ -43,7 +73,6 @@ public class InputRemapping : MonoBehaviour
                 {
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
-                    //Debug.Log("Last typed character pos: " + lastTypedCharacterPosition);
                     break;
                 }
             }
@@ -53,37 +82,24 @@ public class InputRemapping : MonoBehaviour
             lastTypedCharacter = " ";
         }
     }
-
-    // private void CompareToPreviousText()
-    // {
-    //     currentText = inputField.text;
-    //     
-    //     // Only run if a new letter is added AND if the string is greater than 1
-    //     if (currentText.Length > previousText.Length && currentText.Length > 1)
-    //     {
-    //         // Loop through each letter
-    //         for (int i = 0; i < currentText.Length; i++)
-    //         {
-    //             // Find the position of the character that was added
-    //             if (i >= previousText.Length || currentText[i] != previousText[i])
-    //             {
-    //                 // Don't try to replace spaces
-    //                 if (currentText[i].ToString() != " ")
-    //                 {
-    //                     lastTypedCharacterPosition = i;
-    //                     RandomiseLetterChange();
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    
+    private void SwapItems(string[] array, int index1, int index2)
+    {
+        // Check for out-of-bounds errors
+        if (index1 < 0 || index1 >= array.Length || index2 < 0 || index2 >= array.Length)
+        {
+            throw new IndexOutOfRangeException("Index is outside the bounds of the array.");
+        }
+        
+        // Swap the value
+        (array[index1], array[index2]) = (array[index2], array[index1]);
+    }
 
     private void RandomiseLetterChange()
     {
         // Don't bother if the string is less than 1 character long
-        if (currentText.Length <= 1)
-            return;
+        // if (currentText.Length <= 1)
+        //     return;
         
         // Don't bother if the last typed character is a space
         if (lastTypedCharacter == " ")
@@ -93,30 +109,26 @@ public class InputRemapping : MonoBehaviour
         if (previousText.Length > currentText.Length)
             return;
         
-        if (remapType == REMAP_TYPE.REPLACE_ALL)
+        if (remapType == REMAP_TYPE.REMAP_VOWELS)
         {
-            float rand = Random.Range(0.0f, 1.0f);
-            
-            if (rand < remapPercentage)
+            foreach (var vowel in vowels)
             {
-                ReplaceLastTypedCharacter();
+                if (vowel == lastTypedCharacter)
+                {
+                    ReplaceLastTypedCharacter();
+                    break;
+                }
             }
         }
     }
 
     private void ReplaceLastTypedCharacter()
     {
-        Debug.Log(currentText.Length);
-        
-        // Cut the last letter and replace it
-        int replacementPosition = lastTypedCharacterPosition - 1;
-        
         isProgramChangingText = true;
         
         string newText;
-        Debug.Log(replacementPosition);
         newText = currentText.Substring(0, lastTypedCharacterPosition);
-        newText += "z";
+        newText += GetNewCharacter();
         
         // If you are editing the end of the textbox, don't worry about adding the previous text to the end
         if(lastTypedCharacterPosition + 1 < currentText.Length)
@@ -124,7 +136,22 @@ public class InputRemapping : MonoBehaviour
         
         inputField.text = newText;
         
-        // Move the "Caret" to the end so the player keeps typing
-        //inputField.MoveTextEnd(false);
+        isProgramChangingText = false;
+    }
+
+    private string GetNewCharacter()
+    {
+        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        {
+            for (int i = 0; i < vowels.Length; i++)
+            {
+                if (vowels[i] == lastTypedCharacter)
+                {
+                    return newVowelOrder[i];
+                }
+            }
+        }
+        
+        return "?";
     }
 }

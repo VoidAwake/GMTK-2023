@@ -213,8 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ff3185960beff40a968e00cb51d675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remapType: 2
-  remapPercentage: 0.4
+  remapType: 0
+  vowels:
+  - a
+  - e
+  - i
+  - o
+  - u
   inputField: {fileID: 1663102328}
 --- !u!1 &647109139
 GameObject:
