@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d013a14c5795a42bb0541192d4ad06, type: 3}
   m_Name: BaristaDialogue_Test
   m_EditorClassIdentifier: 
-  DialogueQuestion: 
+  dialogueObjects: []
