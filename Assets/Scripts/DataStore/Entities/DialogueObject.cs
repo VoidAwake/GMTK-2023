@@ -19,12 +19,12 @@ namespace CoffeeJitters.DataStore.Entities
         /// <summary>
         /// The question literal for the dialogue.
         /// </summary>
-        public List<string> questions;
+        public List<string> questions = new();
 
         /// <summary>
         /// The optional response literals for additional dialogue.
         /// </summary>
-        public List<string> responses;
+        public List<string> responses = new();
 
         #endregion Fields
 
