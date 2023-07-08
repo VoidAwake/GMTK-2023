@@ -1,0 +1,6 @@
+public enum REMAP_TYPE
+{
+    REMAP_VOWELS,
+    REMAP_ANY_LETTER,
+    REMAP_TO_CLOSEBY_LETTER
+}
