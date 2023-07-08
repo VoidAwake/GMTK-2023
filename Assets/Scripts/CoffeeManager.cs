@@ -88,15 +88,18 @@ public class CoffeeManager : MonoBehaviour
         {
             if (closestResponse == expectedResponse)
             {
+                DaddyManager.instance.UpdateScore(20f);
                 return ResponseMatch.Correct;
             }
             else
             {
+                DaddyManager.instance.UpdateScore(-30f);
                 return ResponseMatch.Incorrect;
             }
         }
         else
         {
+            DaddyManager.instance.UpdateScore(-15f);
             return ResponseMatch.No;
         }
     }

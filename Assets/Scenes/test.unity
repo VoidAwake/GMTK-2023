@@ -788,7 +788,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: DaddyManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6554388839038543779, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

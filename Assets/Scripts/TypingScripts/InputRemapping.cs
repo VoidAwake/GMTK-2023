@@ -50,6 +50,7 @@ public class InputRemapping : MonoBehaviour
     public void OnLetterTyped()
     {
         currentText = inputField.text;
+        DaddyManager.instance.OnInput();
         
         // If the change is made by the program, don't do anything
         if (isProgramChangingText)

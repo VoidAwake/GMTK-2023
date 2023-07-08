@@ -45,7 +45,7 @@ public class Barista : MonoBehaviour
     public void NextQuestion()
     {
         currentQuestionIndex++;
-        if(currentQuestionIndex == questions.Count)
+        if(currentQuestionIndex >= questions.Count)
             return;
         currentQuestion = questions[currentQuestionIndex];
 
