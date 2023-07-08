@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,7 +25,7 @@ public class GameDataStore : MonoBehaviour, IGameDataStore
 
     #region - - - - - - Fields - - - - - -
 
-    private BaristaDialogue baristaDialogueScriptableObject;
+    public BaristaDialogue baristaDialogueScriptableObject;
 
     #endregion Fields
 
@@ -31,17 +33,43 @@ public class GameDataStore : MonoBehaviour, IGameDataStore
 
     DialogueObject IGameDataStore.GetDialogueObjectByIdentifier(string indentifier)
     {
-        throw new System.NotImplementedException();
+        if (baristaDialogueScriptableObject == null)
+        {
+            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
+            return null;
+        }
+
+        return baristaDialogueScriptableObject.dialogueObjects
+            .Where(bdo => bdo.identifier == indentifier)
+            .SingleOrDefault();
     }
 
     string IGameDataStore.GetDialogueQuestionByIdentifier(string indentifier)
     {
-        throw new System.NotImplementedException();
+        if (baristaDialogueScriptableObject == null)
+        {
+            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
+            return null;
+        }
+
+        return baristaDialogueScriptableObject.dialogueObjects
+            .Where(bdo => bdo.identifier == indentifier)
+            .Select(bdo => bdo.question)
+            .SingleOrDefault();
     }
 
     List<string> IGameDataStore.GetDialogueResponsesByIdentifier(string indentifier)
     {
-        throw new System.NotImplementedException();
+        if (baristaDialogueScriptableObject == null)
+        {
+            Debug.LogWarning("Barista Dialogue Scriptable Object not loaded.", baristaDialogueScriptableObject);
+            return null;
+        }
+
+        return baristaDialogueScriptableObject.dialogueObjects
+            .Where(bdo => bdo.identifier == indentifier)
+            .Select(bdo => bdo.response)
+            .SingleOrDefault();
     }
 
     #endregion Methods
