@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueObjects:
   - identifier: test1
-    question: This is question 1
-    response: []
+    questions:
+    - This is question 1
+    responses: []
   - identifier: test2
-    question: This is question 2
-    response: []
+    questions: []
+    responses: []
   - identifier: test3
-    question: 
-    response:
-    - This is response 3
+    questions: []
+    responses: []

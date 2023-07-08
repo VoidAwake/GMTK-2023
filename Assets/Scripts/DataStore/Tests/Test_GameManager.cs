@@ -12,50 +12,26 @@ namespace CoffeeJitters.DataStore.Tests
         [SerializeField]
         public GameDataStore gameDataStore;
 
-        public string test1Identifier;
-        public string test2Identifier;
-        public string test3Identifier;
+        [Header("Test Parameters")]
+        [Space]
+        public string inputIdentifier;
+        public string expectedResponse;
 
         // Tests on start
         void Start()
-        {
-            this.GetDialogueObjectByIdentifier_DataIsValid_GetsDialogueObject();
-            this.GetDialogueResponsesByIdentifier_DataIsValid_GetsResponses();
-            this.GetDialogueQuestionByIdentifier_DataIsValid_GetsQuestion();
-        }
+            => this.GetDialogueObjectByIdentifier_DataIsValid_GetsDialogueObject();
 
         void GetDialogueObjectByIdentifier_DataIsValid_GetsDialogueObject()
         {
             // Arrange
 
             // Act
-            var _Result = ((IGameDataStore)this.gameDataStore).GetDialogueObjectByIdentifier(this.test1Identifier);
+            var _Result = ((IGameDataStore)this.gameDataStore).GetDialogueObjectByIdentifier(this.inputIdentifier);
 
             // Assert
-            Debug.Log($"Test Result 1: {_Result} Success: {_Result.question == "This is question 1"}");
+            Debug.Log($"Test Result 1: {_Result} => Success: {_Result.questions[0] == expectedResponse}");
         }
 
-        void GetDialogueQuestionByIdentifier_DataIsValid_GetsQuestion()
-        {
-            // Arrange
-
-            // Act
-            var _Result = ((IGameDataStore)this.gameDataStore).GetDialogueQuestionByIdentifier(this.test2Identifier);
-
-            // Assert
-            Debug.Log($"Test Result 2: {_Result} Success: {_Result == "This is question 2"}");
-        }
-
-        void GetDialogueResponsesByIdentifier_DataIsValid_GetsResponses()
-        {
-            // Arrange
-
-            // Act
-            var _Result = ((IGameDataStore)this.gameDataStore).GetDialogueResponsesByIdentifier(this.test3Identifier);
-
-            // Assert
-            Debug.Log($"Test Result 2: {_Result} Success: {_Result.First() == "This is response 3"}");
-        }
 
     }
 
