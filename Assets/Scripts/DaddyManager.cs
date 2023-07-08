@@ -7,6 +7,9 @@ using UnityEngine;
 public class DaddyManager : MonoBehaviour
 {
     public OrderUI orderUi;
+    public float score = 0f;
+    public float inputTimer = 0f;
+    [SerializeField] private float timerBuffer; 
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
@@ -35,6 +38,29 @@ public class DaddyManager : MonoBehaviour
         }
     }
     
+    //update
+
+    public void OnInput()
+    {
+        inputTimer = 0f;
+    }
+    private void Update()
+    {
+        if (remainingOrders == 0)
+        {
+            //end game
+            //display score
+            //display end game text
+            //display restart button
+        }
+
+        inputTimer += Time.deltaTime;
+        if (inputTimer > timerBuffer)
+        {
+            //call heartbeat.increase(inputTimer)
+        }
+            
+    }
     
     void Start()
     {
@@ -119,6 +145,12 @@ public class DaddyManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         
         Debug.Log("We have reached the end");
+    }
+    
+    public void UpdateScore(float amount)
+    {
+        this.score += amount;
+        Debug.Log(score);
     }
     
     private List<string> GetQuestionResponses()
