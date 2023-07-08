@@ -513,50 +513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f204f6da2cd3404c914b4cc6ad454f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &990568634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8143718730987230782, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
-  m_PrefabInstance: {fileID: 4294519815364551780}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &990568635 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
-  m_PrefabInstance: {fileID: 4294519815364551780}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990568634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d18a3d9e3e864774687eff134d71b520, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &990568637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990568634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f318050ed524f7946934ad8de4760742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 990568635}
-        m_TargetAssemblyTypeName: DaddyManager, Assembly-CSharp
-        m_MethodName: OnTextSubmitted
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
-          m_ObjectArgumentAssemblyTypeName: StringGameEvent, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &2043593827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -740,6 +696,10 @@ PrefabInstance:
       propertyPath: _gameDataStore
       value: 
       objectReference: {fileID: 946852265}
+    - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
+      propertyPath: numberOfOrders
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7951554613639234691, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -791,8 +751,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8143718730987230782, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 990568637}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
