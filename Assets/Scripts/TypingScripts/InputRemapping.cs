@@ -19,6 +19,7 @@ public class InputRemapping : MonoBehaviour
     
     [Header("Assign in Inspector")]
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private StringGameEvent sendCompletedTextEvent;
     
     private string currentText = "";
     private string previousText = "";
@@ -44,8 +45,6 @@ public class InputRemapping : MonoBehaviour
                 SwapItems(newVowelOrder, rand1, rand2);  
             }
         }
-        
-        Debug.Log(newVowelOrder);
     }
 
     public void OnLetterTyped()
@@ -58,13 +57,25 @@ public class InputRemapping : MonoBehaviour
             return;
         }
         
+        if (inputField.text.Contains("\n"))
+        {
+            SendCompletedText();
+            return;
+        }
+
         GetLastTypedCharacter();
         RandomiseLetterChange();
         previousText = currentText;
     }
+
+    public void OnSelect()
+    {
+        Debug.Log("Select");
+    }
     
     private void GetLastTypedCharacter()
     {
+        // Standard check for if a new character is added
         if (currentText.Length > previousText.Length)
         {
             for (int i = 0; i < currentText.Length; i++)
@@ -153,5 +164,19 @@ public class InputRemapping : MonoBehaviour
         }
         
         return "?";
+    }
+    
+    private void SendCompletedText()
+    {
+        currentText = inputField.text;
+        
+        sendCompletedTextEvent.SetString(currentText);
+        sendCompletedTextEvent.Raise();
+        
+        Debug.Log("Sending string: " + sendCompletedTextEvent.GetString());
+
+        previousText = "";
+        currentText = "";
+        inputField.text = "";
     }
 }
