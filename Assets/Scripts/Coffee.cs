@@ -5,6 +5,7 @@ public class Coffee
     public string style;
     public string milk;
     public string size;
+    public int complexity;
     
     public static List<string> styles = new()
     {
@@ -29,6 +30,20 @@ public class Coffee
     public static List<string> sizes = new()
     {
         "Small",
+        "Regular",
+        "Large"
+    };
+    
+    public static List<string> sides = new()
+    {
+        "Bread",
+        "Amongus",
+        "Fred"
+    };
+    
+    public static List<string> toppings = new()
+    {
+        "Chocolate Shavings",
         "Regular",
         "Large"
     };
