@@ -15,7 +15,7 @@ public class InputRemapping : MonoBehaviour
     [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
     private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
     
-    private int numberOfRemaps = 1;
+    [SerializeField] private int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
     [SerializeField] private TMP_InputField inputField;
@@ -68,11 +68,6 @@ public class InputRemapping : MonoBehaviour
         previousText = currentText;
     }
 
-    public void OnSelect()
-    {
-        Debug.Log("Select");
-    }
-    
     private void GetLastTypedCharacter()
     {
         // Standard check for if a new character is added
@@ -84,6 +79,20 @@ public class InputRemapping : MonoBehaviour
                 {
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
+                    break;
+                }
+            }
+        }
+        // Edge case check for if words are highlighted and replaced with a single letter
+        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2)
+        {
+            for (int i = 0; i < previousText.Length; i++)
+            {
+                if (i >= currentText.Length || currentText[i] != previousText[i])
+                {
+                    lastTypedCharacter = currentText[i].ToString();
+                    lastTypedCharacterPosition = i;
+                    Debug.Log(currentText[i].ToString());
                     break;
                 }
             }
@@ -117,19 +126,31 @@ public class InputRemapping : MonoBehaviour
             return;
         
         // Don't bother if the last typed character is a backspace
-        if (previousText.Length > currentText.Length)
-            return;
-        
-        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        // if (previousText.Length > currentText.Length)
+        //     return;
+
+        switch (remapType)
         {
-            foreach (var vowel in vowels)
-            {
-                if (vowel == lastTypedCharacter)
+            case REMAP_TYPE.REMAP_VOWELS:
+                foreach (var vowel in vowels)
                 {
-                    ReplaceLastTypedCharacter();
-                    break;
+                    if (vowel == lastTypedCharacter)
+                    {
+                        ReplaceLastTypedCharacter();
+                        break;
+                    }
                 }
-            }
+                break;
+            
+            case REMAP_TYPE.REMAP_ANY_LETTER:
+                break;
+            
+            case REMAP_TYPE.REMAP_TO_CLOSEBY_LETTER:
+                break;
+            
+            default:
+                Debug.LogWarning("Non-implemented remap type");
+                break;
         }
     }
 
@@ -169,12 +190,13 @@ public class InputRemapping : MonoBehaviour
     private void SendCompletedText()
     {
         currentText = inputField.text;
+        currentText = currentText.Replace("\n", "");
         
         sendCompletedTextEvent.SetString(currentText);
         sendCompletedTextEvent.Raise();
         
-        Debug.Log("Sending string: " + sendCompletedTextEvent.GetString());
-
+        Debug.Log("Sending string: " + currentText);
+        
         previousText = "";
         currentText = "";
         inputField.text = "";
