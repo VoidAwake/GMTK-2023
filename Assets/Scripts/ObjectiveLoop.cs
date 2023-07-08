@@ -12,7 +12,7 @@ namespace DefaultNamespace
 {
     public class ObjectiveLoop : MonoBehaviour
     {
-        [SerializeField] private TMP_Text baristaText;
+        public TMP_Text baristaText;
         
         private UnityEvent questionDone = new();
         private UnityEvent coffeeDone = new();
