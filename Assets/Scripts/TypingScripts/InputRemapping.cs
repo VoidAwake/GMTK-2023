@@ -48,7 +48,10 @@ public class InputRemapping : MonoBehaviour
                 }
             }
         }
-        previousText = currentText;
+        else
+        {
+            lastTypedCharacter = " ";
+        }
     }
 
     // private void CompareToPreviousText()
@@ -78,6 +81,18 @@ public class InputRemapping : MonoBehaviour
 
     private void RandomiseLetterChange()
     {
+        // Don't bother if the string is less than 1 character long
+        if (currentText.Length <= 1)
+            return;
+        
+        // Don't bother if the last typed character is a space
+        if (lastTypedCharacter == " ")
+            return;
+        
+        // Don't bother if the last typed character is a backspace
+        if (previousText.Length > currentText.Length)
+            return;
+        
         if (remapType == REMAP_TYPE.REPLACE_ALL)
         {
             float rand = Random.Range(0.0f, 1.0f);
@@ -91,14 +106,6 @@ public class InputRemapping : MonoBehaviour
 
     private void ReplaceLastTypedCharacter()
     {
-        // Don't bother if the string is less than 1 character long
-        if (currentText.Length <= 1)
-            return;
-        
-        // Don't bother if the last typed character is a space
-        if (lastTypedCharacter == " ")
-            return;
-        
         Debug.Log(currentText.Length);
         
         // Cut the last letter and replace it
@@ -110,7 +117,10 @@ public class InputRemapping : MonoBehaviour
         Debug.Log(replacementPosition);
         newText = currentText.Substring(0, lastTypedCharacterPosition);
         newText += "z";
-        //newText += currentText.Substring(lastTypedCharacterPosition + 1, currentText.Length - newText.Length + 2);
+        
+        // If you are editing the end of the textbox, don't worry about adding the previous text to the end
+        if(lastTypedCharacterPosition + 1 < currentText.Length)
+            newText += currentText.Substring(lastTypedCharacterPosition + 1, currentText.Length - newText.Length);
         
         inputField.text = newText;
         
