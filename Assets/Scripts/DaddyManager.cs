@@ -25,6 +25,7 @@ public class DaddyManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
         else
         {
@@ -36,7 +37,6 @@ public class DaddyManager : MonoBehaviour
     void Start()
     {
         //dont destroy on load
-        DontDestroyOnLoad(this);
         //call order generator
         //insantiate order ui
         OrderUI temp = Instantiate(orderUi,canvas.transform);
@@ -49,15 +49,15 @@ public class DaddyManager : MonoBehaviour
         temp.OrderInit(coffeeManager.currentCoffee.size + " " + coffeeManager.currentCoffee.milk + " milk " + coffeeManager.currentCoffee.style);
 
         // TODO: Needs to be called for each new order
-        timerScript.StartTimer(45f);
     }
 
     public void GameStart()
     {
+        timerScript.StartTimer(45f);
         //SceneManager.LoadScene(1);
         Instantiate(InputBox,canvas.transform);
         
-        barista.NextQuestion();
+        barista.FirstQuestion();
     }
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)

@@ -31,21 +31,30 @@ public class Barista : MonoBehaviour
         if (shuffleQuestionOrder)
             rng.Shuffle(questions);
 
+        //currentQuestionIndex = 0;
+    }
+    
+    public void FirstQuestion()
+    {
         currentQuestionIndex = 0;
+        currentQuestion = questions[currentQuestionIndex];
+        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
+        
     }
 
     public void NextQuestion()
     {
-        currentQuestion = questions[currentQuestionIndex];
-
         currentQuestionIndex++;
+        if(currentQuestionIndex == questions.Count)
+            return;
+        currentQuestion = questions[currentQuestionIndex];
 
         baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
     }
 
     public bool HasMoreQuestions()
     {
-        return currentQuestionIndex != questions.Count + 1;
+        return currentQuestionIndex != questions.Count;
     }
 
     public void DisplayCloseText()
