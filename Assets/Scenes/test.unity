@@ -808,6 +808,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2ef7575a5e426cb47dc9d859685db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1367683688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1367683689}
+  - component: {fileID: 1367683691}
+  - component: {fileID: 1367683690}
+  m_Layer: 5
+  m_Name: BaristaImg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1367683689
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367683688}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2043593828}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 225.04446, y: -40.960724}
+  m_SizeDelta: {x: 202.05, y: 394.4659}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1367683690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367683688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -656037627, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1367683691
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367683688}
+  m_CullTransparentMesh: 1
 --- !u!1 &1546261537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1334,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2808982235268483389, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1367683689}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4018970819839917378, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
       insertIndex: -1
@@ -1300,10 +1379,10 @@ MonoBehaviour:
   baristaText: {fileID: 2043593830}
   shuffleQuestionOrder: 0
   currentQuestion: 
-  questions:
-  - Style
-  - Milk
-  - Size
+  baristaImage: {fileID: 1367683690}
+  baristas:
+  - {fileID: 11400000, guid: 81ffa9a3ae8fc0946947bf6d1c354058, type: 2}
+  - {fileID: 11400000, guid: 5cf044f581a31c443a68af9c4b105015, type: 2}
 --- !u!114 &2043593832 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 852876199118778097, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
@@ -1354,23 +1433,23 @@ PrefabInstance:
     - target: {fileID: 3133678684923330562, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyLevels.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 3ba48905608ed8f4ba9cfe8108aaa506, type: 2}
+      objectReference: {fileID: 11400000, guid: e8ad709bd5279574fb8e06a511221245, type: 2}
     - target: {fileID: 3133678684923330562, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyLevels.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: e8ad709bd5279574fb8e06a511221245, type: 2}
+      objectReference: {fileID: 11400000, guid: c9b0110e3922c9449a8d8853b18b1d29, type: 2}
     - target: {fileID: 3133678684923330562, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyLevels.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: c9b0110e3922c9449a8d8853b18b1d29, type: 2}
+      objectReference: {fileID: 11400000, guid: 391efd682cf17c945b7b1aa5e5d90592, type: 2}
     - target: {fileID: 3133678684923330562, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyLevels.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 391efd682cf17c945b7b1aa5e5d90592, type: 2}
+      objectReference: {fileID: 11400000, guid: c6e756275dfab794aaeb4fbc5623bbf0, type: 2}
     - target: {fileID: 3133678684923330562, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyLevels.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: c6e756275dfab794aaeb4fbc5623bbf0, type: 2}
+      objectReference: {fileID: 11400000, guid: 3ba48905608ed8f4ba9cfe8108aaa506, type: 2}
     - target: {fileID: 7951554613639234691, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: m_RootOrder
       value: 2
