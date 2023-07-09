@@ -57,8 +57,8 @@ MonoBehaviour:
   coordSpeedPanic: 15
   horizSpeedResting: 1.4
   horizSpeedPanic: 9
-  trailTimeResting: 1.2
-  trailTimePanic: 1
+  trailTimeResting: 0.9
+  trailTimePanic: 0.5
   graphWidth: 4
   colorGradient:
     serializedVersion: 2

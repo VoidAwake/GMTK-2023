@@ -36,6 +36,7 @@ public class TextAnim : MonoBehaviour
         Tween fade = textObject.DOFade(0, 0.1f);
         yield return fade.WaitForCompletion();
         Tween myTween = textBackground.rectTransform.DOScale(new Vector3(0f,0f,0f), 0.1f).SetEase(Ease.OutCubic);
+        animationCompleted.Invoke();
     }
     
     public void SetText(string text, bool response = false)
@@ -84,6 +85,7 @@ public class TextAnim : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenChars);
         }
         textObject.maxVisibleCharacters = totalChars;
+        animationCompleted.Invoke();
         yield return new WaitForSeconds(1f);
         StartCoroutine(BubbleClose());
     }

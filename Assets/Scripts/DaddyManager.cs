@@ -207,12 +207,16 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     private IEnumerator NextQuestionRoutine()
     {
+        var textAnimationComplete = false;
+        
+        barista.textAnim.animationCompleted.AddListener(() => textAnimationComplete = true);
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
         orderHoverTrigger.SetCollision(false);
-        
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitUntil(() => textAnimationComplete);
+        textAnimationComplete = false;
+        yield return new WaitForSeconds(0.5f);
 
         // Don't continue if it's a game over state
         if (gameOverType != GAME_OVER_TYPE.NONE)
@@ -240,8 +244,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
                 // TODO: Barista to ask about the next order first
                 
                 barista.DisplayNextOrderText();
-
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitUntil(() => textAnimationComplete);
+                textAnimationComplete = false;
+                yield return new WaitForSeconds(0.5f);
 
                 Debug.Log("You have NOT reached the end");
 
@@ -259,13 +264,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         barista.DisplayCloseText();
 
-        var textAnimationComplete = false;
         
-        FindObjectOfType<TextAnim>().animationCompleted.AddListener(() => textAnimationComplete = true);
 
         yield return new WaitUntil(() => textAnimationComplete);
         
-        FindObjectOfType<TextAnim>().animationCompleted.RemoveListener(() => textAnimationComplete = true);
+        barista.textAnim.animationCompleted.RemoveListener(() => textAnimationComplete = true);
         
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
@@ -285,6 +288,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         //ResultsScreen();
     }
 
+
+    public void TweenUiIn()
+    {
+        
+    }
     private void ResultsScreen()
     {
         //SceneManager.LoadScene(2);
