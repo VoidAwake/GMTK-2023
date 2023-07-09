@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2f84bc348c56543828a65b00999727, type: 3}
   m_Name: Image
   m_EditorClassIdentifier: 
-  Nuetral: {fileID: 1535196479, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
-  Confused: {fileID: -267614656, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
-  Angry: {fileID: -656037627, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
+  Nuetral: {fileID: -1951260001, guid: 402a45ab51834d44289e7a904fa09449, type: 3}
+  Confused: {fileID: 1573445747, guid: 402a45ab51834d44289e7a904fa09449, type: 3}
+  Angry: {fileID: 295553971, guid: 402a45ab51834d44289e7a904fa09449, type: 3}
   Identifier: B1
+  textSpeed: 0
+  blips:
+  - {fileID: 8300000, guid: ebc7e772c2b7e8744b0c4d29c2d514d4, type: 3}
+  - {fileID: 8300000, guid: f5ef52a770d6ea8489e38b138543055b, type: 3}

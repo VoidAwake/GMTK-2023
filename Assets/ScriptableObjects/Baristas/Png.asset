@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2f84bc348c56543828a65b00999727, type: 3}
   m_Name: Png
   m_EditorClassIdentifier: 
-  Nuetral: {fileID: -1827646815, guid: bbef748552ee8c4448967c26731d7cc2, type: 3}
-  Confused: {fileID: -1773572097, guid: bbef748552ee8c4448967c26731d7cc2, type: 3}
-  Angry: {fileID: -1629817003, guid: bbef748552ee8c4448967c26731d7cc2, type: 3}
-  Identifier: B2
+  Nuetral: {fileID: -196219899, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
+  Confused: {fileID: -465516908, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
+  Angry: {fileID: 1979773252, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
+  Identifier: B3
+  textSpeed: 0
+  blips:
+  - {fileID: 8300000, guid: f1c59251d3717ba47b2365c72cc77856, type: 3}
+  - {fileID: 8300000, guid: 979dacd0293db2d4da5ac40e36ed3ef8, type: 3}
