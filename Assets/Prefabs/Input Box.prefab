@@ -441,7 +441,7 @@ MonoBehaviour:
   - i
   - o
   - u
-  numberOfRemaps: 1
+  numberOfRemaps: 0
   inputField: {fileID: 4063634313681280317}
   sendCompletedTextEvent: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
 --- !u!1 &8512787820291952827

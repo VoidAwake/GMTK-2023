@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 public class InputRemapping : MonoBehaviour
 {
     [Header("Remap Parameters")]
-    [SerializeField] private REMAP_TYPE remapType;
+    [SerializeField]
+    public REMAP_TYPE remapType;
     
     // [SerializeField] private float remapPercentage = 0.05f;
     
@@ -15,7 +16,7 @@ public class InputRemapping : MonoBehaviour
     [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
     private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
     
-    [SerializeField] private int numberOfRemaps = 1;
+    public int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
     [SerializeField] private TMP_InputField inputField;
@@ -27,8 +28,8 @@ public class InputRemapping : MonoBehaviour
     private int lastTypedCharacterPosition = 0;
     
     private bool isProgramChangingText;
-    
-    private void Start()
+
+    public void Initialise()
     {
         if (remapType == REMAP_TYPE.REMAP_VOWELS)
         {

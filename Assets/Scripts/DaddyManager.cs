@@ -17,12 +17,13 @@ public class DaddyManager : MonoBehaviour
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
     public Barista barista;
+    [SerializeField] private DifficultyManager difficultyManager;
 
     private TMP_Text objectiveText;
     
     [Header("Assign in Inspector")]
     [SerializeField] private TimerScript timerScript;
-    [SerializeField] private int numberOfOrders = 1;
+    [SerializeField] public int numberOfOrders = 1;
     private int remainingOrders;
 
     private void Awake()
@@ -66,11 +67,22 @@ public class DaddyManager : MonoBehaviour
     {
         //call order generator
         //insantiate order ui
+        
+        
         OrderUI temp = Instantiate(orderUi,canvas.transform);
         
         coffeeManager = Instantiate(coffeeManager);
-
+        
+        InputBox.gameObject.SetActive(false);
+        
+        difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
+        
         remainingOrders = numberOfOrders;
+        
+        difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
+
+        InputBox.Initialise();
+
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
         
         coffeeManager.GenerateCoffee(numberOfOrders);
@@ -95,7 +107,8 @@ public class DaddyManager : MonoBehaviour
     {
         timerScript.StartTimer(45f);
         //SceneManager.LoadScene(1);
-        Instantiate(InputBox,canvas.transform);
+        
+        InputBox.gameObject.SetActive(true);
         
         barista.FirstQuestion();
     }
@@ -131,6 +144,8 @@ public class DaddyManager : MonoBehaviour
                 barista.DisplayCloseText();
                 
                 Debug.Log("You have NOT reached the end");
+                
+                difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
                 
                 coffeeManager.SetNextCoffee();
                 
