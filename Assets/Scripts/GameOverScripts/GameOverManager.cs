@@ -11,7 +11,15 @@ public class GameOverManager : MonoBehaviour
     void Start()
     {
         UpdateGameOverText();
-        scoreText.text = "Final Score: " + DaddyManager.instance.score;
+        scoreText.text = "Final Score: " + DaddyManager.instance.highscore;
+        if(PlayerPrefs.HasKey("HighScore") == false)
+        {
+            PlayerPrefs.SetFloat("HighScore", DaddyManager.instance.highscore);
+        }
+        else if(PlayerPrefs.GetFloat("HighScore") < DaddyManager.instance.highscore)
+        {
+            PlayerPrefs.SetFloat("HighScore", DaddyManager.instance.highscore);
+        }
     }
 
     private void UpdateGameOverText()
