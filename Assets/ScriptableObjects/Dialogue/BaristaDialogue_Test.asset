@@ -17,7 +17,6 @@ MonoBehaviour:
     questions:
     - What would you like?
     - What can I get you?
-    - Whats ya coffee of the day
     responses: []
   - identifier: B1Milk
     questions:
@@ -30,27 +29,20 @@ MonoBehaviour:
     - Which milk?
   - identifier: B1Close
     questions:
-    - No worries, won't be long.
+    - Thank you, won't be long.
     responses:
     - Which milk?
   - identifier: B1Response Match
     questions:
     - Sure thing.
     - No worries.
+    - Got it.
     responses:
     - Which milk?
   - identifier: B1Side
     questions:
     - Anything on the side?
-    - Anything on the side?
-    - Anything on the side?
-    - Anything on the side?
-    - Anything on the side?
-    - WHAT SIDE BITCHHHHHH
-    - Anything on the side?
-    - Anything on the side?
-    - Anything on the side?
-    - Anything on the side?
+    - Did you want a side with that?
     responses:
     - Which milk?
   - identifier: B1Topping
@@ -62,12 +54,14 @@ MonoBehaviour:
   - identifier: B1No Response Match
     questions:
     - Sorry?
-    - The... what?
+    - The...what?
+    - One more time?
     responses:
     - Which milk?
   - identifier: B2Style
     questions:
     - Type.
+    - What now?
     responses:
     - Which milk?
   - identifier: B2Milk
@@ -83,11 +77,13 @@ MonoBehaviour:
   - identifier: B2Close
     questions:
     - Wait.
+    - Your order will be ready when it's ready.
     responses:
     - Which milk?
   - identifier: B2Response Match
     questions:
-    - OK
+    - Uh huh.
+    - Mmhmm.
     responses:
     - Which milk?
   - identifier: B2Side
@@ -102,47 +98,58 @@ MonoBehaviour:
     - Which milk?
   - identifier: B2No Response Match
     questions:
-    - I don't understand french.
+    - I don't understand French.
+    - Hah?
+    - Speak up.
     responses:
     - Which milk?
   - identifier: B3Style
     questions:
-    - Type.
+    - What coffee can I get you today?
+    - What will it be today?
     responses:
     - Which milk?
   - identifier: B3Milk
     questions:
-    - Milk.
+    - What kind of milk is that gonna be?
     responses:
     - Which milk?
   - identifier: B3Size
     questions:
-    - Size.
+    - How big did you want that?
+    - What size will that be?
     responses:
     - Which milk?
   - identifier: B3Close
     questions:
-    - Wait.
+    - Just wait to the side for us, thanks!
+    - Cheers, we'll be with you in no time!
     responses:
     - Which milk?
   - identifier: B3Response Match
     questions:
-    - OK
+    - Gotcha.
+    - Sure thing.
+    - Not a problem.
     responses:
     - Which milk?
   - identifier: B3Side
     questions:
-    - Side.
+    - Anything extra on the side?
+    - Want anything on the side?
     responses:
     - Which milk?
   - identifier: B3Topping
     questions:
-    - Topping.
+    - Anything on top?
+    - Any toppings for that?
     responses:
     - Which milk?
   - identifier: B3No Response Match
     questions:
-    - I don't understand french.
+    - I...sorry could you say that again?
+    - Run that by me one more time?
+    - Sorry, I didn't get that.
     responses:
     - Which milk?
   - identifier: B1Fail
