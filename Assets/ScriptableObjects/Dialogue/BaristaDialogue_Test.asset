@@ -17,6 +17,7 @@ MonoBehaviour:
     questions:
     - What would you like?
     - What can I get you?
+    - What did you want from our menu?
     responses: []
   - identifier: B1Milk
     questions:
@@ -24,12 +25,14 @@ MonoBehaviour:
     responses: []
   - identifier: B1Size
     questions:
-    - Small, regular or large?
+    - Small, regular, large or xl?
+    - What size was that in?
     responses:
     - Which milk?
   - identifier: B1Close
     questions:
     - Thank you, won't be long.
+    - Thank you, will have it to you shortly.
     responses:
     - Which milk?
   - identifier: B1Response Match
@@ -37,6 +40,7 @@ MonoBehaviour:
     - Sure thing.
     - No worries.
     - Got it.
+    - mhm.
     responses:
     - Which milk?
   - identifier: B1Side
@@ -56,12 +60,12 @@ MonoBehaviour:
     - Sorry?
     - The...what?
     - One more time?
+    - I'm not sure I understand...
     responses:
     - Which milk?
   - identifier: B2Style
     questions:
     - Type.
-    - What now?
     responses:
     - Which milk?
   - identifier: B2Milk
@@ -78,12 +82,14 @@ MonoBehaviour:
     questions:
     - Wait.
     - Your order will be ready when it's ready.
+    - Stay There.
     responses:
     - Which milk?
   - identifier: B2Response Match
     questions:
     - Uh huh.
     - Mmhmm.
+    - ...
     responses:
     - Which milk?
   - identifier: B2Side
@@ -101,6 +107,7 @@ MonoBehaviour:
     - I don't understand French.
     - Hah?
     - Speak up.
+    - Stop with the gibberish.
     responses:
     - Which milk?
   - identifier: B3Style
@@ -112,6 +119,7 @@ MonoBehaviour:
   - identifier: B3Milk
     questions:
     - What kind of milk is that gonna be?
+    - Anything special for the milk?
     responses:
     - Which milk?
   - identifier: B3Size

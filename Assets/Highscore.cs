@@ -9,6 +9,11 @@ public class Highscore : MonoBehaviour
     public TextMeshProUGUI text;
     void Start()
     {
+        if (DaddyManager.instance)
+        {
+            DaddyManager.instance.numberOfOrders = 1;
+        }
+        
         if(PlayerPrefs.HasKey("HighScore") == false)
         {
             PlayerPrefs.SetFloat("HighScore", 0f);
