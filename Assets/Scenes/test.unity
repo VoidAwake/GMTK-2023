@@ -772,6 +772,10 @@ PrefabInstance:
       propertyPath: textMesh
       value: 
       objectReference: {fileID: 1661412842}
+    - target: {fileID: 8368042594807843559, guid: b014554953056b145b9b9b09f8855f84, type: 3}
+      propertyPath: orderHoverTrigger
+      value: 
+      objectReference: {fileID: 1128013142}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1044,6 +1048,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054318594}
   m_CullTransparentMesh: 1
+--- !u!114 &1128013142 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7792624855046053569, guid: b014554953056b145b9b9b09f8855f84, type: 3}
+  m_PrefabInstance: {fileID: 654781934}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa509d1c1edce2549954e57f3cc13050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367683688
 GameObject:
   m_ObjectHideFlags: 0

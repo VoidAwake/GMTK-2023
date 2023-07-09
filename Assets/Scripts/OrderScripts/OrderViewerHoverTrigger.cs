@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class OrderViewerHoverTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private OrderViewer orderViewer;
-    private bool enableCollision = true;
+    public bool enableCollision = true;
     
     public void OnPointerEnter(PointerEventData eventData)
     {

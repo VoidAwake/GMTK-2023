@@ -288,6 +288,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         //ResultsScreen();
     }
 
+
+    public void TweenUiIn()
+    {
+        
+    }
     private void ResultsScreen()
     {
         //SceneManager.LoadScene(2);

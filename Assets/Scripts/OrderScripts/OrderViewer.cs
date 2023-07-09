@@ -12,8 +12,11 @@ public class OrderViewer : MonoBehaviour
     public float _tweenTime;
     public RectTransform rect;
     private bool isUh = false;
+    
+    [SerializeField] private RectTransform pos;
 
     [SerializeField] private GameObject UICardNouveau;
+    public OrderViewerHoverTrigger orderHoverTrigger;
     [SerializeField] private Material smudgeMat;
     private int smudgeLevel = 0;
 
@@ -24,11 +27,14 @@ public class OrderViewer : MonoBehaviour
     private void Start()
     {
         UICardNouveau.SetActive(false);
+        orderHoverTrigger.enableCollision = false;
+
     }
 
     public void Initialise(string coffeeOrderList)
     {
-        startPos = rect.localPosition;
+        orderHoverTrigger.enableCollision = true;
+        startPos = pos.localPosition;
         UICardNouveau.SetActive(true);
         
         textMesh.text = coffeeOrderList;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c4637dc2d44e2ca25e869755549a4f, type: 3}
   m_Name: Level 0
   m_EditorClassIdentifier: 
-  fuzzyMatchThreshold: 0.9
+  fuzzyMatchThreshold: 0
   coffeeComplexity: 0
   shuffleQuestionOrder: 0
   remapType: 0
