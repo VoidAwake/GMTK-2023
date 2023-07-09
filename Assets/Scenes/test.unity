@@ -941,7 +941,7 @@ MonoBehaviour:
   normalBlip: {fileID: 8300000, guid: 8d80bef2cc7de574f9db1186841ada68, type: 3}
   stutterBlip: {fileID: 8300000, guid: a1197a521d150b34aab89eda139f4637, type: 3}
   uhhBlip: {fileID: 8300000, guid: 1d6fd5ee6ccdfc540b621e2dc91dfc89, type: 3}
-  doubleAudioSource: {fileID: 0}
+  doubleAudioSource: {fileID: 1546261543}
 --- !u!82 &1546261541
 AudioSource:
   m_ObjectHideFlags: 0
