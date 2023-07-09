@@ -15,8 +15,6 @@ public class DaddyManager : MonoBehaviour
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
 
-    [SerializeField]
-    private CoffeeManager _coffeeBP;
     public IGameDataStore GameDataStore { get { return _gameDataStore; } }  
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
@@ -63,15 +61,15 @@ public class DaddyManager : MonoBehaviour
             
     }
     
-    public void DaddyStart(Canvas can, Barista bar)
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager)
     {
         //call order generator
         //insantiate order ui
         canvas = can;
         barista = bar;
+        InputBox = inputRemapping;
+        this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
-        
-        coffeeManager = Instantiate(_coffeeBP);
         
         InputBox.gameObject.SetActive(false);
         
