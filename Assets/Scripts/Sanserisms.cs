@@ -30,7 +30,7 @@ public class Sanserisms : MonoBehaviour
     
     private void PlayBlip(AudioClip clip, bool varyPitch = true)
     {
-        doubleAudioSource.CrossFade(clip, 0.5f, 0.1f);
+        doubleAudioSource.CrossFade(clip, 0.3f, 0.1f);
     
         if (varyPitch)
             doubleAudioSource.CurrentSource().pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
