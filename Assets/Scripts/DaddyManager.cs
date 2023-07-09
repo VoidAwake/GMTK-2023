@@ -184,6 +184,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             Debug.LogWarning("Order viewer is not assigned to DaddyManager. It will not appear in the scene");
         }
 
+        gameOverType = GAME_OVER_TYPE.NONE;
+
         InputBox.gameObject.SetActive(true);
         //barista.gameObject.SetActive(true);
         ecgObject.SetActive(true);
@@ -211,6 +213,12 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         orderHoverTrigger.SetCollision(false);
         
         yield return new WaitForSeconds(1.5f);
+
+        // Don't continue if it's a game over state
+        if (gameOverType != GAME_OVER_TYPE.NONE)
+        {
+            yield break;
+        }
         
         // Enable typing and hover trigger
         InputBox.IsBaristaResponding(false);
