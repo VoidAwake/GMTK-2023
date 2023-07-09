@@ -20,3 +20,7 @@ MonoBehaviour:
   blips:
   - {fileID: 8300000, guid: 6d6717c36a063ef47aa3af755ad656b3, type: 3}
   - {fileID: 8300000, guid: 19edce8c3d3af844693595aa809af0c6, type: 3}
+  music:
+  - {fileID: 8300000, guid: 87bdd1d653579ff48b834522210dbf62, type: 3}
+  - {fileID: 8300000, guid: 0ac4d28dab5fc094a89f63a45b158288, type: 3}
+  - {fileID: 8300000, guid: 59d735661158a144d82a7f7273a8ed9b, type: 3}
