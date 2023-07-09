@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 0
   m_EditorClassIdentifier: 
   fuzzyMatchThreshold: 0
+  coffeeComplexity: 0
   shuffleQuestionOrder: 0
   remapType: 0
   numberOfRemaps: 0
