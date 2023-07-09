@@ -78,7 +78,7 @@ public class InputRemapping : MonoBehaviour
                 break;
         }
         
-        inputField.Select();
+        EnableTyping();
     }
 
     // OPTIONAL RETURN: sends back the alphabet position of the first random vowel chosen
@@ -130,6 +130,17 @@ public class InputRemapping : MonoBehaviour
         SwapItems(newAlphabetOrder, rand1, rand2);
 
         return rand1;
+    }
+
+    public void EnableTyping()
+    {
+        inputField.readOnly = false;
+        inputField.Select();
+    }
+    
+    public void DisableTyping()
+    {
+        inputField.readOnly = true;
     }
     
     private void Update()
@@ -367,6 +378,8 @@ public class InputRemapping : MonoBehaviour
         
         previousText = "";
         currentText = "";
+
+        isProgramChangingText = true;
         inputField.text = "";
     }
 }
