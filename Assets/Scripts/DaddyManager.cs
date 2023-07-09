@@ -35,9 +35,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private TMP_Text objectiveText;
 
     [Header("Assign in Inspector")]
+    [SerializeField] private EndGameTransition endGameTransition;
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
+    
     private OrderViewerHoverTrigger orderHoverTrigger;
     private int remainingOrders;
 
@@ -233,16 +235,21 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         InputBox.DisableTyping();
         orderHoverTrigger.SetCollision(false);
         
-        yield return new WaitForSeconds(2);
+        // End transition before the next screen
+        endGameTransition.gameObject.SetActive(true);
+        endGameTransition.StartTransition(true);
+        
+        //yield return new WaitForSeconds(2);
+        
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
-        ResultsScreen();
+        //ResultsScreen();
     }
 
     private void ResultsScreen()
     {
-        SceneManager.LoadScene(2);
+        //SceneManager.LoadScene(2);
     }
 
     public void UpdateScore(float amount)
@@ -291,7 +298,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     float IInputValueTimeoutProvider.GetInputTimeoutValue()
         => this.inputTimeoutData.currentInterpolatedValue;
 
-    
+    public void GameOver()
+    {
+        endGameTransition.gameObject.SetActive(true);
+        endGameTransition.StartTransition(false);
+    }
 }
 
 [System.Serializable]
