@@ -93,9 +93,7 @@ public class DaddyManager : MonoBehaviour
         difficultyManager.AdjustDifficulty(levelsCompleted);
         
         remainingOrders = numberOfOrders;
-
-        InputBox.Initialise();
-
+        
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
         
         coffeeManager.GenerateCoffee(numberOfOrders);
@@ -130,6 +128,8 @@ public class DaddyManager : MonoBehaviour
         }
         
         InputBox.gameObject.SetActive(true);
+        
+        InputBox.Initialise();
         
         barista.FirstQuestion();
     }
