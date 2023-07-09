@@ -15,11 +15,16 @@ public class InputRemapping : MonoBehaviour
     [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
     private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
     
+    [SerializeField] private bool doubleLettersEnabled = false;
+    [SerializeField] private float doubleLettersChance = 0.05f;
+    
     [SerializeField] private int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private StringGameEvent sendCompletedTextEvent;
+    
+    // TODO: convert to uppercase input
     
     private string currentText = "";
     private string previousText = "";
@@ -66,6 +71,7 @@ public class InputRemapping : MonoBehaviour
 
         GetLastTypedCharacter();
         RandomiseLetterChange();
+        RandomiseDoubleLetterChance();
         previousText = currentText;
     }
 
@@ -154,7 +160,50 @@ public class InputRemapping : MonoBehaviour
                 break;
         }
     }
+    
+    private void RandomiseDoubleLetterChance()
+    {
+        if (doubleLettersEnabled)
+            return;
+        
+        // Don't bother if the last typed character is a space
+        if (lastTypedCharacter == " ")
+            return;
 
+        if (Random.Range(0.0f, 1.0f) < doubleLettersChance)
+        {
+            isProgramChangingText = true;
+            
+            string newText;
+            
+            // Modifying the middle of text
+            if (lastTypedCharacterPosition + 1 < currentText.Length)
+            {
+                string unmodifiedText = currentText;
+                
+                newText = currentText.Substring(0, lastTypedCharacterPosition + 1);
+                newText += lastTypedCharacter;
+                
+                // This will inheritly change currentText. This is why unmodifyText is introduced
+                inputField.text = newText;
+                inputField.MoveTextEnd(false);
+                
+                // We add a +1 to the end of text because the word is 1 letter longer
+                inputField.text += unmodifiedText.Substring(lastTypedCharacterPosition + 1, unmodifiedText.Length - newText.Length + 1);
+            }
+            else // Modifying the end of text
+            {
+                newText = currentText + lastTypedCharacter;
+                inputField.text = newText;
+                inputField.MoveTextEnd(false);
+            }
+            
+            isProgramChangingText = false;
+            
+            Debug.Log("Double letter");
+        }
+    }
+    
     private void ReplaceLastTypedCharacter()
     {
         isProgramChangingText = true;
