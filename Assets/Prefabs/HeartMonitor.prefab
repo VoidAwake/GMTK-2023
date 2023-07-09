@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 199416426860231802}
   - component: {fileID: 6366057542695993066}
   - component: {fileID: 4849111681975910917}
+  - component: {fileID: 2588407659325323967}
   m_Layer: 0
   m_Name: HeartMonitor
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &199416426860231802
 MonoBehaviour:
@@ -46,13 +47,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb2cea2cffbd854d9d2db176d25e9c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHeartRate: 60
-  maxHeartRate: 200
+  currentHeartRate: 80
+  maxHeartRate: 240
   minHeartRate: 0
   timerSpeed: 1
   interpolationBalance: 0.5
   beatEventSpeed: 1
   enableValueTracking: 0
+  enableDoubleLetters: {fileID: 11400000, guid: b6061779d6cc8584689d5e8b5aa820d3, type: 2}
 --- !u!114 &6366057542695993066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +80,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0.5
+          m_FloatArgument: 2
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -107,7 +109,62 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 20
+          m_FloatArgument: 30
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 199416426860231802}
+        m_TargetAssemblyTypeName: CoffeeJitters.HeartRateMonitor.HeartRateMonitor,
+          Assembly-CSharp
+        m_MethodName: IncreaseHeartRateMultiplier
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2588407659325323967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5696442710438721630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f318050ed524f7946934ad8de4760742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: b650753baa6812f4faace894c2fab4c1, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 199416426860231802}
+        m_TargetAssemblyTypeName: CoffeeJitters.HeartRateMonitor.HeartRateMonitor,
+          Assembly-CSharp
+        m_MethodName: IncreaseHeartRate
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 15
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 199416426860231802}
+        m_TargetAssemblyTypeName: CoffeeJitters.HeartRateMonitor.HeartRateMonitor,
+          Assembly-CSharp
+        m_MethodName: IncreaseHeartRateMultiplier
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

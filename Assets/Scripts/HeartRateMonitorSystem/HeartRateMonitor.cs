@@ -62,6 +62,12 @@ namespace CoffeeJitters.HeartRateMonitor
         private IPatienceTimerProvider patienceTimerProvider;
         private SimpleTimer simpleTimer;
 
+        [SerializeField] private GameEvent enableDoubleLetters;
+        private bool doubleLettersTriggered = false;
+        private float doubleLettersThreshold = 150f;
+        private bool stopIncreaseHeartRate = false;
+        private float heartRateIncreaseMultiplier = 1.0f;
+
         #endregion Fields
 
         #region - - - - - - MonoBehaviour - - - - - -
@@ -85,6 +91,8 @@ namespace CoffeeJitters.HeartRateMonitor
 
         private void Update()
         {
+            IncreaseHeartRateUpdate();
+            
             if (enableValueTracking)
                 this.CalculateCurrentHeartRate();
 
@@ -153,6 +161,31 @@ namespace CoffeeJitters.HeartRateMonitor
         public void IncreaseHeartRate(float increase)
         {
             currentHeartRate += increase;
+        }
+        
+        public void IncreaseHeartRateMultiplier(float multiplyValue)
+        {
+            heartRateIncreaseMultiplier *= multiplyValue;
+        }
+        
+        private void IncreaseHeartRateUpdate()
+        {
+            if (stopIncreaseHeartRate)
+                return;
+            
+            currentHeartRate += Time.deltaTime * heartRateIncreaseMultiplier;
+            
+            if (currentHeartRate >= maxHeartRate)
+            {
+                DaddyManager.instance.GameOver(GAME_OVER_TYPE.HEART_RATE_TOO_HIGH);
+                stopIncreaseHeartRate = true;
+            }
+
+            if (!doubleLettersTriggered && currentHeartRate > doubleLettersThreshold)
+            {
+                enableDoubleLetters.Raise();
+                doubleLettersTriggered = true;
+            }
         }
         
         #endregion Methods

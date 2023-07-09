@@ -154,6 +154,7 @@ MonoBehaviour:
   expectedResponse: 
   fuzzyMatchThreshold: 0
   objectiveTextDuration: 3
+  incorrectItem: {fileID: 11400000, guid: b650753baa6812f4faace894c2fab4c1, type: 2}
 --- !u!114 &182558432295324784
 MonoBehaviour:
   m_ObjectHideFlags: 0

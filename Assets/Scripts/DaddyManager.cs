@@ -48,6 +48,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     private string coffeeOrderList = "";
 
+    private GAME_OVER_TYPE gameOverType = GAME_OVER_TYPE.NONE;
+
     #region - - - - - - Properties - - - - - -
 
     public IGameDataStore GameDataStore { get { return _gameDataStore; } }
@@ -325,10 +327,18 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     float IInputValueTimeoutProvider.GetInputTimeoutValue()
         => this.inputTimeoutData.currentInterpolatedValue;
 
-    public void GameOver()
+    public void GameOver(GAME_OVER_TYPE _gameOverType)
     {
         endGameTransition.gameObject.SetActive(true);
+        
+        gameOverType = _gameOverType;
+        
         endGameTransition.StartTransition(false);
+    }
+
+    public GAME_OVER_TYPE GetGameOverType()
+    {
+        return gameOverType;
     }
 }
 
