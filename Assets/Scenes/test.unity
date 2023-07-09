@@ -609,7 +609,10 @@ MonoBehaviour:
   barista: {fileID: 2043593831}
   canvas: {fileID: 142077963}
   inputRemapping: {fileID: 657232863}
+  heartRateMonitor: {fileID: 2075493003}
+  ecgModifier: {fileID: 1339019082}
   coffeeManager: {fileID: 2043593832}
+  ecgObject: {fileID: 406332672}
   orderViewer: {fileID: 654781935}
   gameDataStore: {fileID: 946852265}
 --- !u!4 &317337677
@@ -728,6 +731,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddb0baf96a029c3499782a35d8c03670, type: 3}
+--- !u!1 &406332672 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 685955135547022348, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
+  m_PrefabInstance: {fileID: 294237653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &450156647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,7 +1166,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9053596276009245306, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
   m_PrefabInstance: {fileID: 294237653}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 406332672}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3530da8d7566d2c4ebae656a1fce9f96, type: 3}
