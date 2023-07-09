@@ -39,6 +39,8 @@ public class Barista : MonoBehaviour
 
     private IGameDataStore gameDataStore;
 
+    [SerializeField] private GameEvent baristaPatienceLost;
+
     private void Start()
     {
         gameDataStore = DaddyManager.instance.GameDataStore;
@@ -52,6 +54,20 @@ public class Barista : MonoBehaviour
         baristaText.enabled = false;
 
         //currentQuestionIndex = 0;
+    }
+
+    private void ProgressState()
+    {
+        switch (baristaState)
+        {
+            case baristaStates.nuetral: ChangeState(baristaStates.confused);
+                break;
+            case baristaStates.confused: ChangeState(baristaStates.angry);
+                break;
+            default:
+                Debug.Log("GET A GAME OVER HERE");
+                break;
+        }
     }
 
     private void ChangeState(baristaStates newState)
@@ -117,6 +133,9 @@ public class Barista : MonoBehaviour
         {
             
             SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random());
+            
+            ProgressState();
+            baristaPatienceLost.Raise();
             
             // Repeat the last question
             currentQuestionIndex--;
