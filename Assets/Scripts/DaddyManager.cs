@@ -38,6 +38,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
+    private OrderViewerHoverTrigger orderHoverTrigger;
     private int remainingOrders;
 
     private string coffeeOrderList = "";
@@ -159,6 +160,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             orderViewer.SetActive(true);
             orderViewer.GetComponentInChildren<OrderViewer>().Initialise(coffeeOrderList);
+            orderHoverTrigger = orderViewer.GetComponentInChildren<OrderViewerHoverTrigger>();
         }
         else
         {
@@ -180,18 +182,25 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         var responseMatch = coffeeManager.CheckResponse(stringGameEvent.GetString(), GetQuestionResponses());
 
         barista.DisplayResponseMatch(responseMatch != CoffeeManager.ResponseMatch.No);
-
         StartCoroutine(NextQuestionRoutine());
     }
 
     private IEnumerator NextQuestionRoutine()
     {
+        // Disable typing and hover trigger
+        InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
+        orderHoverTrigger.SetCollision(false);
+        
         yield return new WaitForSeconds(2);
+        
+        // Enable typing and hover trigger
+        InputBox.IsBaristaResponding(false);
         InputBox.EnableTyping();
-
+        orderHoverTrigger.SetCollision(true);
+        
         barista.NextQuestion();
-
+        
         if (barista.HasMoreQuestions())
         {
             yield break;
@@ -218,8 +227,12 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         }
 
         barista.DisplayCloseText();
-
+        
+        // Disable typing and hover trigger
+        InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
+        orderHoverTrigger.SetCollision(false);
+        
         yield return new WaitForSeconds(2);
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
