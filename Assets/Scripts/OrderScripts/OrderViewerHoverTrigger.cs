@@ -8,12 +8,12 @@ public class OrderViewerHoverTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
     public void OnPointerEnter(PointerEventData eventData)
     {
         orderViewer.OnHoverEnter();
-        Debug.Log("trigger enter");
+        //Debug.Log("trigger enter");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         orderViewer.OnHoverExit();
-        Debug.Log("trigger exit");
+        //Debug.Log("trigger exit");
     }
 }
