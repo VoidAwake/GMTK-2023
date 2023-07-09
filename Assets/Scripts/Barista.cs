@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
@@ -81,7 +81,7 @@ public class Barista : MonoBehaviour
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random());
-        
+        DaddyManager.instance.InputBox.EnableTyping();
     }
 
     public void NextQuestion()
@@ -92,6 +92,7 @@ public class Barista : MonoBehaviour
         currentQuestion = questions[currentQuestionIndex];
 
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random());
+        DaddyManager.instance.InputBox.EnableTyping();
     }
 
     public bool HasMoreQuestions()

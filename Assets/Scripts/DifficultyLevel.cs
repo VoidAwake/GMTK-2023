@@ -3,7 +3,7 @@
 [CreateAssetMenu]
 public class DifficultyLevel : ScriptableObject
 {
-    public int fuzzyMatchThreshold = 0;
+    public float fuzzyMatchThreshold = 0;
     public int coffeeComplexity = 0;
     public bool shuffleQuestionOrder = false;
     public REMAP_TYPE remapType = REMAP_TYPE.REMAP_VOWELS;

@@ -4,10 +4,12 @@ using UnityEngine.EventSystems;
 public class OrderViewerHoverTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private OrderViewer orderViewer;
+    private bool enableCollision = true;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        orderViewer.OnHoverEnter();
+        if(enableCollision)
+            orderViewer.OnHoverEnter();
         //Debug.Log("trigger enter");
     }
 
@@ -15,5 +17,15 @@ public class OrderViewerHoverTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         orderViewer.OnHoverExit();
         //Debug.Log("trigger exit");
+    }
+    
+    public void SetCollision(bool newValue)
+    {
+        enableCollision = newValue;
+        
+        if (!enableCollision)
+        {
+            orderViewer.OnHoverExit();
+        }
     }
 }

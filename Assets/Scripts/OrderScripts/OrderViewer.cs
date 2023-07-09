@@ -24,12 +24,14 @@ public class OrderViewer : MonoBehaviour
     
     public void OnHoverEnter()
     {
+        DaddyManager.instance.InputBox.SetOrderViewerActive(true);
         DaddyManager.instance.InputBox.DisableTyping();
         StartCoroutine(ShowOrder());
     }
     
     public void OnHoverExit()
     {
+        DaddyManager.instance.InputBox.SetOrderViewerActive(false);
         DaddyManager.instance.InputBox.EnableTyping();
         StartCoroutine(HideOrder());
     }
