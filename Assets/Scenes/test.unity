@@ -779,6 +779,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2043593831}
     - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
+      propertyPath: _coffeeBP
+      value: 
+      objectReference: {fileID: 852876199118778097, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
+    - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: coffeeManager
       value: 
       objectReference: {fileID: 2043593832}
