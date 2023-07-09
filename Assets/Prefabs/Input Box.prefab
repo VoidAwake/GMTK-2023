@@ -436,11 +436,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   remapType: 0
   vowels:
-  - a
-  - e
-  - i
-  - o
-  - u
+  - A
+  - E
+  - I
+  - O
+  - U
+  doubleLettersEnabled: 0
+  doubleLettersChance: 0.05
   numberOfRemaps: 1
   inputField: {fileID: 4063634313681280317}
   sendCompletedTextEvent: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}

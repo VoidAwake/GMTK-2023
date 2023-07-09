@@ -54,6 +54,8 @@ public class InputRemapping : MonoBehaviour
 
     public void OnLetterTyped()
     {
+        inputField.text = inputField.text.ToUpper();
+        
         currentText = inputField.text;
         DaddyManager.instance.OnInput();
         
@@ -163,7 +165,7 @@ public class InputRemapping : MonoBehaviour
     
     private void RandomiseDoubleLetterChance()
     {
-        if (doubleLettersEnabled)
+        if (!doubleLettersEnabled)
             return;
         
         // Don't bother if the last typed character is a space
@@ -175,6 +177,10 @@ public class InputRemapping : MonoBehaviour
             isProgramChangingText = true;
             
             string newText;
+            
+            // This is used later for the letter swapping rules
+            // See comment [Now apply the letter swapping rules if applicable]
+            previousText = currentText;
             
             // Modifying the middle of text
             if (lastTypedCharacterPosition + 1 < currentText.Length)
@@ -200,7 +206,11 @@ public class InputRemapping : MonoBehaviour
             
             isProgramChangingText = false;
             
-            Debug.Log("Double letter");
+            // Now apply the letter swapping rules if applicable
+            GetLastTypedCharacter();
+            RandomiseLetterChange();
+            
+            //Debug.Log("Double letter");
         }
     }
     
