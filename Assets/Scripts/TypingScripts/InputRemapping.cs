@@ -20,8 +20,8 @@ public class InputRemapping : MonoBehaviour
     private bool letterSwapTriggered = false;
     
     // Double letter params
-    [SerializeField] private bool doubleLettersEnabled = false;
-    [SerializeField] private float doubleLettersChance = 0.05f;
+    private bool doubleLettersEnabled = false;
+    private float doubleLettersChance = 0.05f;
     private bool doubleLetterTriggered = false;
     
     public int numberOfRemaps = 1;
@@ -402,5 +402,10 @@ public class InputRemapping : MonoBehaviour
 
         isProgramChangingText = true;
         inputField.text = "";
+    }
+    
+    public void SetDoubleLetters(bool enabled)
+    {
+        doubleLettersEnabled = enabled;
     }
 }

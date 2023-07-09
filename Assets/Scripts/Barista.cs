@@ -92,7 +92,8 @@ public class Barista : MonoBehaviour
             case baristaStates.confused: ChangeState(baristaStates.angry);
                 break;
             default:
-                Debug.Log("GET A GAME OVER HERE");
+                DaddyManager.instance.GameOver(GAME_OVER_TYPE.BARISTA_LOST_PATIENCE);
+                SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Fail").questions.Random(), true);
                 break;
         }
     }
@@ -161,6 +162,8 @@ public class Barista : MonoBehaviour
         {
             // TODO: Would be nice if the gameDataStore could take string arguments. Format?
             //baristaText.text = closestResponse + "? Sure.";
+            remainingPatience = patiencePerState;
+            ChangeState(baristaStates.nuetral);
             SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random(), true);
         }
         else

@@ -1,0 +1,6 @@
+public enum GAME_OVER_TYPE
+{
+    NONE,
+    BARISTA_LOST_PATIENCE,
+    HEART_RATE_TOO_HIGH
+}
