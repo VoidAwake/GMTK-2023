@@ -16,23 +16,17 @@ namespace DefaultNamespace
         {
             var daddyManager = FindObjectOfType<DaddyManager>();
 
-            foreach (var actualCoffee in daddyManager.actualCoffees)
+            if (daddyManager == null)
             {
-                leftBodyTemp.text += "\n";
-                rightBodyTemp.text += "\n";
-                mainLeft.text = leftBodyTemp.text;
-                mainRight.text = rightBodyTemp.text;
-
-                foreach (var actualCoffeeProperty in actualCoffee)
+                for (int i = 0; i < 100; i++)
                 {
-                    leftBodyTemp.text += actualCoffeeProperty.propertyName + " : " + "\n" + actualCoffeeProperty.value + "\n";
-                    rightBodyTemp.text += actualCoffeeProperty.score + "\n" + "\n";
-                    mainLeft.text = leftBodyTemp.text;
-                    mainRight.text = rightBodyTemp.text;
-                    score += actualCoffeeProperty.score;
+                    mainLeft.text += "test\n";
+                    leftBodyTemp.text += "test\n";
                 }
+
+                return;
             }
-            
+
             foreach (var actualCoffee in daddyManager.actualCoffees)
             {
                 leftBodyTemp.text += "\n";
