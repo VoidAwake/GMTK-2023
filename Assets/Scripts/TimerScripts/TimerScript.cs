@@ -1,8 +1,9 @@
+using CoffeeJitters.Timer.Services;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimerScript : MonoBehaviour
+public class TimerScript : MonoBehaviour, IPatienceTimerProvider
 {
     [Tooltip("How long the order should last (in seconds)")]
     [SerializeField] private float maxPatienceTime = 1.0f;
@@ -13,21 +14,21 @@ public class TimerScript : MonoBehaviour
     {
         StartTimer();
     }
-    
+
     public void StartTimer()
     {
         StartTimer(maxPatienceTime);
     }
-    
+
     public void StartTimer(float overrideMaxPatienceTime)
     {
         Debug.Log("Timer start");
-        
+
         isRunning = true;
-        
+
         currentPatience = overrideMaxPatienceTime;
     }
-    
+
     private void Update()
     {
         if(isRunning)
@@ -46,7 +47,13 @@ public class TimerScript : MonoBehaviour
     {
         currentPatience = 0;
         isRunning = false;
-        
+
         Debug.Log("Out of patience, you lose");
     }
+
+    float IPatienceTimerProvider.GetCurrentPatienceTime()
+        => currentPatience;
+
+    float IPatienceTimerProvider.GetMaxPatienceTime()
+        => maxPatienceTime;
 }
