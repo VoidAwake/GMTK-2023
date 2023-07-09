@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -18,7 +19,7 @@ public class Barista : MonoBehaviour
 
     [SerializeField] private Image baristaImage;
     [SerializeField] private List<BaristaObject> baristas;
-    private BaristaObject currentBarista; 
+    public BaristaObject currentBarista; 
     public TextAnim textAnim;
     private enum baristaStates
     {
@@ -39,6 +40,14 @@ public class Barista : MonoBehaviour
 
     private IGameDataStore gameDataStore;
 
+    [SerializeField] private GameEvent baristaPatienceLost;
+
+    [NonSerialized] public UnityEvent<string> textDisplayed = new();
+    
+    [Header("Barista Patience Parameters")]
+    [SerializeField] private float patiencePerState = 20.0f;
+    private float remainingPatience = 20.0f;
+    
     private void Start()
     {
         gameDataStore = DaddyManager.instance.GameDataStore;
@@ -51,7 +60,33 @@ public class Barista : MonoBehaviour
         baristaImage.enabled = false;
         baristaText.enabled = false;
 
+        remainingPatience = patiencePerState;
+
         //currentQuestionIndex = 0;
+    }
+
+    private void Update()
+    {
+        remainingPatience -= Time.deltaTime;
+
+        if (remainingPatience <= 0)
+        {
+            ProgressState();
+        }
+    }
+
+    private void ProgressState()
+    {
+        switch (baristaState)
+        {
+            case baristaStates.nuetral: ChangeState(baristaStates.confused);
+                break;
+            case baristaStates.confused: ChangeState(baristaStates.angry);
+                break;
+            default:
+                Debug.Log("GET A GAME OVER HERE");
+                break;
+        }
     }
 
     private void ChangeState(baristaStates newState)
@@ -62,6 +97,7 @@ public class Barista : MonoBehaviour
 
     private void OnStateChange()
     {
+        remainingPatience = patiencePerState;
         switch (baristaState)
         {
             case baristaStates.nuetral: baristaImage.sprite = currentBarista.Nuetral;
@@ -80,6 +116,7 @@ public class Barista : MonoBehaviour
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
+        gameDataStore = DaddyManager.instance.GameDataStore;
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
         DaddyManager.instance.InputBox.EnableTyping();
     }
@@ -118,6 +155,9 @@ public class Barista : MonoBehaviour
             
             SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random(), true);
             
+            ProgressState();
+            baristaPatienceLost.Raise();
+            
             // Repeat the last question
             currentQuestionIndex--;
         }
@@ -125,7 +165,9 @@ public class Barista : MonoBehaviour
     
     public void SetText(string text, bool response)
     {
-        textAnim.SetText(text, response);
+        textAnim.SetText(text);
+        
+        textDisplayed.Invoke(text);
     }
 }
 

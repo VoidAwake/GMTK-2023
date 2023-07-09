@@ -27,7 +27,7 @@ public class InputRemapping : MonoBehaviour
     public int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] public TMP_InputField inputField;
     [SerializeField] private StringGameEvent sendCompletedTextEvent;
     
     private string currentText = "";
@@ -35,12 +35,14 @@ public class InputRemapping : MonoBehaviour
     private string lastTypedCharacter;
     private int lastTypedCharacterPosition = 0;
     
-    private bool isProgramChangingText = false;
+    public bool isProgramChangingText = false;
 
     [NonSerialized] public UnityEvent normalLetterTyped = new();
     [NonSerialized] public UnityEvent swappedLetterTyped = new();
     [NonSerialized] public UnityEvent backspaceTyped = new();
     [NonSerialized] public UnityEvent doubleLetterTyped = new();
+    // SO events
+    [SerializeField] private GameEvent backspacedPressedEvent;
 
     private bool orderViewerActive = false;
     private bool isBaristaResponding = false;
@@ -224,6 +226,7 @@ public class InputRemapping : MonoBehaviour
         else if (currentText.Length <= previousText.Length)
         {
             backspaceTyped.Invoke();
+            backspacedPressedEvent.Raise();
         }
         else if (currentText.Length > previousText.Length)
         {

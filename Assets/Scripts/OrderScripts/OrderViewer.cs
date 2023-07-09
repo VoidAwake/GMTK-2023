@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class OrderViewer : MonoBehaviour
     public Vector2 _tweenPos;
     public float _tweenTime;
     public RectTransform rect;
+    private bool isUh = false;
 
     private Vector2 startPos;
 
@@ -27,6 +29,8 @@ public class OrderViewer : MonoBehaviour
         DaddyManager.instance.InputBox.SetOrderViewerActive(true);
         DaddyManager.instance.InputBox.DisableTyping();
         StartCoroutine(ShowOrder());
+        isUh = true;
+        StartCoroutine(UhBuffer());
     }
     
     public void OnHoverExit()
@@ -34,6 +38,7 @@ public class OrderViewer : MonoBehaviour
         DaddyManager.instance.InputBox.SetOrderViewerActive(false);
         DaddyManager.instance.InputBox.EnableTyping();
         StartCoroutine(HideOrder());
+        isUh = false;
     }
     
     private IEnumerator ShowOrder()
@@ -56,5 +61,28 @@ public class OrderViewer : MonoBehaviour
         yield return myTween.WaitForCompletion();
         
         tweenRunning = false;
+    }
+
+    private IEnumerator UhBuffer()
+    {
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(Uh());
+    }
+
+    private IEnumerator Uh()
+    {
+        if (isUh)
+        {
+            DaddyManager.instance.InputBox.isProgramChangingText = true;
+            DaddyManager.instance.InputBox.inputField.text += "U";
+            while (isUh)
+            {
+                DaddyManager.instance.InputBox.isProgramChangingText = true;
+                DaddyManager.instance.InputBox.inputField.text += "h";
+                DaddyManager.instance.InputBox.backspaceTyped.Invoke();
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+
     }
 }

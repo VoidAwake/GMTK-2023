@@ -105,3 +105,58 @@ MonoBehaviour:
     - I don't understand french.
     responses:
     - Which milk?
+  - identifier: B3Style
+    questions:
+    - Type.
+    responses:
+    - Which milk?
+  - identifier: B3Milk
+    questions:
+    - Milk.
+    responses:
+    - Which milk?
+  - identifier: B3Size
+    questions:
+    - Size.
+    responses:
+    - Which milk?
+  - identifier: B3Close
+    questions:
+    - Wait.
+    responses:
+    - Which milk?
+  - identifier: B3Response Match
+    questions:
+    - OK
+    responses:
+    - Which milk?
+  - identifier: B3Side
+    questions:
+    - Side.
+    responses:
+    - Which milk?
+  - identifier: B3Topping
+    questions:
+    - Topping.
+    responses:
+    - Which milk?
+  - identifier: B3No Response Match
+    questions:
+    - I don't understand french.
+    responses:
+    - Which milk?
+  - identifier: B1Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?
+  - identifier: B2Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?
+  - identifier: B3Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?

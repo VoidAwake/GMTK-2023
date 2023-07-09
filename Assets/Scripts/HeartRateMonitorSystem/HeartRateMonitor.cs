@@ -65,7 +65,7 @@ namespace CoffeeJitters.HeartRateMonitor
         #endregion Fields
 
         #region - - - - - - MonoBehaviour - - - - - -
-
+        
         private void Start() =>
             this.simpleTimer =
                 new SimpleTimer(
@@ -149,6 +149,12 @@ namespace CoffeeJitters.HeartRateMonitor
         private void HeartBeatDebugger(float patienceValue, float inputTimeoutValue, float mixedInterpolatedValue, float heartRatePerSecond, float heartRateInMilliseconds)
             => Debug.Log($" {patienceValue}, {inputTimeoutValue}, {mixedInterpolatedValue}, {currentHeartRate}, {heartRatePerSecond}, {heartRateInMilliseconds}");
 
+        
+        public void IncreaseHeartRate(float increase)
+        {
+            currentHeartRate += increase;
+        }
+        
         #endregion Methods
 
     }
