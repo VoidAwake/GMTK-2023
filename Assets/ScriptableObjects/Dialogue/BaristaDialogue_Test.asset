@@ -98,7 +98,6 @@ MonoBehaviour:
   - identifier: B2Topping
     questions:
     - Topping.
-    - The... what?
     responses:
     - Which milk?
   - identifier: B2No Response Match
