@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{36e30cec-f821-47f9-9f90-2101b38d0438}">
+		<property name="assetPath">
+			<value>SFX/Blip Stutter 2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.34941043083900225</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ce7175d-768d-4ff9-9d99-f9f1f325c0b1}</destination>
+		</relationship>
+	</object>
+</objects>
