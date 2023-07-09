@@ -1187,10 +1187,6 @@ MonoBehaviour:
   baristaText: {fileID: 2043593830}
   shuffleQuestionOrder: 0
   currentQuestion: 
-  questions:
-  - Style
-  - Milk
-  - Size
 --- !u!114 &2043593832 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 852876199118778097, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
