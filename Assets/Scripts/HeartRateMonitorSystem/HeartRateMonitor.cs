@@ -9,11 +9,23 @@ using UnityEngine;
 namespace CoffeeJitters.HeartRateMonitor
 {
 
-    public class HeartRateMonitor : MonoBehaviour
+    public interface IHeartRateProvider
+    {
+
+        #region - - - - - - Methods - - - - - -
+
+        float GetHeartBeatsPerMinute();
+
+        #endregion Methods
+
+    }
+
+    public class HeartRateMonitor : MonoBehaviour, IHeartRateProvider
     {
 
         #region - - - - - - Fields - - - - - -
 
+        [SerializeField]
         private float currentHeartRate = 80f;
         [SerializeField]
         private float maxHeartRate;
@@ -47,16 +59,16 @@ namespace CoffeeJitters.HeartRateMonitor
         private void Update()
         {
             // Shift interpolation value based on the patience value
-            float anxietyLevel = Mathf.Clamp(
-                patienceTimerProvider.GetMaxPatienceTime() - patienceTimerProvider.GetCurrentPatienceTime(),
-                0f,
-                patienceTimerProvider.GetMaxPatienceTime());
+            //float anxietyLevel = Mathf.Clamp(
+            //    patienceTimerProvider.GetMaxPatienceTime() - patienceTimerProvider.GetCurrentPatienceTime(),
+            //    0f,
+            //    patienceTimerProvider.GetMaxPatienceTime());
 
-            float anxiousHeartRateBPM = Mathf.Lerp(minHeartRate, maxHeartRate, EaseInCirc(anxietyLevel / patienceTimerProvider.GetMaxPatienceTime()));
+            //float anxiousHeartRateBPM = Mathf.Lerp(minHeartRate, maxHeartRate, EaseInCirc(anxietyLevel / patienceTimerProvider.GetMaxPatienceTime()));
 
-            float heartRate = 60f / anxiousHeartRateBPM * 1000f;
-
-            this.simpleTimer.IntervalLength =  heartRate;
+            // Problem with translation below TODO: properly translate into a heartbeat
+            //float heartRate = 60f / anxiousHeartRateBPM * 1000f;
+            //this.simpleTimer.IntervalLength =  heartRate;
 
             // Run the heartbeat
             if (this.simpleTimer.CheckTimeIsUp())
@@ -68,15 +80,11 @@ namespace CoffeeJitters.HeartRateMonitor
             this.simpleTimer.TickTimer(Time.deltaTime);
         }
 
-        private float EaseInCubic(float value)
-        {
-            return value * value * value;
-        }
-
         private float EaseInCirc(float value)
-        {
-            return 1 - Mathf.Sqrt(1 - Mathf.Pow(value, 2));
-        }
+            => 1 - Mathf.Sqrt(1 - Mathf.Pow(value, 2));
+
+        public float GetHeartBeatsPerMinute()
+            => currentHeartRate;
 
         #endregion Methods
 
