@@ -55,6 +55,10 @@ public class InputRemapping : MonoBehaviour
     
     private void Update()
     {
+        // Always focus
+        if (!inputField.isFocused)
+            inputField.Select();
+        
         // Always move caret to end
         if (inputField.isFocused && inputField.caretPosition != inputField.text.Length)
         {
