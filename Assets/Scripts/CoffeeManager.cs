@@ -97,9 +97,9 @@ public class CoffeeManager : MonoBehaviour
         var score = 0;
         var responseMatch = ResponseMatch.Correct;
         
-        if (perfectScore * fuzzyMatchThreshold < closestScore)
+        if (perfectScore * fuzzyMatchThreshold < closestScore || response == expectedResponse + " MILK")
         {
-            if (closestResponse == expectedResponse)
+            if (closestResponse == expectedResponse || response == expectedResponse + " MILK")
             {
                 
                 DaddyManager.instance.UpdateScore(20f);
