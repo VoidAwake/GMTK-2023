@@ -42,6 +42,9 @@ public class InputRemapping : MonoBehaviour
     [NonSerialized] public UnityEvent backspaceTyped = new();
     [NonSerialized] public UnityEvent doubleLetterTyped = new();
 
+    private bool orderViewerActive = false;
+    private bool isBaristaResponding = false;
+
     public void Initialise()
     {
         switch (remapType)
@@ -132,10 +135,25 @@ public class InputRemapping : MonoBehaviour
         return rand1;
     }
 
+    public void SetOrderViewerActive(bool _orderViewerActive)
+    {
+        orderViewerActive = _orderViewerActive;
+    }
+    
+    public void IsBaristaResponding(bool _isBaristaResponding)
+    {
+        isBaristaResponding = _isBaristaResponding;
+    }
+    
     public void EnableTyping()
     {
-        inputField.readOnly = false;
-        inputField.Select();
+        // Do not enable typing if the order is in the player's face
+        if (!orderViewerActive && !isBaristaResponding)
+        {
+            inputField.readOnly = false;
+            inputField.Select();
+            inputField.ActivateInputField();
+        }
     }
     
     public void DisableTyping()
