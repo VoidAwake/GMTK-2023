@@ -8,6 +8,16 @@ namespace CoffeeJitters.HeartRateMonitor.Entities
     public class HeartState
     {
 
+        #region - - - - - - Properties - - - - - -
+
+        public float BaseHeartRate { get; set; }
+
+        public float HeartRate { get; set; }
+
+        public float MaxHeartRate { get; set; }
+
+        #endregion Properties
+
     }
 
 }

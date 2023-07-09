@@ -1,29 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
+using CoffeeJitters.HeartRateMonitor;
+using CoffeeJitters.HeartRateMonitor.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DaddyManager : MonoBehaviour
+public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 {
     private int levelsCompleted;
     public OrderUI orderUi;
     public float score = 0f;
     public float inputTimer = 0f;
-    [SerializeField] private float timerBuffer; 
+    [SerializeField] private float timerBuffer;
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
 
-    public IGameDataStore GameDataStore { get { return _gameDataStore; } }  
+    [Header("Heart Rate Monitoring")]
+    [SerializeField]
+    public InputTimeoutData inputTimeoutData;
+    public HeartRateMonitor heartRateMonitor;
+    public HeartToECGModifier ecgModifier;
+
+    public IGameDataStore GameDataStore { get { return _gameDataStore; } }
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
     public Barista barista;
     [SerializeField] private DifficultyManager difficultyManager;
 
     private TMP_Text objectiveText;
-    
+
     [Header("Assign in Inspector")]
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
@@ -38,7 +46,7 @@ public class DaddyManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
-            
+
             PlayerPrefs.SetInt("levelsCompleted", 0);
         }
         else
@@ -46,25 +54,25 @@ public class DaddyManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
     }
-    
+
     //update
 
     public void OnInput()
     {
         inputTimer = 0f;
+        inputTimeoutData.currentInterpolatedValue = 0;
     }
     private void Update()
     {
 
+        // Calculate input timeout
         inputTimer += Time.deltaTime;
         if (inputTimer > timerBuffer)
-        {
-            //call heartbeat.increase(inputTimer)
-        }
-            
+            this.TickInputTimeout();
     }
-    
+
     public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer)
     {
         if (PlayerPrefs.HasKey("levelsCompleted"))
@@ -85,20 +93,20 @@ public class DaddyManager : MonoBehaviour
         this._gameDataStore = gameDataStore;
         this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
-        
+
         InputBox.gameObject.SetActive(false);
         //barista.gameObject.SetActive(false);
         
         difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
-        
+
         difficultyManager.AdjustDifficulty(levelsCompleted);
-        
+
         remainingOrders = numberOfOrders;
-        
+
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
-        
+
         coffeeManager.GenerateCoffee(numberOfOrders);
-        
+
         coffeeOrderList = "";
         for (int i = 0; i < coffeeManager.GetAllOrders().Count; i++)
         {
@@ -111,7 +119,7 @@ public class DaddyManager : MonoBehaviour
             if (coffeeManager.GetCoffeeAtIndex(i).questionAmount == 5)
             {
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).topping + " on top"
-                                            + " and a " + coffeeManager.GetCoffeeAtIndex(i).side 
+                                            + " and a " + coffeeManager.GetCoffeeAtIndex(i).side
                                             + " on the side";
 
             }
@@ -122,7 +130,7 @@ public class DaddyManager : MonoBehaviour
             coffeeOrderList+= ". \n";
 
         }
-        
+
         temp.OrderInit(coffeeOrderList);
     }
 
@@ -140,30 +148,30 @@ public class DaddyManager : MonoBehaviour
         {
             Debug.LogWarning("Order viewer is not assigned to DaddyManager. It will not appear in the scene");
         }
-        
+
         InputBox.gameObject.SetActive(true);
         //barista.gameObject.SetActive(true);
         
         InputBox.Initialise();
-        
+
         barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
     }
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
     {
         coffeeManager.expectedResponse = GetExpectedResponse();
-            
+
         var responseMatch = coffeeManager.CheckResponse(stringGameEvent.GetString(), GetQuestionResponses());
-        
+
         barista.DisplayResponseMatch(responseMatch != CoffeeManager.ResponseMatch.No);
-        
+
         StartCoroutine(NextQuestionRoutine());
     }
 
     private IEnumerator NextQuestionRoutine()
     {
         yield return new WaitForSeconds(2);
-        
+
         barista.NextQuestion();
 
         if (barista.HasMoreQuestions())
@@ -178,21 +186,21 @@ public class DaddyManager : MonoBehaviour
             {
                 // TODO: Barista to ask about the next order first
                 barista.DisplayCloseText();
-                
+
                 Debug.Log("You have NOT reached the end");
-                
+
                 difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
-                
+
                 coffeeManager.SetNextCoffee();
-                
+
                 barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
-                
+
                 yield break;
             }
         }
-        
+
         barista.DisplayCloseText();
-        
+
         yield return new WaitForSeconds(2);
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
@@ -204,13 +212,13 @@ public class DaddyManager : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
-    
+
     public void UpdateScore(float amount)
     {
         this.score += amount;
         Debug.Log(score);
     }
-    
+
     private List<string> GetQuestionResponses()
     {
         return barista.currentQuestion switch
@@ -223,7 +231,7 @@ public class DaddyManager : MonoBehaviour
             _ => new List<string>()
         };
     }
-    
+
     private string GetExpectedResponse()
     {
         return barista.currentQuestion switch
@@ -236,4 +244,38 @@ public class DaddyManager : MonoBehaviour
             _ => ""
         };
     }
+
+    private void TickInputTimeout()
+    {
+        inputTimeoutData.currentInterpolatedValue = Mathf.Clamp((inputTimer - timerBuffer) / inputTimeoutData.maxTimeoutTime, 0f, 1f);
+        if (inputTimer > timerBuffer + inputTimeoutData.maxTimeoutTime)
+            inputTimeoutData.currentInterpolatedValue = 1;
+    }
+
+    /// <summary>
+    /// Provides the gradually increasing timeout value and interpolated between 0 and 1.
+    /// </summary>
+    /// <returns>Interpolated value between 0 and 1.</returns>
+    float IInputValueTimeoutProvider.GetInputTimeoutValue()
+        => this.inputTimeoutData.currentInterpolatedValue;
+}
+
+[System.Serializable]
+public struct InputTimeoutData
+{
+
+    #region - - - - - - Fields - - - - - -
+
+    /// <summary>
+    /// Value between 0 and 1 representing the timer past the timer buffer.
+    /// </summary>
+    public float currentInterpolatedValue;
+
+    /// <summary>
+    /// The maximum amount of time after the timer buffer.
+    /// </summary>
+    public float maxTimeoutTime;
+
+    #endregion Fields
+
 }
