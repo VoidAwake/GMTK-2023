@@ -45,6 +45,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
+    public GameObject kill;
     
     private OrderViewerHoverTrigger orderHoverTrigger;
     private int remainingOrders;
@@ -96,7 +97,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             this.TickInputTimeout();
     }
 
-    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer, HeartRateMonitor monitor, HeartToECGModifier modifier, GameObject Object)
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer, HeartRateMonitor monitor, HeartToECGModifier modifier, GameObject Object, GameObject continueObject)
     {
         if (PlayerPrefs.HasKey("levelsCompleted"))
         {
@@ -107,6 +108,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             levelsCompleted = 0;
             PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         }
+
+        kill = continueObject;
+        
         actualCoffees.Clear();
         score = 0;
         heartRateMonitor = monitor;
@@ -170,6 +174,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     public void GameStart()
     {
+        Destroy(kill);
         timerScript.StartTimer(45f);
         heartRateMonitor.StartIncreaseHeartRate();
         //SceneManager.LoadScene(1);

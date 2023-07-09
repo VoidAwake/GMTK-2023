@@ -54,7 +54,7 @@ namespace DefaultNamespace
             leftBodyTemp.text += "Total Score: \n";
             rightBodyTemp.text += daddyManager.highscore + " \n";
             leftBodyTemp.text += "---------------\n";
-            leftBodyTemp.text += "Please Come Again :D \n";
+            leftBodyTemp.text += "We Miss You :D \n";
             mainLeft.text = leftBodyTemp.text;
             mainRight.text = rightBodyTemp.text;
             // TODO: Full line of dashes
