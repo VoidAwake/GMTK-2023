@@ -104,9 +104,22 @@ public class DaddyManager : MonoBehaviour
             coffeeOrderList += coffeeManager.GetCoffeeAtIndex(i).size
                                + " "
                                + coffeeManager.GetCoffeeAtIndex(i).milk
-                               + " milk "
-                               + coffeeManager.GetCoffeeAtIndex(i).style
-                               + "\n";
+                               + " Milk "
+                               + coffeeManager.GetCoffeeAtIndex(i).style;
+
+            if (coffeeManager.GetCoffeeAtIndex(i).questionAmount == 5)
+            {
+                coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).topping + " on top"
+                                            + " and a " + coffeeManager.GetCoffeeAtIndex(i).side 
+                                            + " on the side";
+
+            }
+            else if(coffeeManager.GetCoffeeAtIndex(i).questionAmount == 4)
+            {
+                coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
+            }
+            coffeeOrderList+= "\n";
+
         }
         
         temp.OrderInit(coffeeOrderList);
@@ -131,7 +144,7 @@ public class DaddyManager : MonoBehaviour
         
         InputBox.Initialise();
         
-        barista.FirstQuestion();
+        barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
     }
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
@@ -170,7 +183,7 @@ public class DaddyManager : MonoBehaviour
                 
                 coffeeManager.SetNextCoffee();
                 
-                barista.FirstQuestion();
+                barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
                 
                 yield break;
             }
@@ -203,6 +216,8 @@ public class DaddyManager : MonoBehaviour
             "Style" => Coffee.styles,
             "Milk" => Coffee.milks,
             "Size" => Coffee.sizes,
+            "Topping" => Coffee.toppings,
+            "Side" => Coffee.sides,
             _ => new List<string>()
         };
     }
@@ -214,6 +229,8 @@ public class DaddyManager : MonoBehaviour
             "Style" => coffeeManager.GetCurrentCoffee().style,
             "Milk" => coffeeManager.GetCurrentCoffee().milk,
             "Size" => coffeeManager.GetCurrentCoffee().size,
+            "Topping" => coffeeManager.GetCurrentCoffee().topping,
+            "Side" => coffeeManager.GetCurrentCoffee().side,
             _ => ""
         };
     }

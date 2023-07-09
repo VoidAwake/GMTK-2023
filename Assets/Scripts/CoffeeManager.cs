@@ -16,6 +16,7 @@ public class CoffeeManager : MonoBehaviour
     [SerializeField] private TMP_Text objectiveText;
     
     private List<Coffee> coffeeOrders = new List<Coffee>();
+    public int coffeeComplexity;
 
     public string expectedResponse;
 
@@ -106,11 +107,21 @@ public class CoffeeManager : MonoBehaviour
     private Coffee RandomCoffee()
     {
         var coffee = new Coffee();
-
         coffee.style = Coffee.styles.Random();
         coffee.milk = Coffee.milks.Random();
         coffee.size = Coffee.sizes.Random();
-
+        if (coffeeComplexity > 1)
+        {
+            coffee.side = Coffee.sides.Random();
+            coffee.topping = Coffee.toppings.Random();
+            coffee.questionAmount = 5;
+        }
+        else if (coffeeComplexity > 0)
+        {
+            coffee.side = Coffee.sides.Random();
+            coffee.questionAmount = 4;
+        }
+        
         return coffee;
     }
 

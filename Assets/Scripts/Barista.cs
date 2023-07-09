@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
@@ -12,12 +13,15 @@ public class Barista : MonoBehaviour
 
     public string currentQuestion;
     private int currentQuestionIndex;
+    private int questionCount = 3;
 
-    public List<string> questions = new()
+    [NonSerialized] public List<string> questions = new()
     {
         "Style",
         "Milk",
         "Size",
+        "Side",
+        "Topping"
     };
 
     private IGameDataStore gameDataStore;
@@ -34,9 +38,10 @@ public class Barista : MonoBehaviour
         //currentQuestionIndex = 0;
     }
     
-    public void FirstQuestion()
+    public void FirstQuestion(int questionAmount)
     {
         currentQuestionIndex = 0;
+        questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
         baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
         
@@ -45,7 +50,7 @@ public class Barista : MonoBehaviour
     public void NextQuestion()
     {
         currentQuestionIndex++;
-        if(currentQuestionIndex >= questions.Count)
+        if(currentQuestionIndex >= questionCount)
             return;
         currentQuestion = questions[currentQuestionIndex];
 
@@ -54,7 +59,7 @@ public class Barista : MonoBehaviour
 
     public bool HasMoreQuestions()
     {
-        return currentQuestionIndex != questions.Count;
+        return currentQuestionIndex != questionCount;
     }
 
     public void DisplayCloseText()
