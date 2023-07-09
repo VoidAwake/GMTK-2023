@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c4637dc2d44e2ca25e869755549a4f, type: 3}
   m_Name: Level 4
   m_EditorClassIdentifier: 
-  fuzzyMatchThreshold: 0
+  fuzzyMatchThreshold: 1
   coffeeComplexity: 2
   shuffleQuestionOrder: 1
-  remapType: 0
+  remapType: 2
   numberOfRemaps: 4
   numberOfOrders: 2
