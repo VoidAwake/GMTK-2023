@@ -15,9 +15,12 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
+
+    [Header("Heart Rate Monitoring")]
     [SerializeField]
     public InputTimeoutData inputTimeoutData;
     public HeartRateMonitor heartRateMonitor;
+    public HeartToECGModifier ecgModifier;
 
     public IGameDataStore GameDataStore { get { return _gameDataStore; } }
     [SerializeField] private GameDataStore _gameDataStore;
@@ -46,7 +49,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             Destroy(gameObject);
         }
 
-        this.heartRateMonitor.InitialiseHeartMonitor(null, this, timerScript); // Need to hool up the IHeartECG service
+        this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
     }
 
     //update
@@ -66,6 +69,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             //display restart button
         }
 
+        // Calculate input timeout
         inputTimer += Time.deltaTime;
         if (inputTimer > timerBuffer)
             this.TickInputTimeout();
