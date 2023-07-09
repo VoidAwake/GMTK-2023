@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
 {
-    [RequireComponent(typeof(AudioSource))]
     public class Sanserisms : MonoBehaviour
     {
         [SerializeField] private InputRemapping inputRemapping;
@@ -14,26 +12,40 @@ namespace DefaultNamespace
         [SerializeField] private AudioClip stutterBlip;
         [SerializeField] private AudioClip uhhBlip;
 
-        private AudioSource audioSource;
+        [SerializeField] private DoubleAudioSource doubleAudioSource;
 
-        private void Awake()
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
+        private bool secondEvent;
 
         private void OnEnable()
         {
-            inputRemapping.backspaceTyped.AddListener(() => PlayBlip(uhhBlip));
-            inputRemapping.normalLetterTyped.AddListener(() => PlayBlip(normalBlip));
+            inputRemapping.backspaceTyped.AddListener(() =>
+            {
+                Debug.Log("backspace");
+                PlayBlip(uhhBlip, false);
+            });
+            inputRemapping.normalLetterTyped.AddListener(() =>
+            {
+                Debug.Log("normal");
+                PlayBlip(normalBlip);
+            });
             inputRemapping.doubleLetterTyped.AddListener(() => PlayBlip(stutterBlip));
             inputRemapping.swappedLetterTyped.AddListener(() => PlayBlip(stutterBlip));
         }
 
-        private void PlayBlip(AudioClip clip)
+        private void PlayBlip(AudioClip clip, bool varyPitch = true)
         {
-            audioSource.pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
-            audioSource.clip = clip;
-            audioSource.Play();
+            secondEvent = !secondEvent;
+
+            if (secondEvent) return;
+            
+            Debug.Log(clip.name);
+            doubleAudioSource.CrossFade(clip, 0.5f, 0.1f);
+            
+            
+            if (varyPitch)
+                doubleAudioSource.CurrentSource().pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
+            else
+                doubleAudioSource.CurrentSource().pitch = 1;
         }
     }
 }
