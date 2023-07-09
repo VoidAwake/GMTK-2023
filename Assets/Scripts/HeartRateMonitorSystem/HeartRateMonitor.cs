@@ -65,7 +65,7 @@ namespace CoffeeJitters.HeartRateMonitor
         [SerializeField] private GameEvent enableDoubleLetters;
         private bool doubleLettersTriggered = false;
         private float doubleLettersThreshold = 150f;
-        private bool stopIncreaseHeartRate = false;
+        private bool stopIncreaseHeartRate = true;
         private float heartRateIncreaseMultiplier = 1.0f;
 
         #endregion Fields
@@ -186,6 +186,11 @@ namespace CoffeeJitters.HeartRateMonitor
                 enableDoubleLetters.Raise();
                 doubleLettersTriggered = true;
             }
+        }
+        
+        public void StartIncreaseHeartRate()
+        {
+            stopIncreaseHeartRate = false;
         }
         
         #endregion Methods

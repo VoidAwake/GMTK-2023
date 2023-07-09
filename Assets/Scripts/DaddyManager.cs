@@ -171,6 +171,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public void GameStart()
     {
         timerScript.StartTimer(45f);
+        heartRateMonitor.StartIncreaseHeartRate();
         //SceneManager.LoadScene(1);
 
         if (orderViewer != null)
