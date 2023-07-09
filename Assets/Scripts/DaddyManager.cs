@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DaddyManager : MonoBehaviour
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
+
+    [SerializeField]
+    private CoffeeManager _coffeeBP;
     public IGameDataStore GameDataStore { get { return _gameDataStore; } }  
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
@@ -49,13 +53,6 @@ public class DaddyManager : MonoBehaviour
     }
     private void Update()
     {
-        if (remainingOrders == 0)
-        {
-            //end game
-            //display score
-            //display end game text
-            //display restart button
-        }
 
         inputTimer += Time.deltaTime;
         if (inputTimer > timerBuffer)
@@ -65,13 +62,15 @@ public class DaddyManager : MonoBehaviour
             
     }
     
-    void Start()
+    public void DaddyStart(Canvas can, Barista bar)
     {
         //call order generator
         //insantiate order ui
+        canvas = can;
+        barista = bar;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
         
-        coffeeManager = Instantiate(coffeeManager);
+        coffeeManager = Instantiate(_coffeeBP);
 
         remainingOrders = numberOfOrders;
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
@@ -158,6 +157,12 @@ public class DaddyManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         
         Debug.Log("We have reached the end");
+        ResultsScreen();
+    }
+
+    private void ResultsScreen()
+    {
+        SceneManager.LoadScene(2);
     }
     
     public void UpdateScore(float amount)
@@ -187,4 +192,5 @@ public class DaddyManager : MonoBehaviour
             _ => ""
         };
     }
+    
 }

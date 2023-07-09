@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &852646345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3254809783823721892, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
+  m_PrefabInstance: {fileID: 6914518492797949429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1001070496
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,16 +689,66 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3254809783823721892, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6914518492797949432}
   m_SourcePrefab: {fileID: 100100000, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
 --- !u!114 &6914518492797949430 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4865706046762194538, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
   m_PrefabInstance: {fileID: 6914518492797949429}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 852646345}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7919e161002f00c4280f19361495f5e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6914518492797949432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852646345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7a3914d56e9f17747a24083ce0ec0663, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6914518492797949430}
+        m_TargetAssemblyTypeName: CoffeeJitters.ResultsScreen.ResultsScreenController,
+          Assembly-CSharp
+        m_MethodName: Continue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cd28b209-8457-4e5d-b439-35d796049795
+    m_ActionName: New action map/UIContinue[/Keyboard/anyKey]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: New action map
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
