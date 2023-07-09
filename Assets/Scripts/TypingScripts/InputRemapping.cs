@@ -42,55 +42,92 @@ public class InputRemapping : MonoBehaviour
 
     public void Initialise()
     {
-        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        switch (remapType)
         {
-            for (int i = 0; i < numberOfRemaps; i++)
-            {
-                string[] vowels = {"A", "E", "I", "O", "U"};
-                int rand1 = Random.Range(0, 5);
-                int rand2 = rand1;
-
-                while (rand2 == rand1)
+            case REMAP_TYPE.REMAP_VOWELS:
+                for (int i = 0; i < numberOfRemaps; i++)
                 {
-                    rand2 = Random.Range(0, 5);
+                    SwapVowels();
                 }
-                
-                Debug.Log("Swapping " + vowels[rand1] + " and " + vowels[rand2]);
-                SwapItems(newAlphabetOrder, vowelPositionList[rand1], vowelPositionList[rand2]);  
-            }
-        }
-        else if (remapType == REMAP_TYPE.REMAP_ANY_LETTER)
-        {
-            // Always swap 1 set of vowels
-            string[] vowels = {"A", "E", "I", "O", "U"};
-            int rand1 = Random.Range(0, 5);
-            int rand2 = rand1;
-
-            while (rand2 == rand1)
-            {
-                rand2 = Random.Range(0, 5);
-            }
+                break;
             
-            Debug.Log("Swapping " + vowels[rand1] + " and " + vowels[rand2]);
-            SwapItems(newAlphabetOrder, vowelPositionList[rand1], vowelPositionList[rand2]);
-
-            // Now swap for additional
-            for (int i = 1; i < numberOfRemaps; i++)
-            {
-                rand1 = Random.Range(0, 26);
-                rand2 = rand1;
-
-                while (rand2 == rand1)
-                {
-                    rand2 = Random.Range(0, 26);
-                }
+            case REMAP_TYPE.REMAP_ANY_LETTER:
+                // Always swap 1 set of vowels
+                SwapVowels();
                 
-                Debug.Log("Swapping " + newAlphabetOrder[rand1] + " and " + newAlphabetOrder[rand2]);
-                SwapItems(newAlphabetOrder, rand1, rand2);
-            }
+                // Now swap a number of times equal to the number of remaps (i=1 as we already did 1 swap)
+                for (int i = 1; i < numberOfRemaps; i++)
+                {
+                    SwapAny();
+                }
+                break;
+            
+            case REMAP_TYPE.MULTISWAP:
+                // Always swap 1 set of vowels AND get the position of one of the vowels
+                int letterPos = SwapVowels();
+                
+                // Now swap a number of times equal to the number of remaps (i=1 as we already did 1 swap)
+                for (int i = 1; i < numberOfRemaps; i++)
+                {
+                    letterPos = SwapWithInput(letterPos);
+                }
+                break;
+            default:
+                break;
         }
         
         inputField.Select();
+    }
+
+    // OPTIONAL RETURN: sends back the alphabet position of the first random vowel chosen
+    private int SwapVowels()
+    {
+        int rand1 = Random.Range(0, 5);
+        int rand2 = rand1;
+
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 5);
+        }
+            
+        Debug.Log("Swapping " + vowels[rand1] + " and " + vowels[rand2]);
+        SwapItems(newAlphabetOrder, vowelPositionList[rand1], vowelPositionList[rand2]);
+
+        return vowelPositionList[rand1];
+    }
+    
+    // OPTIONAL RETURN: sends back the alphabet position of the first random letter chosen
+    private int SwapAny()
+    {
+        int rand1 = Random.Range(0, 26);
+        int rand2 = rand1;
+
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 26);
+        }
+                
+        Debug.Log("Swapping " + newAlphabetOrder[rand1] + " and " + newAlphabetOrder[rand2]);
+        SwapItems(newAlphabetOrder, rand1, rand2);
+
+        return rand1;
+    }
+    
+    // OPTIONAL RETURN: sends back the alphabet position of the random letter chosen
+    private int SwapWithInput(int positionToSwap)
+    {
+        int rand1 = positionToSwap;
+        int rand2 = Random.Range(0, 26);
+        
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 26);
+        }
+        
+        Debug.Log("Swapping " + newAlphabetOrder[rand1] + " and " + newAlphabetOrder[rand2]);
+        SwapItems(newAlphabetOrder, rand1, rand2);
+
+        return rand1;
     }
     
     private void Update()
