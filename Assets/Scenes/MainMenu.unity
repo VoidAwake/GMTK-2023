@@ -1676,7 +1676,7 @@ PrefabInstance:
 
         Finn Berryman
 
-        Max Dalkin'
+        ixam'
       objectReference: {fileID: 0}
     - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
       propertyPath: m_fontSize
