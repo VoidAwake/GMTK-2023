@@ -11,16 +11,18 @@ public class InputRemapping : MonoBehaviour
     [SerializeField]
     public REMAP_TYPE remapType;
     
-    // [SerializeField] private float remapPercentage = 0.05f;
-    
+    // Letter swap params
     // I use strings because it's nicer to store spaces
     private string[] vowels = {"A", "E", "I", "O", "U"};
     private List<int> vowelPositionList = new List<int> { 0, 4, 8, 14, 20 };
     private string[] alphabet = new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private string[] newAlphabetOrder = new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private bool letterSwapTriggered = false;
     
+    // Double letter params
     [SerializeField] private bool doubleLettersEnabled = false;
     [SerializeField] private float doubleLettersChance = 0.05f;
+    private bool doubleLetterTriggered = false;
     
     public int numberOfRemaps = 1;
     
@@ -33,7 +35,7 @@ public class InputRemapping : MonoBehaviour
     private string lastTypedCharacter;
     private int lastTypedCharacterPosition = 0;
     
-    private bool isProgramChangingText;
+    private bool isProgramChangingText = false;
 
     [NonSerialized] public UnityEvent normalLetterTyped = new();
     [NonSerialized] public UnityEvent swappedLetterTyped = new();
@@ -76,7 +78,7 @@ public class InputRemapping : MonoBehaviour
                 break;
         }
         
-        inputField.Select();
+        EnableTyping();
     }
 
     // OPTIONAL RETURN: sends back the alphabet position of the first random vowel chosen
@@ -129,6 +131,17 @@ public class InputRemapping : MonoBehaviour
 
         return rand1;
     }
+
+    public void EnableTyping()
+    {
+        inputField.readOnly = false;
+        inputField.Select();
+    }
+    
+    public void DisableTyping()
+    {
+        inputField.readOnly = true;
+    }
     
     private void Update()
     {
@@ -145,7 +158,13 @@ public class InputRemapping : MonoBehaviour
     
     public void OnLetterTyped()
     {
-        inputField.text = inputField.text.ToUpper();
+        // Convert to uppercase AND RETURN TO NOT RUN THE REST
+        // Updating the inputField to uppercase will run this function again anyway
+        if (inputField.text != inputField.text.ToUpper())
+        {
+            inputField.text = inputField.text.ToUpper();
+            return;
+        }
         
         currentText = inputField.text;
         DaddyManager.instance.OnInput();
@@ -153,6 +172,7 @@ public class InputRemapping : MonoBehaviour
         // If the change is made by the program, don't do anything
         if (isProgramChangingText)
         {
+            isProgramChangingText = false;
             return;
         }
         
@@ -165,7 +185,32 @@ public class InputRemapping : MonoBehaviour
         GetLastTypedCharacter();
         ChangeLetterIfApplicable();
         RandomiseDoubleLetterChance();
+
+        PlaySoundEvent();
+        
         previousText = currentText;
+    }
+
+    private void PlaySoundEvent()
+    {
+        if (doubleLetterTriggered)
+        {
+            doubleLetterTyped.Invoke();
+            doubleLetterTriggered = false;
+        }
+        else if(letterSwapTriggered)
+        {
+            swappedLetterTyped.Invoke();
+            letterSwapTriggered = false;
+        }
+        else if (currentText.Length <= previousText.Length)
+        {
+            backspaceTyped.Invoke();
+        }
+        else if (currentText.Length > previousText.Length)
+        {
+            normalLetterTyped.Invoke();
+        }
     }
 
     private void GetLastTypedCharacter()
@@ -180,15 +225,13 @@ public class InputRemapping : MonoBehaviour
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
                     
-                    if(!isProgramChangingText)
-                        normalLetterTyped.Invoke();
-                    
                     break;
                 }
             }
         }
         // Edge case check for if words are highlighted and replaced with a single letter
-        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2 && currentText != "")
+        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2 &&
+                 currentText != "")
         {
             for (int i = 0; i < previousText.Length; i++)
             {
@@ -201,11 +244,6 @@ public class InputRemapping : MonoBehaviour
                     break;
                 }
             }
-        }
-        else if (currentText.Length < previousText.Length)
-        {
-            if(!isProgramChangingText)
-                backspaceTyped.Invoke();
         }
         else
         {
@@ -239,7 +277,8 @@ public class InputRemapping : MonoBehaviour
         // if (previousText.Length > currentText.Length)
         //     return;
         
-        ReplaceLastTypedCharacter();
+        if(GetNewCharacter() != lastTypedCharacter)
+            ReplaceLastTypedCharacter();
     }
     
     private void RandomiseDoubleLetterChance()
@@ -287,11 +326,11 @@ public class InputRemapping : MonoBehaviour
             GetLastTypedCharacter();
             ChangeLetterIfApplicable();
             
-            isProgramChangingText = false;
+            doubleLetterTriggered = true;
+            
+            //isProgramChangingText = false;
             
             //Debug.Log("Double letter");
-            
-            doubleLetterTyped.Invoke();
         }
     }
     
@@ -309,9 +348,9 @@ public class InputRemapping : MonoBehaviour
         
         inputField.text = newText;
         
-        swappedLetterTyped.Invoke();
+        letterSwapTriggered = true;
         
-        isProgramChangingText = false;
+        //isProgramChangingText = false;
     }
 
     private string GetNewCharacter()
@@ -339,6 +378,8 @@ public class InputRemapping : MonoBehaviour
         
         previousText = "";
         currentText = "";
+
+        isProgramChangingText = true;
         inputField.text = "";
     }
 }

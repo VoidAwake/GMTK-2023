@@ -56,7 +56,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             Destroy(gameObject);
         }
 
-        
+        //this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
     }
 
     //update
@@ -178,7 +178,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     private IEnumerator NextQuestionRoutine()
     {
+        InputBox.DisableTyping();
         yield return new WaitForSeconds(2);
+        InputBox.EnableTyping();
 
         barista.NextQuestion();
 
@@ -209,6 +211,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         barista.DisplayCloseText();
 
+        InputBox.DisableTyping();
         yield return new WaitForSeconds(2);
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
