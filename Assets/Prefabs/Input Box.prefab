@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c680510f4e1ad34da59a093a5e2e9f6, type: 2}
+  m_sharedMaterial: {fileID: -7150352940545923295, guid: 4c680510f4e1ad34da59a093a5e2e9f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -255,10 +255,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Placeholder Text Here...
+  m_text: ...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4c680510f4e1ad34da59a093a5e2e9f6, type: 2}
+  m_sharedMaterial: {fileID: -7150352940545923295, guid: 4c680510f4e1ad34da59a093a5e2e9f6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -436,12 +436,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   remapType: 0
   vowels:
-  - a
-  - e
-  - i
-  - o
-  - u
-  numberOfRemaps: 1
+  - A
+  - E
+  - I
+  - O
+  - U
+  doubleLettersEnabled: 0
+  doubleLettersChance: 0.05
+  numberOfRemaps: 0
   inputField: {fileID: 4063634313681280317}
   sendCompletedTextEvent: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
 --- !u!1 &8512787820291952827
@@ -625,7 +627,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: 4c680510f4e1ad34da59a093a5e2e9f6, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1

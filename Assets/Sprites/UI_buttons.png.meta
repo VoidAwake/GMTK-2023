@@ -114,7 +114,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 180
+        y: 360
         width: 414
         height: 180
       alignment: 0
@@ -135,7 +135,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 180
         width: 414
         height: 180
       alignment: 0
@@ -147,6 +147,27 @@ TextureImporter:
       bones: []
       spriteID: 784a9f3350e670644a6528ceac6626e7
       internalID: -249711824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_buttons_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 414
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37584a6a22692764cb56695c1fa6fc62
+      internalID: 1459633688
       vertices: []
       indices: 
       edges: []
@@ -164,6 +185,7 @@ TextureImporter:
     nameFileIdTable:
       UI_buttons_0: 1460505214
       UI_buttons_1: -249711824
+      UI_buttons_2: 1459633688
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

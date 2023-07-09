@@ -5,9 +5,11 @@ using CoffeeJitters.HeartRateMonitor;
 using CoffeeJitters.HeartRateMonitor.Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 {
+    private int levelsCompleted;
     public OrderUI orderUi;
     public float score = 0f;
     public float inputTimer = 0f;
@@ -26,12 +28,13 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
     public Barista barista;
+    [SerializeField] private DifficultyManager difficultyManager;
 
     private TMP_Text objectiveText;
 
     [Header("Assign in Inspector")]
     [SerializeField] private TimerScript timerScript;
-    [SerializeField] private int numberOfOrders = 1;
+    [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
     private int remainingOrders;
 
@@ -43,6 +46,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             instance = this;
             DontDestroyOnLoad(this);
+
+            PlayerPrefs.SetInt("levelsCompleted", 0);
         }
         else
         {
@@ -61,13 +66,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     }
     private void Update()
     {
-        if (remainingOrders == 0)
-        {
-            //end game
-            //display score
-            //display end game text
-            //display restart button
-        }
 
         // Calculate input timeout
         inputTimer += Time.deltaTime;
@@ -75,15 +73,35 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             this.TickInputTimeout();
     }
 
-    void Start()
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer)
     {
+        if (PlayerPrefs.HasKey("levelsCompleted"))
+        {
+            levelsCompleted = PlayerPrefs.GetInt("levelsCompleted");
+        }
+        else
+        {
+            levelsCompleted = 0;
+            PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
+        }
         //call order generator
         //insantiate order ui
+        canvas = can;
+        barista = bar;
+        InputBox = inputRemapping;
+        this.orderViewer = orderViewer;
+        this._gameDataStore = gameDataStore;
+        this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
 
-        coffeeManager = Instantiate(coffeeManager);
+        InputBox.gameObject.SetActive(false);
+
+        difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
+
+        difficultyManager.AdjustDifficulty(levelsCompleted);
 
         remainingOrders = numberOfOrders;
+
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
 
         coffeeManager.GenerateCoffee(numberOfOrders);
@@ -94,21 +112,31 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             coffeeOrderList += coffeeManager.GetCoffeeAtIndex(i).size
                                + " "
                                + coffeeManager.GetCoffeeAtIndex(i).milk
-                               + " milk "
-                               + coffeeManager.GetCoffeeAtIndex(i).style
-                               + "\n";
+                               + " Milk "
+                               + coffeeManager.GetCoffeeAtIndex(i).style;
+
+            if (coffeeManager.GetCoffeeAtIndex(i).questionAmount == 5)
+            {
+                coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).topping + " on top"
+                                            + " and a " + coffeeManager.GetCoffeeAtIndex(i).side
+                                            + " on the side";
+
+            }
+            else if(coffeeManager.GetCoffeeAtIndex(i).questionAmount == 4)
+            {
+                coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
+            }
+            coffeeOrderList+= "\n";
+
         }
 
         temp.OrderInit(coffeeOrderList);
-
-        // TODO: Needs to be called for each new order
     }
 
     public void GameStart()
     {
         timerScript.StartTimer(45f);
         //SceneManager.LoadScene(1);
-        Instantiate(InputBox,canvas.transform);
 
         if (orderViewer != null)
         {
@@ -120,7 +148,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             Debug.LogWarning("Order viewer is not assigned to DaddyManager. It will not appear in the scene");
         }
 
-        barista.FirstQuestion();
+        InputBox.gameObject.SetActive(true);
+
+        InputBox.Initialise();
+
+        barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
     }
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
@@ -155,9 +187,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
                 Debug.Log("You have NOT reached the end");
 
+                difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
+
                 coffeeManager.SetNextCoffee();
 
-                barista.FirstQuestion();
+                barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
 
                 yield break;
             }
@@ -166,8 +200,15 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         barista.DisplayCloseText();
 
         yield return new WaitForSeconds(2);
-
+        levelsCompleted++;
+        PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
+        ResultsScreen();
+    }
+
+    private void ResultsScreen()
+    {
+        SceneManager.LoadScene(2);
     }
 
     public void UpdateScore(float amount)
@@ -183,6 +224,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             "Style" => Coffee.styles,
             "Milk" => Coffee.milks,
             "Size" => Coffee.sizes,
+            "Topping" => Coffee.toppings,
+            "Side" => Coffee.sides,
             _ => new List<string>()
         };
     }
@@ -194,6 +237,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             "Style" => coffeeManager.GetCurrentCoffee().style,
             "Milk" => coffeeManager.GetCurrentCoffee().milk,
             "Size" => coffeeManager.GetCurrentCoffee().size,
+            "Topping" => coffeeManager.GetCurrentCoffee().topping,
+            "Side" => coffeeManager.GetCurrentCoffee().side,
             _ => ""
         };
     }
