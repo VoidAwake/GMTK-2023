@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+namespace CoffeeJitters.HeartRateMonitor.Services
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public interface IInputValueTimeoutProvider
     {
-        
+
+        #region - - - - - - Methods - - - - - -
+
+        float GetInputTimeoutValue();
+
+        #endregion Methods
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

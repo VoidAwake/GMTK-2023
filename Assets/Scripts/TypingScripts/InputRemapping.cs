@@ -14,8 +14,10 @@ public class InputRemapping : MonoBehaviour
     // [SerializeField] private float remapPercentage = 0.05f;
     
     // I use strings because it's nicer to store spaces
-    [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
-    private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
+    private string[] vowels = {"A", "E", "I", "O", "U"};
+    private List<int> vowelPositionList = new List<int> { 0, 4, 8, 14, 20 };
+    private string[] alphabet = new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private string[] newAlphabetOrder = new string[] {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     
     [SerializeField] private bool doubleLettersEnabled = false;
     [SerializeField] private float doubleLettersChance = 0.05f;
@@ -40,23 +42,92 @@ public class InputRemapping : MonoBehaviour
 
     public void Initialise()
     {
-        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        switch (remapType)
         {
-            for (int i = 0; i < numberOfRemaps; i++)
-            {
-                int rand1 = Random.Range(0, 5);
-                int rand2 = rand1;
-
-                while (rand2 == rand1)
+            case REMAP_TYPE.REMAP_VOWELS:
+                for (int i = 0; i < numberOfRemaps; i++)
                 {
-                    rand2 = Random.Range(0, 5);
+                    SwapVowels();
                 }
+                break;
+            
+            case REMAP_TYPE.REMAP_ANY_LETTER:
+                // Always swap 1 set of vowels
+                SwapVowels();
                 
-                SwapItems(newVowelOrder, rand1, rand2);  
-            }
+                // Now swap a number of times equal to the number of remaps (i=1 as we already did 1 swap)
+                for (int i = 1; i < numberOfRemaps; i++)
+                {
+                    SwapAny();
+                }
+                break;
+            
+            case REMAP_TYPE.MULTISWAP:
+                // Always swap 1 set of vowels AND get the position of one of the vowels
+                int letterPos = SwapVowels();
+                
+                // Now swap a number of times equal to the number of remaps (i=1 as we already did 1 swap)
+                for (int i = 1; i < numberOfRemaps; i++)
+                {
+                    letterPos = SwapWithInput(letterPos);
+                }
+                break;
+            default:
+                break;
         }
         
         inputField.Select();
+    }
+
+    // OPTIONAL RETURN: sends back the alphabet position of the first random vowel chosen
+    private int SwapVowels()
+    {
+        int rand1 = Random.Range(0, 5);
+        int rand2 = rand1;
+
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 5);
+        }
+            
+        Debug.Log("Swapping " + vowels[rand1] + " and " + vowels[rand2]);
+        SwapItems(newAlphabetOrder, vowelPositionList[rand1], vowelPositionList[rand2]);
+
+        return vowelPositionList[rand1];
+    }
+    
+    // OPTIONAL RETURN: sends back the alphabet position of the first random letter chosen
+    private int SwapAny()
+    {
+        int rand1 = Random.Range(0, 26);
+        int rand2 = rand1;
+
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 26);
+        }
+                
+        Debug.Log("Swapping " + newAlphabetOrder[rand1] + " and " + newAlphabetOrder[rand2]);
+        SwapItems(newAlphabetOrder, rand1, rand2);
+
+        return rand1;
+    }
+    
+    // OPTIONAL RETURN: sends back the alphabet position of the random letter chosen
+    private int SwapWithInput(int positionToSwap)
+    {
+        int rand1 = positionToSwap;
+        int rand2 = Random.Range(0, 26);
+        
+        while (rand2 == rand1)
+        {
+            rand2 = Random.Range(0, 26);
+        }
+        
+        Debug.Log("Swapping " + newAlphabetOrder[rand1] + " and " + newAlphabetOrder[rand2]);
+        SwapItems(newAlphabetOrder, rand1, rand2);
+
+        return rand1;
     }
     
     private void Update()
@@ -92,7 +163,7 @@ public class InputRemapping : MonoBehaviour
         }
 
         GetLastTypedCharacter();
-        RandomiseLetterChange();
+        ChangeLetterIfApplicable();
         RandomiseDoubleLetterChance();
         previousText = currentText;
     }
@@ -109,7 +180,8 @@ public class InputRemapping : MonoBehaviour
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
                     
-                    normalLetterTyped.Invoke();
+                    if(!isProgramChangingText)
+                        normalLetterTyped.Invoke();
                     
                     break;
                 }
@@ -132,7 +204,8 @@ public class InputRemapping : MonoBehaviour
         }
         else if (currentText.Length < previousText.Length)
         {
-            backspaceTyped.Invoke();
+            if(!isProgramChangingText)
+                backspaceTyped.Invoke();
         }
         else
         {
@@ -152,7 +225,7 @@ public class InputRemapping : MonoBehaviour
         (array[index1], array[index2]) = (array[index2], array[index1]);
     }
 
-    private void RandomiseLetterChange()
+    private void ChangeLetterIfApplicable()
     {
         // Don't bother if the string is less than 1 character long
         // if (currentText.Length <= 1)
@@ -165,30 +238,8 @@ public class InputRemapping : MonoBehaviour
         // Don't bother if the last typed character is a backspace
         // if (previousText.Length > currentText.Length)
         //     return;
-
-        switch (remapType)
-        {
-            case REMAP_TYPE.REMAP_VOWELS:
-                foreach (var vowel in vowels)
-                {
-                    if (vowel == lastTypedCharacter)
-                    {
-                        ReplaceLastTypedCharacter();
-                        break;
-                    }
-                }
-                break;
-            
-            case REMAP_TYPE.REMAP_ANY_LETTER:
-                break;
-            
-            case REMAP_TYPE.REMAP_TO_CLOSEBY_LETTER:
-                break;
-            
-            default:
-                Debug.LogWarning("Non-implemented remap type");
-                break;
-        }
+        
+        ReplaceLastTypedCharacter();
     }
     
     private void RandomiseDoubleLetterChance()
@@ -232,11 +283,11 @@ public class InputRemapping : MonoBehaviour
                 inputField.MoveTextEnd(false);
             }
             
-            isProgramChangingText = false;
-            
             // Now apply the letter swapping rules if applicable
             GetLastTypedCharacter();
-            RandomiseLetterChange();
+            ChangeLetterIfApplicable();
+            
+            isProgramChangingText = false;
             
             //Debug.Log("Double letter");
             
@@ -265,14 +316,11 @@ public class InputRemapping : MonoBehaviour
 
     private string GetNewCharacter()
     {
-        if (remapType == REMAP_TYPE.REMAP_VOWELS)
+        for (int i = 0; i < alphabet.Length; i++)
         {
-            for (int i = 0; i < vowels.Length; i++)
+            if (alphabet[i] == lastTypedCharacter)
             {
-                if (vowels[i] == lastTypedCharacter)
-                {
-                    return newVowelOrder[i];
-                }
+                return newAlphabetOrder[i];
             }
         }
         
