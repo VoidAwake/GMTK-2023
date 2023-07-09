@@ -10,23 +10,29 @@ public class TimerScript : MonoBehaviour, IPatienceTimerProvider
     private float currentPatience = 0;
     private bool isRunning = false;
 
+    /// <summary>
+    /// PLEASE NOTE
+    /// TIMER FUNCTIONALITY HAS BEEN DISABLED FOR NOW AND HAS BEEN MOVED AS AN ADDITIONAL PART OF THE
+    /// BARISTA'S PATIENCE
+    /// </summary>
+    
     private void Start()
     {
-        StartTimer();
+        //StartTimer();
     }
 
     public void StartTimer()
     {
-        StartTimer(maxPatienceTime);
+        //StartTimer(maxPatienceTime);
     }
 
     public void StartTimer(float overrideMaxPatienceTime)
     {
-        Debug.Log("Timer start");
-
-        isRunning = true;
-
-        currentPatience = overrideMaxPatienceTime;
+        // Debug.Log("Timer start");
+        //
+        // isRunning = true;
+        //
+        // currentPatience = overrideMaxPatienceTime;
     }
 
     private void Update()
@@ -47,8 +53,8 @@ public class TimerScript : MonoBehaviour, IPatienceTimerProvider
     {
         currentPatience = 0;
         isRunning = false;
-
-        Debug.Log("Out of patience, you lose");
+        
+        Debug.Log("GET A GAME OVER HERE");
     }
 
     /// <summary>

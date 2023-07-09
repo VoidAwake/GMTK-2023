@@ -41,6 +41,8 @@ public class InputRemapping : MonoBehaviour
     [NonSerialized] public UnityEvent swappedLetterTyped = new();
     [NonSerialized] public UnityEvent backspaceTyped = new();
     [NonSerialized] public UnityEvent doubleLetterTyped = new();
+    // SO events
+    [SerializeField] private GameEvent backspacedPressedEvent;
 
     private bool orderViewerActive = false;
     private bool isBaristaResponding = false;
@@ -224,6 +226,7 @@ public class InputRemapping : MonoBehaviour
         else if (currentText.Length <= previousText.Length)
         {
             backspaceTyped.Invoke();
+            backspacedPressedEvent.Raise();
         }
         else if (currentText.Length > previousText.Length)
         {

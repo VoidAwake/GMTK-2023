@@ -40,8 +40,14 @@ public class Barista : MonoBehaviour
 
     private IGameDataStore gameDataStore;
 
-    [NonSerialized] public UnityEvent<string> textDisplayed = new();
+    [SerializeField] private GameEvent baristaPatienceLost;
 
+    [NonSerialized] public UnityEvent<string> textDisplayed = new();
+    
+    [Header("Barista Patience Parameters")]
+    [SerializeField] private float patiencePerState = 20.0f;
+    private float remainingPatience = 20.0f;
+    
     private void Start()
     {
         gameDataStore = DaddyManager.instance.GameDataStore;
@@ -54,7 +60,33 @@ public class Barista : MonoBehaviour
         baristaImage.enabled = false;
         baristaText.enabled = false;
 
+        remainingPatience = patiencePerState;
+
         //currentQuestionIndex = 0;
+    }
+
+    private void Update()
+    {
+        remainingPatience -= Time.deltaTime;
+
+        if (remainingPatience <= 0)
+        {
+            ProgressState();
+        }
+    }
+
+    private void ProgressState()
+    {
+        switch (baristaState)
+        {
+            case baristaStates.nuetral: ChangeState(baristaStates.confused);
+                break;
+            case baristaStates.confused: ChangeState(baristaStates.angry);
+                break;
+            default:
+                Debug.Log("GET A GAME OVER HERE");
+                break;
+        }
     }
 
     private void ChangeState(baristaStates newState)
@@ -65,6 +97,7 @@ public class Barista : MonoBehaviour
 
     private void OnStateChange()
     {
+        remainingPatience = patiencePerState;
         switch (baristaState)
         {
             case baristaStates.nuetral: baristaImage.sprite = currentBarista.Nuetral;
@@ -121,6 +154,9 @@ public class Barista : MonoBehaviour
         {
             
             SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random(), true);
+            
+            ProgressState();
+            baristaPatienceLost.Raise();
             
             // Repeat the last question
             currentQuestionIndex--;

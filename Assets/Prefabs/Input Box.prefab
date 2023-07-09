@@ -705,6 +705,7 @@ MonoBehaviour:
   numberOfRemaps: 0
   inputField: {fileID: 4063634313681280317}
   sendCompletedTextEvent: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
+  backspacedPressedEvent: {fileID: 11400000, guid: 4cad766aa2bff944189ccf5b81b4fb81, type: 2}
 --- !u!1 &8512787820291952827
 GameObject:
   m_ObjectHideFlags: 0
