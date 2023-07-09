@@ -15,7 +15,7 @@ MonoBehaviour:
   Nuetral: {fileID: -196219899, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
   Confused: {fileID: -465516908, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
   Angry: {fileID: 1979773252, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
-  Identifier: B2
+  Identifier: B3
   textSpeed: 0
   blips:
   - {fileID: 8300000, guid: f1c59251d3717ba47b2365c72cc77856, type: 3}

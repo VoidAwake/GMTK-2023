@@ -16,6 +16,8 @@ public class TextAnim : MonoBehaviour
     [SerializeField] private int totalChars;
     [SerializeField] private Image textBackground;
 
+    [NonSerialized] public UnityEvent animationCompleted = new();
+
     [NonSerialized] public UnityEvent charDisplayed = new();
     void Start()
     {
@@ -67,6 +69,8 @@ public class TextAnim : MonoBehaviour
             
             yield return new WaitForSeconds(timeBetweenChars);
         }
+        
+        animationCompleted.Invoke();
         yield break;
         textObject.maxVisibleCharacters = totalChars;
     }
