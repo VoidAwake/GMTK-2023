@@ -154,17 +154,17 @@ MonoBehaviour:
     - Which milk?
   - identifier: B1Fail
     questions:
-    - GET OUT!
+    - ...I have to serve other customers.
     responses:
     - Which milk?
   - identifier: B2Fail
     questions:
-    - GET OUT!
+    - Quit wasting my time!
     responses:
     - Which milk?
   - identifier: B3Fail
     questions:
-    - GET OUT!
+    - Look man, you're holding up the line.
     responses:
     - Which milk?
   - identifier: B1Next

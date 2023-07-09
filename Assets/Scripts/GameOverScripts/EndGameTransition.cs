@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class EndGameTransition : MonoBehaviour
 {
-    [SerializeField] private float transitionTime = 2.5f;
-    private float currentTransitionTime = 2.5f;
+    private float transitionTime = 3.5f;
+    private float currentTransitionTime = 3.5f;
 
     private bool levelWon = false;
 
