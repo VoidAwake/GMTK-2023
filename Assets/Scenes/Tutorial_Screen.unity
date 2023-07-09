@@ -458,6 +458,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 3403529727990424328, guid: 423eca29a8fb5d7499bd37ca50ef826e, type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589446002191498418, guid: 423eca29a8fb5d7499bd37ca50ef826e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6488602315305687205, guid: 423eca29a8fb5d7499bd37ca50ef826e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

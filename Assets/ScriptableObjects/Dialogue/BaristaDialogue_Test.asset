@@ -155,16 +155,19 @@ MonoBehaviour:
   - identifier: B1Fail
     questions:
     - ...I have to serve other customers.
+    - Could you please move to the back until you're ready?
     responses:
     - Which milk?
   - identifier: B2Fail
     questions:
     - Quit wasting my time!
+    - Don't get in line if you're not ready to order!
     responses:
     - Which milk?
   - identifier: B3Fail
     questions:
-    - Look man, you're holding up the line.
+    - Look, I'm sorry, but you're holding up the line.
+    - Sorry, but I really need to serve other customers.
     responses:
     - Which milk?
   - identifier: B1Next
