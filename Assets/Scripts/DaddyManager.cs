@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using CoffeeJitters.HeartRateMonitor;
 using CoffeeJitters.HeartRateMonitor.Services;
+using CoffeeJitters.Timer.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public HeartRateMonitor heartRateMonitor;
     public HeartToECGModifier ecgModifier;
 
-    public IGameDataStore GameDataStore { get { return _gameDataStore; } }
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
     public Barista barista;
@@ -39,6 +39,14 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private int remainingOrders;
 
     private string coffeeOrderList = "";
+
+    #region - - - - - - Properties - - - - - -
+
+    public IGameDataStore GameDataStore { get { return _gameDataStore; } }
+
+    public IPatienceTimerProvider PatienceTimerProvider { get { return this.timerScript; } }
+
+    #endregion Properties
 
     private void Awake()
     {
