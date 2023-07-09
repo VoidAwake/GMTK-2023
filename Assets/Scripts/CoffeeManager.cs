@@ -75,10 +75,14 @@ public class CoffeeManager : MonoBehaviour
         {
             long score = 0;
 
+            possibleResponse = possibleResponse.ToUpper();
+
             FuzzySearch.FuzzyMatch(response, possibleResponse, ref score);
 
             return score;
         });
+
+        closestResponse = closestResponse.ToUpper();
         
         long closestScore = 0;
 
