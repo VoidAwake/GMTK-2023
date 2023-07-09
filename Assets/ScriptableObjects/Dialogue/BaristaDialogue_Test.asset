@@ -145,3 +145,18 @@ MonoBehaviour:
     - I don't understand french.
     responses:
     - Which milk?
+  - identifier: B1Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?
+  - identifier: B2Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?
+  - identifier: B3Fail
+    questions:
+    - GET OUT!
+    responses:
+    - Which milk?

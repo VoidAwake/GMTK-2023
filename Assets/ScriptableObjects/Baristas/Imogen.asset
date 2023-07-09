@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f2f84bc348c56543828a65b00999727, type: 3}
-  m_Name: Image
+  m_Name: Imogen
   m_EditorClassIdentifier: 
   Nuetral: {fileID: -1951260001, guid: 402a45ab51834d44289e7a904fa09449, type: 3}
   Confused: {fileID: 1573445747, guid: 402a45ab51834d44289e7a904fa09449, type: 3}

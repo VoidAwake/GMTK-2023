@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f2f84bc348c56543828a65b00999727, type: 3}
-  m_Name: Png
+  m_Name: Fred
   m_EditorClassIdentifier: 
   Nuetral: {fileID: -196219899, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
   Confused: {fileID: -465516908, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
