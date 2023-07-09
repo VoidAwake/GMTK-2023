@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{f01a6899-c183-415d-b441-ddfe7c055b31}">
+		<property name="assetPath">
+			<value>SFX/zapsplat_bell_med_small_school_hand_ring_short_003_39313.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2ce7175d-768d-4ff9-9d99-f9f1f325c0b1}</destination>
+		</relationship>
+	</object>
+</objects>
