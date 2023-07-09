@@ -153,6 +153,11 @@ namespace CoffeeJitters.HeartRateMonitor
         public void IncreaseHeartRate(float increase)
         {
             currentHeartRate += increase;
+
+            if (currentHeartRate >= 200)
+            {
+                DaddyManager.instance.GameOver(GAME_OVER_TYPE.HEART_RATE_TOO_HIGH);
+            }
         }
         
         #endregion Methods
