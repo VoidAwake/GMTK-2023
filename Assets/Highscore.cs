@@ -11,7 +11,7 @@ public class Highscore : MonoBehaviour
     {
         if (DaddyManager.instance)
         {
-            DaddyManager.instance.numberOfOrders = 1;
+             DaddyManager.instance.levelsCompleted = 1;
         }
         
         if(PlayerPrefs.HasKey("HighScore") == false)

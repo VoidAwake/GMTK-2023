@@ -101,9 +101,19 @@ public class CoffeeManager : MonoBehaviour
         {
             if (closestResponse == expectedResponse || response == expectedResponse + " MILK")
             {
+                if (response.Length > expectedResponse.Length / 2)
+                {
+                    DaddyManager.instance.UpdateScore(20f);
+                    responseMatch = ResponseMatch.Correct;
+                }
+                else
+                {
+                    DaddyManager.instance.UpdateScore(-15f);
+                    responseMatch = ResponseMatch.No;
+                }
                 
-                DaddyManager.instance.UpdateScore(20f);
-                responseMatch = ResponseMatch.Correct;
+                // DaddyManager.instance.UpdateScore(20f);
+                // responseMatch = ResponseMatch.Correct;
             }
             else
             {

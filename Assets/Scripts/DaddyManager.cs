@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 {
-    private int levelsCompleted;
+    public int levelsCompleted;
     public OrderUI orderUi;
     public float score = 0f;
     public float highscore;
