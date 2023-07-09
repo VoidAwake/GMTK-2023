@@ -35,8 +35,9 @@ public class OrderViewer : MonoBehaviour
     {
         orderHoverTrigger.enableCollision = true;
         startPos = pos.localPosition;
+        Destroy(DaddyManager.instance.kill);
         UICardNouveau.SetActive(true);
-        
+
         textMesh.text = coffeeOrderList;
         smudgeLevel = 0;
         smudgeMat.SetFloat("_SmudgeLevel", 0f);

@@ -15,13 +15,14 @@ public class SceneStarter : MonoBehaviour
     public HeartToECGModifier ecgModifier;
     public CoffeeManager coffeeManager;
     public GameObject ecgObject;
+    public GameObject continueObject;
 
     [FormerlySerializedAs("orderUI")] public GameObject orderViewer;
     public GameDataStore gameDataStore;
     // Start is called before the first frame update
     void Start()
     {
-        DaddyManager.instance.DaddyStart(canvas,barista, inputRemapping, coffeeManager, gameDataStore, orderViewer, heartRateMonitor, ecgModifier, ecgObject);
+        DaddyManager.instance.DaddyStart(canvas,barista, inputRemapping, coffeeManager, gameDataStore, orderViewer, heartRateMonitor, ecgModifier, ecgObject, continueObject);
     }
 
     // Update is called once per frame
