@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour
 {
-    private int orderScore;
+    private int levelsCompleted;
     public OrderUI orderUi;
     public float score = 0f;
     public float inputTimer = 0f;
@@ -38,21 +38,14 @@ public class DaddyManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this);
+            
+            PlayerPrefs.SetInt("levelsCompleted", 0);
         }
         else
         {
             Destroy(gameObject);
         }
 
-        if (PlayerPrefs.HasKey("orderScore"))
-        {
-            orderScore = PlayerPrefs.GetInt("orderScore");
-        }
-        else
-        {
-            orderScore = 0;
-            PlayerPrefs.SetInt("orderScore", orderScore);
-        }
     }
     
     //update
@@ -72,13 +65,24 @@ public class DaddyManager : MonoBehaviour
             
     }
     
-    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager)
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer)
     {
+        if (PlayerPrefs.HasKey("levelsCompleted"))
+        {
+            levelsCompleted = PlayerPrefs.GetInt("levelsCompleted");
+        }
+        else
+        {
+            levelsCompleted = 0;
+            PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
+        }
         //call order generator
         //insantiate order ui
         canvas = can;
         barista = bar;
         InputBox = inputRemapping;
+        this.orderViewer = orderViewer;
+        this._gameDataStore = gameDataStore;
         this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
         
@@ -86,9 +90,9 @@ public class DaddyManager : MonoBehaviour
         
         difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
         
-        remainingOrders = numberOfOrders;
+        difficultyManager.AdjustDifficulty(levelsCompleted);
         
-        difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
+        remainingOrders = numberOfOrders;
 
         InputBox.Initialise();
 
@@ -108,8 +112,6 @@ public class DaddyManager : MonoBehaviour
         }
         
         temp.OrderInit(coffeeOrderList);
-        
-        // TODO: Needs to be called for each new order
     }
 
     public void GameStart()
@@ -152,7 +154,6 @@ public class DaddyManager : MonoBehaviour
         if (barista.HasMoreQuestions())
         {
             yield break;
-            orderScore++;
         }
         else if(remainingOrders > 0)
         {
@@ -178,7 +179,8 @@ public class DaddyManager : MonoBehaviour
         barista.DisplayCloseText();
         
         yield return new WaitForSeconds(2);
-        PlayerPrefs.SetInt("orderScore", orderScore);
+        levelsCompleted++;
+        PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
         ResultsScreen();
     }
@@ -215,5 +217,4 @@ public class DaddyManager : MonoBehaviour
             _ => ""
         };
     }
-    
 }

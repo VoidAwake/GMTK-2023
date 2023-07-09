@@ -15,5 +15,5 @@ MonoBehaviour:
   fuzzyMatchThreshold: 0
   shuffleQuestionOrder: 0
   remapType: 0
-  numberOfRemaps: 0
+  numberOfRemaps: 1
   numberOfOrders: 1

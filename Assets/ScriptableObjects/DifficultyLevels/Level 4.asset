@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level 4
   m_EditorClassIdentifier: 
   fuzzyMatchThreshold: 0
-  shuffleQuestionOrder: 0
+  shuffleQuestionOrder: 1
   remapType: 0
-  numberOfRemaps: 0
-  numberOfOrders: 1
+  numberOfRemaps: 4
+  numberOfOrders: 2
