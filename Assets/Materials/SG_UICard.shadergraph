@@ -11,6 +11,12 @@
         },
         {
             "m_Id": "33bacfd647174369b740784a0852364e"
+        },
+        {
+            "m_Id": "280feaaf28d34293a2779fb96f1c5f53"
+        },
+        {
+            "m_Id": "36545666fd80459bb3c2b08cf48cae4e"
         }
     ],
     "m_Keywords": [],
@@ -418,6 +424,12 @@
         },
         {
             "m_Id": "33bacfd647174369b740784a0852364e"
+        },
+        {
+            "m_Id": "280feaaf28d34293a2779fb96f1c5f53"
+        },
+        {
+            "m_Id": "36545666fd80459bb3c2b08cf48cae4e"
         }
     ]
 }
@@ -435,6 +447,36 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "280feaaf28d34293a2779fb96f1c5f53",
+    "m_Guid": {
+        "m_GuidSerialized": "3c7ef189-087f-44d5-92a6-48b6011b1c80"
+    },
+    "m_Name": "NoiseMap",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "NoiseMap",
+    "m_DefaultReferenceName": "_NoiseMap",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
 }
 
 {
@@ -482,6 +524,34 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "SmudgeLevel",
     "m_DefaultReferenceName": "_SmudgeLevel",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.0,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "36545666fd80459bb3c2b08cf48cae4e",
+    "m_Guid": {
+        "m_GuidSerialized": "1b24d2bf-387b-417a-b352-9fbf17fe3aa3"
+    },
+    "m_Name": "AspectRatio",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "AspectRatio",
+    "m_DefaultReferenceName": "_AspectRatio",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,

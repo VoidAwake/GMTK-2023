@@ -31,6 +31,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: b040355d51ea28c4498f35e18b9b1c97, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 2800000, guid: c4b24e92f9bfcf544a4ae550083be9a1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Text:
         m_Texture: {fileID: 8400000, guid: 63f3aeea974b15c42af0e9c551ad2039, type: 2}
         m_Scale: {x: 1, y: 1}
@@ -49,6 +53,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AspectRatio: 2.2851562
     - _SmudgeLevel: 0
     m_Colors: []
   m_BuildTextureStacks: []
