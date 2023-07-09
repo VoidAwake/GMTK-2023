@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour
 {
+    private int orderScore;
     public OrderUI orderUi;
     public float score = 0f;
     public float inputTimer = 0f;
@@ -41,6 +42,16 @@ public class DaddyManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        if (PlayerPrefs.HasKey("orderScore"))
+        {
+            orderScore = PlayerPrefs.GetInt("orderScore");
+        }
+        else
+        {
+            orderScore = 0;
+            PlayerPrefs.SetInt("orderScore", orderScore);
         }
     }
     
@@ -141,6 +152,7 @@ public class DaddyManager : MonoBehaviour
         if (barista.HasMoreQuestions())
         {
             yield break;
+            orderScore++;
         }
         else if(remainingOrders > 0)
         {
@@ -166,7 +178,7 @@ public class DaddyManager : MonoBehaviour
         barista.DisplayCloseText();
         
         yield return new WaitForSeconds(2);
-        
+        PlayerPrefs.SetInt("orderScore", orderScore);
         Debug.Log("We have reached the end");
         ResultsScreen();
     }
