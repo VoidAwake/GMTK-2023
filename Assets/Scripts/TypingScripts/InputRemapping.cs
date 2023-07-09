@@ -51,9 +51,20 @@ public class InputRemapping : MonoBehaviour
             }
         }
     }
-
+    
+    private void Update()
+    {
+        // Always move caret to end
+        if (inputField.isFocused && inputField.caretPosition != inputField.text.Length)
+        {
+            inputField.caretPosition = inputField.text.Length;
+        }
+    }
+    
     public void OnLetterTyped()
     {
+        Debug.Log("OnValueChanged");
+        
         inputField.text = inputField.text.ToUpper();
         
         currentText = inputField.text;
@@ -93,7 +104,7 @@ public class InputRemapping : MonoBehaviour
             }
         }
         // Edge case check for if words are highlighted and replaced with a single letter
-        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2)
+        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2 && currentText != "")
         {
             for (int i = 0; i < previousText.Length; i++)
             {
