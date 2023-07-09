@@ -11,5 +11,5 @@ public class BaristaObject : ScriptableObject
     public Sprite Angry;
     public string Identifier;
     public float textSpeed;
-    public AudioClip blip;
+    public List<AudioClip> blips;
 }

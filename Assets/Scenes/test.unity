@@ -1487,6 +1487,7 @@ MonoBehaviour:
   baristas:
   - {fileID: 11400000, guid: 81ffa9a3ae8fc0946947bf6d1c354058, type: 2}
   - {fileID: 11400000, guid: 5cf044f581a31c443a68af9c4b105015, type: 2}
+  - {fileID: 11400000, guid: 76bbfce99640d7e4b8dc7406e74d89ea, type: 2}
   currentBarista: {fileID: 0}
   textAnim: {fileID: 2043593835}
 --- !u!114 &2043593832 stripped

@@ -83,6 +83,7 @@ public class Barista : MonoBehaviour
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
+        gameDataStore = DaddyManager.instance.GameDataStore;
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
         DaddyManager.instance.InputBox.EnableTyping();
     }

@@ -17,4 +17,6 @@ MonoBehaviour:
   Angry: {fileID: 1979773252, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
   Identifier: B2
   textSpeed: 0
-  blip: {fileID: 8300000, guid: f1c59251d3717ba47b2365c72cc77856, type: 3}
+  blips:
+  - {fileID: 8300000, guid: f1c59251d3717ba47b2365c72cc77856, type: 3}
+  - {fileID: 8300000, guid: 979dacd0293db2d4da5ac40e36ed3ef8, type: 3}

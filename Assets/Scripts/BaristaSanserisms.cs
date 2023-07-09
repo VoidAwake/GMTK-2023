@@ -32,7 +32,7 @@ public class BaristaSanserisms : MonoBehaviour
     {
         for (int i = 0; i < text.Length; i++)
         {
-            doubleAudioSource.CrossFade(barista.currentBarista.blip, 0.5f, 0.1f);
+            doubleAudioSource.CrossFade(barista.currentBarista.blips.Random(), 0.5f, 0.1f);
         
             doubleAudioSource.CurrentSource().pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
 
@@ -42,8 +42,7 @@ public class BaristaSanserisms : MonoBehaviour
     
     private void PlayBlip()
     {
-        Debug.Log("yeah");
-        doubleAudioSource.CrossFade(barista.currentBarista.blip, 0.5f, 0.02f);
+        doubleAudioSource.CrossFade(barista.currentBarista.blips.Random(), 0.5f, 0.02f);
     
         doubleAudioSource.CurrentSource().pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
     }
