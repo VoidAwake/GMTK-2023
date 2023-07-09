@@ -378,6 +378,8 @@ public class InputRemapping : MonoBehaviour
         
         previousText = "";
         currentText = "";
+
+        isProgramChangingText = true;
         inputField.text = "";
     }
 }
