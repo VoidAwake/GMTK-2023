@@ -13,19 +13,32 @@ public class OrderViewer : MonoBehaviour
     public RectTransform rect;
     private bool isUh = false;
 
+    [SerializeField] private GameObject UICardNouveau;
+    [SerializeField] private Material smudgeMat;
+    private int smudgeLevel = 0;
+
     private Vector2 startPos;
 
     private bool tweenRunning = false;
-    
+
+    private void Start()
+    {
+        UICardNouveau.SetActive(false);
+    }
+
     public void Initialise(string coffeeOrderList)
     {
         startPos = rect.localPosition;
+        UICardNouveau.SetActive(true);
         
         textMesh.text = coffeeOrderList;
+        smudgeLevel = 0;
+        smudgeMat.SetFloat("_SmudgeLevel", 0f);
     }
     
     public void OnHoverEnter()
     {
+        print("Entering hover");
         DaddyManager.instance.InputBox.SetOrderViewerActive(true);
         DaddyManager.instance.InputBox.DisableTyping();
         StartCoroutine(ShowOrder());
@@ -35,10 +48,13 @@ public class OrderViewer : MonoBehaviour
     
     public void OnHoverExit()
     {
+        print("Exiting hover");
         DaddyManager.instance.InputBox.SetOrderViewerActive(false);
         DaddyManager.instance.InputBox.EnableTyping();
         StartCoroutine(HideOrder());
         isUh = false;
+        smudgeLevel++;
+        smudgeMat.SetFloat("_SmudgeLevel", (float)smudgeLevel);
     }
     
     private IEnumerator ShowOrder()
