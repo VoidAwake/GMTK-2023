@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f2f84bc348c56543828a65b00999727, type: 3}
-  m_Name: Png
+  m_Name: Milo
   m_EditorClassIdentifier: 
-  Nuetral: {fileID: -196219899, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
-  Confused: {fileID: -465516908, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
-  Angry: {fileID: 1979773252, guid: 87434b63104daf54fb69d5cb345980fb, type: 3}
-  Identifier: B2
+  Nuetral: {fileID: -1422281824, guid: 1a371fa8f3836f940a6986386e9f035f, type: 3}
+  Confused: {fileID: 1824171090, guid: 1a371fa8f3836f940a6986386e9f035f, type: 3}
+  Angry: {fileID: -1898421731, guid: 1a371fa8f3836f940a6986386e9f035f, type: 3}
+  Identifier: 
   textSpeed: 0
-  blip: {fileID: 8300000, guid: f1c59251d3717ba47b2365c72cc77856, type: 3}
+  blip: {fileID: 0}
