@@ -181,6 +181,7 @@ MonoBehaviour:
   - identifier: B1Next
     questions:
     - Ok, next drink.
+    - Other drink time.
     responses:
     - Which milk?
   - identifier: B2Next
@@ -191,5 +192,6 @@ MonoBehaviour:
   - identifier: B3Next
     questions:
     - Onto the next drink!
+    - Another drink!
     responses:
     - Which milk?
