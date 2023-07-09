@@ -66,8 +66,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             Destroy(gameObject);
         }
-
-        //this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
     }
 
     //update

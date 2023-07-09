@@ -43,7 +43,11 @@ public class Barista : MonoBehaviour
     [SerializeField] private GameEvent baristaPatienceLost;
 
     [NonSerialized] public UnityEvent<string> textDisplayed = new();
-
+    
+    [Header("Barista Patience Parameters")]
+    [SerializeField] private float patiencePerState = 20.0f;
+    private float remainingPatience = 20.0f;
+    
     private void Start()
     {
         gameDataStore = DaddyManager.instance.GameDataStore;
@@ -56,7 +60,19 @@ public class Barista : MonoBehaviour
         baristaImage.enabled = false;
         baristaText.enabled = false;
 
+        remainingPatience = patiencePerState;
+
         //currentQuestionIndex = 0;
+    }
+
+    private void Update()
+    {
+        remainingPatience -= Time.deltaTime;
+
+        if (remainingPatience <= 0)
+        {
+            ProgressState();
+        }
     }
 
     private void ProgressState()
@@ -81,6 +97,7 @@ public class Barista : MonoBehaviour
 
     private void OnStateChange()
     {
+        remainingPatience = patiencePerState;
         switch (baristaState)
         {
             case baristaStates.nuetral: baristaImage.sprite = currentBarista.Nuetral;
