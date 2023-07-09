@@ -18,12 +18,14 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
+    
 
     [Header("Heart Rate Monitoring")]
     [SerializeField]
     public InputTimeoutData inputTimeoutData;
     public HeartRateMonitor heartRateMonitor;
     public HeartToECGModifier ecgModifier;
+    GameObject ecgObject;
 
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
@@ -62,7 +64,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             Destroy(gameObject);
         }
 
-        this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
+        //this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
     }
 
     //update
@@ -81,7 +83,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             this.TickInputTimeout();
     }
 
-    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer)
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer, HeartRateMonitor monitor, HeartToECGModifier modifier, GameObject Object)
     {
         if (PlayerPrefs.HasKey("levelsCompleted"))
         {
@@ -92,6 +94,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             levelsCompleted = 0;
             PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         }
+        
+        heartRateMonitor = monitor;
+        ecgModifier = modifier;
+        ecgObject = Object;
         //call order generator
         //insantiate order ui
         canvas = can;
@@ -101,9 +107,12 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         this._gameDataStore = gameDataStore;
         this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
-
+        
+        this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
         InputBox.gameObject.SetActive(false);
-
+        ecgObject.SetActive(false);
+        //barista.gameObject.SetActive(false);
+        
         difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
 
         difficultyManager.AdjustDifficulty(levelsCompleted);
@@ -134,7 +143,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             {
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
             }
-            coffeeOrderList+= "\n";
+            coffeeOrderList+= ". \n";
 
         }
 
@@ -157,7 +166,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         }
 
         InputBox.gameObject.SetActive(true);
-
+        //barista.gameObject.SetActive(true);
+        ecgObject.SetActive(true);
         InputBox.Initialise();
 
         barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
@@ -176,7 +186,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     private IEnumerator NextQuestionRoutine()
     {
+        InputBox.DisableTyping();
         yield return new WaitForSeconds(2);
+        InputBox.EnableTyping();
 
         barista.NextQuestion();
 
@@ -207,6 +219,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         barista.DisplayCloseText();
 
+        InputBox.DisableTyping();
         yield return new WaitForSeconds(2);
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
@@ -264,6 +277,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     /// <returns>Interpolated value between 0 and 1.</returns>
     float IInputValueTimeoutProvider.GetInputTimeoutValue()
         => this.inputTimeoutData.currentInterpolatedValue;
+
+    
 }
 
 [System.Serializable]
