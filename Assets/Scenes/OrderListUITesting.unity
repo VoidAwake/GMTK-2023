@@ -678,6 +678,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ad00cefdbb48238d72ff0d37ed9abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2121507700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1195525411519453961, guid: b014554953056b145b9b9b09f8855f84, type: 3}
+  m_PrefabInstance: {fileID: 3055073331883170762}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3055073331883170762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -795,6 +800,10 @@ PrefabInstance:
       propertyPath: barista
       value: 
       objectReference: {fileID: 2043593831}
+    - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
+      propertyPath: orderViewer
+      value: 
+      objectReference: {fileID: 2121507700}
     - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: coffeeManager
       value: 

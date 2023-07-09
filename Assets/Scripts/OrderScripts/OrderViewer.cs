@@ -15,12 +15,11 @@ public class OrderViewer : MonoBehaviour
 
     private bool tweenRunning = false;
     
-    void Start()
+    public void Initialise(string coffeeOrderList)
     {
         startPos = rect.localPosition;
         
-        // TODO: Get the string for this
-        textMesh.text = "TEST ORDER HERE";
+        textMesh.text = coffeeOrderList;
     }
     
     public void OnHoverEnter()

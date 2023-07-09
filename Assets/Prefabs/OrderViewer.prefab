@@ -228,8 +228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMesh: {fileID: 7123259421520449822}
   _tweenPos: {x: -60, y: 10}
-  _tweenTime: 0.8
+  _tweenTime: 0.6
   rect: {fileID: 0}
+  endPos: {x: 450, y: -270}
 --- !u!114 &682412868168375295
 MonoBehaviour:
   m_ObjectHideFlags: 0
