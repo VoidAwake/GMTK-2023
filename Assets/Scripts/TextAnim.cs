@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TextAnim : MonoBehaviour
@@ -13,6 +15,10 @@ public class TextAnim : MonoBehaviour
     [SerializeField] private int currentChar;
     [SerializeField] private int totalChars;
     [SerializeField] private Image textBackground;
+
+    [NonSerialized] public UnityEvent animationCompleted = new();
+
+    [NonSerialized] public UnityEvent charDisplayed = new();
     void Start()
     {
         textObject = GetComponent<TextMeshProUGUI>();
@@ -58,8 +64,13 @@ public class TextAnim : MonoBehaviour
         {
             currentChar++;
             textObject.maxVisibleCharacters = currentChar;
+            
+            charDisplayed.Invoke();
+            
             yield return new WaitForSeconds(timeBetweenChars);
         }
+        
+        animationCompleted.Invoke();
         yield break;
         textObject.maxVisibleCharacters = totalChars;
     }

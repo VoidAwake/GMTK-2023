@@ -67,6 +67,8 @@ public class CoffeeManager : MonoBehaviour
     
     public ResponseMatch CheckResponse(string response, List<string> questionResponses)
     {
+        response = response.ToUpper();
+        
         var closestResponse = questionResponses.MaxBy(possibleResponse =>
         {
             long score = 0;

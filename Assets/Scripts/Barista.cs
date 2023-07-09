@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -18,7 +19,7 @@ public class Barista : MonoBehaviour
 
     [SerializeField] private Image baristaImage;
     [SerializeField] private List<BaristaObject> baristas;
-    private BaristaObject currentBarista; 
+    public BaristaObject currentBarista; 
     public TextAnim textAnim;
     private enum baristaStates
     {
@@ -38,6 +39,8 @@ public class Barista : MonoBehaviour
     };
 
     private IGameDataStore gameDataStore;
+
+    [NonSerialized] public UnityEvent<string> textDisplayed = new();
 
     private void Start()
     {
@@ -80,6 +83,7 @@ public class Barista : MonoBehaviour
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
+        gameDataStore = DaddyManager.instance.GameDataStore;
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
         DaddyManager.instance.InputBox.EnableTyping();
     }
@@ -125,7 +129,9 @@ public class Barista : MonoBehaviour
     
     public void SetText(string text, bool response)
     {
-        textAnim.SetText(text, response);
+        textAnim.SetText(text);
+        
+        textDisplayed.Invoke(text);
     }
 }
 
