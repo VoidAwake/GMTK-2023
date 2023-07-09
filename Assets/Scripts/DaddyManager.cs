@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CoffeeJitters.DataStore;
 using CoffeeJitters.HeartRateMonitor;
 using CoffeeJitters.HeartRateMonitor.Services;
+using DefaultNamespace;
 using CoffeeJitters.Timer.Services;
 using TMPro;
 using UnityEngine;
@@ -19,6 +21,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
     
+    public List<List<ActualCoffeeProperty>> actualCoffees = new();
 
     [Header("Heart Rate Monitoring")]
     [SerializeField]
@@ -121,6 +124,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         remainingOrders = numberOfOrders;
 
         //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
+        
+        NewActualCoffee();
 
         coffeeManager.GenerateCoffee(numberOfOrders);
 
@@ -220,6 +225,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
                 difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
 
                 coffeeManager.SetNextCoffee();
+                
+                NewActualCoffee();
 
                 barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
 
@@ -289,6 +296,16 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             "Side" => coffeeManager.GetCurrentCoffee().side,
             _ => ""
         };
+    }
+
+    public void SetActualCoffeeProperty(string value, bool correct, int score)
+    {
+        actualCoffees.Last().Add(new ActualCoffeeProperty(barista.currentQuestion, correct, score, value));
+    }
+
+    public void NewActualCoffee()
+    {
+        actualCoffees.Add(new List<ActualCoffeeProperty>());
     }
 
     private void TickInputTimeout()

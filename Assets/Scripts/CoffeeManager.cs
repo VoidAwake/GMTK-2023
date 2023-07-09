@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DefaultNamespace;
 using MoreLinq;
 using TMPro;
 using Hawaiian.Utilities;
@@ -17,6 +18,7 @@ public class CoffeeManager : MonoBehaviour
     
     private List<Coffee> coffeeOrders = new List<Coffee>();
     public int coffeeComplexity;
+
 
     public string expectedResponse;
 
@@ -86,25 +88,37 @@ public class CoffeeManager : MonoBehaviour
 
         FuzzySearch.FuzzyMatch(response, closestResponse, ref perfectScore);
 
+        var score = 0;
+        var responseMatch = ResponseMatch.Correct;
+        
         if (perfectScore * fuzzyMatchThreshold < closestScore)
         {
             if (closestResponse == expectedResponse)
             {
+                score = 20;
                 DaddyManager.instance.UpdateScore(20f);
-                return ResponseMatch.Correct;
+                responseMatch = ResponseMatch.Correct;
             }
             else
             {
+                score = -30;
                 DaddyManager.instance.UpdateScore(-30f);
-                return ResponseMatch.Incorrect;
+                responseMatch = ResponseMatch.Incorrect;
             }
         }
         else
         {
-            DaddyManager.instance.UpdateScore(-15f);
-            return ResponseMatch.No;
+            score = -15;
+            responseMatch = ResponseMatch.No;
         }
+        
+        DaddyManager.instance.SetActualCoffeeProperty(closestResponse, closestResponse == expectedResponse, score);
+        
+        DaddyManager.instance.UpdateScore(score);
+
+        return responseMatch;
     }
+
 
     private Coffee RandomCoffee()
     {
