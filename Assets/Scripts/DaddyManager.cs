@@ -179,6 +179,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
     {
+        barista.textAnim.onTextEnd();
         coffeeManager.expectedResponse = GetExpectedResponse();
 
         var responseMatch = coffeeManager.CheckResponse(stringGameEvent.GetString(), GetQuestionResponses());
