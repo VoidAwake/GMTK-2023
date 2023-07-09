@@ -33,6 +33,8 @@ public class CoffeeManager : MonoBehaviour
 
     public float objectiveTextDuration = 3;
 
+    [SerializeField] private GameEvent incorrectItem;
+
     public void GenerateCoffee(int numberOfOrders)
     {
         for (int i = 0; i < numberOfOrders; i++)
@@ -104,6 +106,8 @@ public class CoffeeManager : MonoBehaviour
                 score = -30;
                 DaddyManager.instance.UpdateScore(-30f);
                 responseMatch = ResponseMatch.Incorrect;
+                
+                incorrectItem.Raise();
             }
         }
         else

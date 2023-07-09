@@ -85,6 +85,7 @@ public class Barista : MonoBehaviour
                 break;
             default:
                 DaddyManager.instance.GameOver(GAME_OVER_TYPE.BARISTA_LOST_PATIENCE);
+                SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Fail").questions.Random(), true);
                 break;
         }
     }
