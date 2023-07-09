@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Heart
   - 
   - 
   - 
@@ -40,4 +40,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Heart
+    uniqueID: 4211042833
+    locked: 0
+  - name: GameOver
+    uniqueID: 3248058959
     locked: 0

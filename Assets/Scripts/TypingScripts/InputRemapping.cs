@@ -27,7 +27,7 @@ public class InputRemapping : MonoBehaviour
     public int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] public TMP_InputField inputField;
     [SerializeField] private StringGameEvent sendCompletedTextEvent;
     
     private string currentText = "";
@@ -35,12 +35,15 @@ public class InputRemapping : MonoBehaviour
     private string lastTypedCharacter;
     private int lastTypedCharacterPosition = 0;
     
-    private bool isProgramChangingText = false;
+    public bool isProgramChangingText = false;
 
     [NonSerialized] public UnityEvent normalLetterTyped = new();
     [NonSerialized] public UnityEvent swappedLetterTyped = new();
     [NonSerialized] public UnityEvent backspaceTyped = new();
     [NonSerialized] public UnityEvent doubleLetterTyped = new();
+
+    private bool orderViewerActive = false;
+    private bool isBaristaResponding = false;
 
     public void Initialise()
     {
@@ -132,10 +135,25 @@ public class InputRemapping : MonoBehaviour
         return rand1;
     }
 
+    public void SetOrderViewerActive(bool _orderViewerActive)
+    {
+        orderViewerActive = _orderViewerActive;
+    }
+    
+    public void IsBaristaResponding(bool _isBaristaResponding)
+    {
+        isBaristaResponding = _isBaristaResponding;
+    }
+    
     public void EnableTyping()
     {
-        inputField.readOnly = false;
-        inputField.Select();
+        // Do not enable typing if the order is in the player's face
+        if (!orderViewerActive && !isBaristaResponding)
+        {
+            inputField.readOnly = false;
+            inputField.Select();
+            inputField.ActivateInputField();
+        }
     }
     
     public void DisableTyping()

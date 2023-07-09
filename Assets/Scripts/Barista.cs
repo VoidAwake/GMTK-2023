@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -18,7 +19,8 @@ public class Barista : MonoBehaviour
 
     [SerializeField] private Image baristaImage;
     [SerializeField] private List<BaristaObject> baristas;
-    private BaristaObject currentBarista; 
+    public BaristaObject currentBarista; 
+    public TextAnim textAnim;
     private enum baristaStates
     {
         nuetral,
@@ -37,6 +39,8 @@ public class Barista : MonoBehaviour
     };
 
     private IGameDataStore gameDataStore;
+
+    [NonSerialized] public UnityEvent<string> textDisplayed = new();
 
     private void Start()
     {
@@ -79,8 +83,9 @@ public class Barista : MonoBehaviour
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random();
-        
+        gameDataStore = DaddyManager.instance.GameDataStore;
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
+        DaddyManager.instance.InputBox.EnableTyping();
     }
 
     public void NextQuestion()
@@ -90,7 +95,8 @@ public class Barista : MonoBehaviour
             return;
         currentQuestion = questions[currentQuestionIndex];
 
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random();
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
+        DaddyManager.instance.InputBox.EnableTyping();
     }
 
     public bool HasMoreQuestions()
@@ -100,7 +106,7 @@ public class Barista : MonoBehaviour
 
     public void DisplayCloseText()
     {
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random();
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random(), true);
     }
 
     public void DisplayResponseMatch(bool responseMatched)
@@ -109,16 +115,23 @@ public class Barista : MonoBehaviour
         {
             // TODO: Would be nice if the gameDataStore could take string arguments. Format?
             //baristaText.text = closestResponse + "? Sure.";
-            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random();
+            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random(), true);
         }
         else
         {
             
-            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random();
+            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random(), true);
             
             // Repeat the last question
             currentQuestionIndex--;
         }
+    }
+    
+    public void SetText(string text, bool response)
+    {
+        textAnim.SetText(text);
+        
+        textDisplayed.Invoke(text);
     }
 }
 
@@ -141,4 +154,5 @@ static class RandomExtensions
     {
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
+    
 }

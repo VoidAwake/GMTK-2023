@@ -5,6 +5,7 @@ using CoffeeJitters.DataStore;
 using CoffeeJitters.HeartRateMonitor;
 using CoffeeJitters.HeartRateMonitor.Services;
 using DefaultNamespace;
+using CoffeeJitters.Timer.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,8 +28,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public InputTimeoutData inputTimeoutData;
     public HeartRateMonitor heartRateMonitor;
     public HeartToECGModifier ecgModifier;
+    GameObject ecgObject;
 
-    public IGameDataStore GameDataStore { get { return _gameDataStore; } }
     [SerializeField] private GameDataStore _gameDataStore;
     public static DaddyManager instance;
     public Barista barista;
@@ -37,12 +38,23 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private TMP_Text objectiveText;
 
     [Header("Assign in Inspector")]
+    [SerializeField] private EndGameTransition endGameTransition;
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
+    
+    private OrderViewerHoverTrigger orderHoverTrigger;
     private int remainingOrders;
 
     private string coffeeOrderList = "";
+
+    #region - - - - - - Properties - - - - - -
+
+    public IGameDataStore GameDataStore { get { return _gameDataStore; } }
+
+    public IPatienceTimerProvider PatienceTimerProvider { get { return this.timerScript; } }
+
+    #endregion Properties
 
     private void Awake()
     {
@@ -77,7 +89,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             this.TickInputTimeout();
     }
 
-    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer)
+    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer, HeartRateMonitor monitor, HeartToECGModifier modifier, GameObject Object)
     {
         if (PlayerPrefs.HasKey("levelsCompleted"))
         {
@@ -88,6 +100,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             levelsCompleted = 0;
             PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         }
+        
+        heartRateMonitor = monitor;
+        ecgModifier = modifier;
+        ecgObject = Object;
         //call order generator
         //insantiate order ui
         canvas = can;
@@ -97,8 +113,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         this._gameDataStore = gameDataStore;
         this.coffeeManager = coffeeManager;
         OrderUI temp = Instantiate(orderUi,canvas.transform);
-
+        
+        this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
         InputBox.gameObject.SetActive(false);
+        ecgObject.SetActive(false);
         //barista.gameObject.SetActive(false);
         
         difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
@@ -149,6 +167,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             orderViewer.SetActive(true);
             orderViewer.GetComponentInChildren<OrderViewer>().Initialise(coffeeOrderList);
+            orderHoverTrigger = orderViewer.GetComponentInChildren<OrderViewerHoverTrigger>();
         }
         else
         {
@@ -157,7 +176,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         InputBox.gameObject.SetActive(true);
         //barista.gameObject.SetActive(true);
-        
+        ecgObject.SetActive(true);
         InputBox.Initialise();
 
         barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
@@ -165,23 +184,31 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
     {
+        barista.textAnim.onTextEnd();
         coffeeManager.expectedResponse = GetExpectedResponse();
 
         var responseMatch = coffeeManager.CheckResponse(stringGameEvent.GetString(), GetQuestionResponses());
 
         barista.DisplayResponseMatch(responseMatch != CoffeeManager.ResponseMatch.No);
-
         StartCoroutine(NextQuestionRoutine());
     }
 
     private IEnumerator NextQuestionRoutine()
     {
+        // Disable typing and hover trigger
+        InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
+        orderHoverTrigger.SetCollision(false);
+        
         yield return new WaitForSeconds(2);
+        
+        // Enable typing and hover trigger
+        InputBox.IsBaristaResponding(false);
         InputBox.EnableTyping();
-
+        orderHoverTrigger.SetCollision(true);
+        
         barista.NextQuestion();
-
+        
         if (barista.HasMoreQuestions())
         {
             yield break;
@@ -211,17 +238,34 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         barista.DisplayCloseText();
 
+        var textAnimationComplete = false;
+        
+        FindObjectOfType<TextAnim>().animationCompleted.AddListener(() => textAnimationComplete = true);
+
+        yield return new WaitUntil(() => textAnimationComplete);
+        
+        FindObjectOfType<TextAnim>().animationCompleted.RemoveListener(() => textAnimationComplete = true);
+        
+        // Disable typing and hover trigger
+        InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
-        yield return new WaitForSeconds(2);
+        orderHoverTrigger.SetCollision(false);
+        
+        // End transition before the next screen
+        endGameTransition.gameObject.SetActive(true);
+        endGameTransition.StartTransition(true);
+        
+        //yield return new WaitForSeconds(2);
+        
         levelsCompleted++;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
-        ResultsScreen();
+        //ResultsScreen();
     }
 
     private void ResultsScreen()
     {
-        SceneManager.LoadScene(2);
+        //SceneManager.LoadScene(2);
     }
 
     public void UpdateScore(float amount)
@@ -279,6 +323,12 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     /// <returns>Interpolated value between 0 and 1.</returns>
     float IInputValueTimeoutProvider.GetInputTimeoutValue()
         => this.inputTimeoutData.currentInterpolatedValue;
+
+    public void GameOver()
+    {
+        endGameTransition.gameObject.SetActive(true);
+        endGameTransition.StartTransition(false);
+    }
 }
 
 [System.Serializable]
