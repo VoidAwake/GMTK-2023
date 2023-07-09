@@ -15,6 +15,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private int levelsCompleted;
     public OrderUI orderUi;
     public float score = 0f;
+    public float highscore;
     public float inputTimer = 0f;
     [SerializeField] private float timerBuffer;
     public Canvas canvas;
@@ -69,6 +70,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             Destroy(gameObject);
         }
+        highscore = 0;
+
     }
 
     //update
@@ -98,7 +101,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             levelsCompleted = 0;
             PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         }
-        
+        actualCoffees.Clear();
+        score = 0;
         heartRateMonitor = monitor;
         ecgModifier = modifier;
         ecgObject = Object;
@@ -259,6 +263,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         //yield return new WaitForSeconds(2);
         
         levelsCompleted++;
+        highscore += score;
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
         //ResultsScreen();

@@ -349,7 +349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4918959078604141497, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -354.5682
+      value: -336.6
       objectReference: {fileID: 0}
     - target: {fileID: 4918959078604141497, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1639,6 +1639,7 @@ MonoBehaviour:
   currentBarista: {fileID: 0}
   textAnim: {fileID: 2043593835}
   baristaPatienceLost: {fileID: 11400000, guid: 46e91ba70b7704248b578031c98a2308, type: 2}
+  patiencePerState: 20
 --- !u!114 &2043593832 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 852876199118778097, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
