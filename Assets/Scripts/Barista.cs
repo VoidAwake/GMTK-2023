@@ -47,6 +47,8 @@ public class Barista : MonoBehaviour
     [Header("Barista Patience Parameters")]
     [SerializeField] private float patiencePerState = 20.0f;
     private float remainingPatience = 20.0f;
+
+    [SerializeField] private AudioSource audioSource;
     
     private void Start()
     {
@@ -63,6 +65,12 @@ public class Barista : MonoBehaviour
         remainingPatience = patiencePerState;
 
         //currentQuestionIndex = 0;
+        
+        audioSource.clip = currentBarista.music.Random();
+
+        audioSource.loop = true;
+        
+        audioSource.Play();
     }
 
     private void Update()
