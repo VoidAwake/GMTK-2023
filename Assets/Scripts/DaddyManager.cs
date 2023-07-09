@@ -283,6 +283,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         
         levelsCompleted++;
         highscore += score;
+        PlayerPrefs.SetFloat("highscore", highscore);
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         Debug.Log("We have reached the end");
         //ResultsScreen();

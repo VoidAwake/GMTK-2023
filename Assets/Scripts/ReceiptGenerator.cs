@@ -19,11 +19,13 @@ namespace DefaultNamespace
 
             if (daddyManager == null)
             {
-                for (int i = 0; i < 100; i++)
-                {
-                    mainLeft.text += "test\n";
-                    leftBodyTemp.text += "test\n";
-                }
+                leftBodyTemp.text += "---------------\n";
+                mainLeft.text = leftBodyTemp.text;
+                // for (int i = 0; i < 100; i++)
+                // {
+                //     mainLeft.text += "test\n";
+                //     leftBodyTemp.text += "test\n";
+                // }
 
                 return;
             }
@@ -51,12 +53,14 @@ namespace DefaultNamespace
             rightBodyTemp.text += daddyManager.score + " \n";
             leftBodyTemp.text += "Total Score: \n";
             rightBodyTemp.text += daddyManager.highscore + " \n";
+            leftBodyTemp.text += "---------------\n";
+            leftBodyTemp.text += "Please Come Again :D \n";
             mainLeft.text = leftBodyTemp.text;
             mainRight.text = rightBodyTemp.text;
             // TODO: Full line of dashes
-
-            leftBodyTemp.text += "SCORE: " + score;
-            mainLeft.text = leftBodyTemp.text;
+            
+            // leftBodyTemp.text += "SCORE: " + score;
+            // mainLeft.text = leftBodyTemp.text;
         }
     }
 }
