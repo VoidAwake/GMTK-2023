@@ -179,6 +179,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     public void OnTextSubmitted(StringGameEvent stringGameEvent)
     {
+        barista.textAnim.onTextEnd();
         coffeeManager.expectedResponse = GetExpectedResponse();
 
         var responseMatch = coffeeManager.CheckResponse(stringGameEvent.GetString(), GetQuestionResponses());
@@ -229,6 +230,14 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         }
 
         barista.DisplayCloseText();
+
+        var textAnimationComplete = false;
+        
+        FindObjectOfType<TextAnim>().animationCompleted.AddListener(() => textAnimationComplete = true);
+
+        yield return new WaitUntil(() => textAnimationComplete);
+        
+        FindObjectOfType<TextAnim>().animationCompleted.RemoveListener(() => textAnimationComplete = true);
         
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
