@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class InputRemapping : MonoBehaviour
@@ -31,6 +32,11 @@ public class InputRemapping : MonoBehaviour
     private int lastTypedCharacterPosition = 0;
     
     private bool isProgramChangingText;
+
+    [NonSerialized] public UnityEvent normalLetterTyped = new();
+    [NonSerialized] public UnityEvent swappedLetterTyped = new();
+    [NonSerialized] public UnityEvent backspaceTyped = new();
+    [NonSerialized] public UnityEvent doubleLetterTyped = new();
 
     public void Initialise()
     {
@@ -102,6 +108,9 @@ public class InputRemapping : MonoBehaviour
                 {
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
+                    
+                    normalLetterTyped.Invoke();
+                    
                     break;
                 }
             }
@@ -116,9 +125,14 @@ public class InputRemapping : MonoBehaviour
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
                     //Debug.Log(currentText[i].ToString());
+                    
                     break;
                 }
             }
+        }
+        else if (currentText.Length < previousText.Length)
+        {
+            backspaceTyped.Invoke();
         }
         else
         {
@@ -225,6 +239,8 @@ public class InputRemapping : MonoBehaviour
             RandomiseLetterChange();
             
             //Debug.Log("Double letter");
+            
+            doubleLetterTyped.Invoke();
         }
     }
     
@@ -241,6 +257,8 @@ public class InputRemapping : MonoBehaviour
             newText += currentText.Substring(lastTypedCharacterPosition + 1, currentText.Length - newText.Length);
         
         inputField.text = newText;
+        
+        swappedLetterTyped.Invoke();
         
         isProgramChangingText = false;
     }
