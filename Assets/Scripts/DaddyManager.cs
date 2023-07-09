@@ -23,7 +23,10 @@ public class DaddyManager : MonoBehaviour
     [Header("Assign in Inspector")]
     [SerializeField] private TimerScript timerScript;
     [SerializeField] private int numberOfOrders = 1;
+    [SerializeField] private GameObject orderViewer;
     private int remainingOrders;
+
+    private string coffeeOrderList = "";
 
     private void Awake()
     {
@@ -75,7 +78,7 @@ public class DaddyManager : MonoBehaviour
         
         coffeeManager.GenerateCoffee(numberOfOrders);
         
-        string coffeeOrderList = "";
+        coffeeOrderList = "";
         for (int i = 0; i < coffeeManager.GetAllOrders().Count; i++)
         {
             coffeeOrderList += coffeeManager.GetCoffeeAtIndex(i).size
@@ -96,6 +99,16 @@ public class DaddyManager : MonoBehaviour
         timerScript.StartTimer(45f);
         //SceneManager.LoadScene(1);
         Instantiate(InputBox,canvas.transform);
+
+        if (orderViewer != null)
+        {
+            orderViewer.SetActive(true);
+            orderViewer.GetComponentInChildren<OrderViewer>().Initialise(coffeeOrderList);
+        }
+        else
+        {
+            Debug.LogWarning("Order viewer is not assigned to DaddyManager. It will not appear in the scene");
+        }
         
         barista.FirstQuestion();
     }
