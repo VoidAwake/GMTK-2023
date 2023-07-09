@@ -72,7 +72,7 @@ public class CoffeeManager : MonoBehaviour
     public ResponseMatch CheckResponse(string response, List<string> questionResponses)
     {
         response = response.ToUpper();
-        
+        expectedResponse = expectedResponse.ToUpper();
         var closestResponse = questionResponses.MaxBy(possibleResponse =>
         {
             long score = 0;
@@ -101,22 +101,22 @@ public class CoffeeManager : MonoBehaviour
         {
             if (closestResponse == expectedResponse)
             {
-                score = 20;
+                
                 DaddyManager.instance.UpdateScore(20f);
                 responseMatch = ResponseMatch.Correct;
             }
             else
             {
-                score = -30;
+                
                 DaddyManager.instance.UpdateScore(-30f);
                 responseMatch = ResponseMatch.Incorrect;
                 
-                incorrectItem.Raise();
+                //incorrectItem.Raise();
             }
         }
         else
         {
-            score = -15;
+            DaddyManager.instance.UpdateScore(-15f);
             responseMatch = ResponseMatch.No;
         }
         

@@ -50,7 +50,7 @@ namespace DefaultNamespace
             leftBodyTemp.text += "Order Score: \n";
             rightBodyTemp.text += score + " \n";
             leftBodyTemp.text += "Total Score: \n";
-            rightBodyTemp.text += "0000 \n";
+            rightBodyTemp.text += daddyManager.highscore + " \n";
             mainLeft.text = leftBodyTemp.text;
             mainRight.text = rightBodyTemp.text;
             // TODO: Full line of dashes
