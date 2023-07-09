@@ -185,7 +185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 15, y: -111.1}
+  m_AnchoredPosition: {x: 15, y: -111.100006}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1329098391468486801
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 3601092914097511065}
   - component: {fileID: 1634047584404033741}
   - component: {fileID: 6067682157944523310}
-  - component: {fileID: 8839654623078118733}
+  - component: {fileID: 5879352146365045742}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -314,7 +314,7 @@ RectTransform:
   m_GameObject: {fileID: 6140868626011768248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.59999996, y: 0.59999996, z: 0.59999996}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 727676431191319775}
@@ -379,7 +379,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &8839654623078118733
+--- !u!114 &5879352146365045742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -388,16 +388,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6140868626011768248}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d740dc37d50fb804ca764786607fa74f, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ac58a47f71f478996c8ab260de7d82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OpenAnimation: 0
-  CloseAnimation: 1
-  OpeningEase: 29
-  ClosingEase: 30
-  thisPanelCanvasGroup: {fileID: 6067682157944523310}
-  animationTime: 0.25
-  _closeButton: {fileID: 7471080885573142053}
+  credits: {fileID: 6018096287496494734}
+  mainMenu: {fileID: 0}
+  shownPos: {x: 0, y: 30}
+  tweenTime: 0.5
 --- !u!1 &9192615543623804602
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,8 +570,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5879352146365045742}
+    - target: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HideCredits
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Credits, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6270747109504272558, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
       propertyPath: m_Pivot.x
@@ -658,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6270747109504272558, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -101.6
+      value: -101.600006
       objectReference: {fileID: 0}
     - target: {fileID: 6270747109504272558, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -686,17 +699,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
---- !u!114 &7471080885573142053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4685954757611150049, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
-  m_PrefabInstance: {fileID: 2785836447645211844}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8191885237307167850 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6270747109504272558, guid: 2ad49cecb62361946b1bbd75a3e88c15, type: 3}
