@@ -24,8 +24,6 @@ public class InputRemapping : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private StringGameEvent sendCompletedTextEvent;
     
-    // TODO: convert to uppercase input
-    
     private string currentText = "";
     private string previousText = "";
     private string lastTypedCharacter;
