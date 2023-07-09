@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,22 +8,26 @@ namespace DefaultNamespace
     public class ReceiptScroller : MonoBehaviour
     {
         [SerializeField] private RectTransform target;
+        [SerializeField] private RectTransform sizeTarget;
         [SerializeField] private float scrollSpeed;
 
         private void Awake()
         {
-            target.anchoredPosition = new Vector2(0, -target.rect.height / 2);
-            StartCoroutine(ScrollRoutine());
+            
         }
 
-        private IEnumerator ScrollRoutine()
-        {
-            while (target.anchoredPosition.y > target.rect.height / 2)
-            {
-                target.anchoredPosition += Vector2.up * scrollSpeed * Time.deltaTime;
-
-                yield return null;
-            }
-        }
+        // private IEnumerator ScrollRoutine()
+        // {
+        //     yield return null;
+        //     Debug.Log(sizeTarget.position.y);
+        //     Debug.Log(Screen.height / 2);
+        //     target.anchoredPosition = new Vector2(0, -sizeTarget.anchoredPosition.y / 2 + Screen.height / 2);
+        //     while (target.anchoredPosition.y < sizeTarget.anchoredPosition.y / 2 - Screen.height / 2)
+        //     {
+        //         target.anchoredPosition += Vector2.up * scrollSpeed * Time.deltaTime;
+        //     
+        //         yield return null;
+        //     }
+        // }
     }
 }

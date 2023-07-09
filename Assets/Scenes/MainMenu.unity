@@ -1655,8 +1655,40 @@ PrefabInstance:
     m_TransformParent: {fileID: 1369427174}
     m_Modifications:
     - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
+      propertyPath: m_text
+      value: 'Habibullah Saleem
+
+        Jack Coggins
+
+        Kyle Hammer
+
+        Jaiden
+        Chicote
+
+        John Collins
+
+        Christa Zhang
+
+        Nina Gao
+
+        Ruben
+        Iuzaic
+
+        Finn Berryman
+
+        Max Dalkin'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
+      propertyPath: m_fontSize
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
       propertyPath: m_lineSpacing
       value: 58.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4155148706310203747, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
       propertyPath: m_VerticalAlignment
@@ -1672,6 +1704,8 @@ PrefabInstance:
 
         Programming
 
+        Programming
+
         UI
         Art
 
@@ -1679,11 +1713,21 @@ PrefabInstance:
 
         Background Art
 
+        Music
+
         Music'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338877745625081137, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
+      propertyPath: m_fontSize
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5338877745625081137, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
       propertyPath: m_lineSpacing
       value: 58.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338877745625081137, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5338877745625081137, guid: 16d0089e87d0ea7469a1e8054ad7e6ec, type: 3}
       propertyPath: m_VerticalAlignment
