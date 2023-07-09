@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
@@ -27,12 +28,12 @@ public class DifficultyManager : MonoBehaviour
         if (completedOrders < difficultyLevels.Count)
             currentDifficultyLevelIndex = completedOrders;
         else
-            currentDifficultyLevelIndex = completedOrders - (difficultyLevels.Count - loopLast) % loopLast +
-                                   (difficultyLevels.Count - loopLast);
+            currentDifficultyLevelIndex = Random.Range(difficultyLevels.Count - loopLast, difficultyLevels.Count);
 
         var difficultyLevel = difficultyLevels[currentDifficultyLevelIndex];
         
         coffeeManager.fuzzyMatchThreshold = difficultyLevel.fuzzyMatchThreshold;
+        coffeeManager.coffeeComplexity = difficultyLevel.coffeeComplexity;
         barista.shuffleQuestionOrder = difficultyLevel.shuffleQuestionOrder;
         inputRemapping.remapType = difficultyLevel.remapType;
         inputRemapping.numberOfRemaps = difficultyLevel.numberOfRemaps;
