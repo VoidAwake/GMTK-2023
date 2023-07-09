@@ -935,10 +935,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICardTextRenderer
       objectReference: {fileID: 0}
-    - target: {fileID: 8977837740232686636, guid: de69ad77b62ec6d4c9a70983c21518c2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

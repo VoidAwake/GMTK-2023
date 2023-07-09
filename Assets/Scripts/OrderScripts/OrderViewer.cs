@@ -10,20 +10,28 @@ public class OrderViewer : MonoBehaviour
     public Vector2 _tweenPos;
     public float _tweenTime;
     public RectTransform rect;
+
+    [SerializeField] private GameObject UICardNouveau;
     [SerializeField] private Material smudgeMat;
     private int smudgeLevel = 0;
 
     private Vector2 startPos;
 
     private bool tweenRunning = false;
-    
+
+    private void Start()
+    {
+        UICardNouveau.SetActive(false);
+    }
+
     public void Initialise(string coffeeOrderList)
     {
         startPos = rect.localPosition;
+        UICardNouveau.SetActive(true);
         
         textMesh.text = coffeeOrderList;
         smudgeLevel = 0;
-        smudgeMat.SetFloat("SmudgeLevel", 0f);
+        smudgeMat.SetFloat("_SmudgeLevel", 0f);
     }
     
     public void OnHoverEnter()
