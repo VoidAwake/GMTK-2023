@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8143718730987230782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7951554613639234691}
+  - component: {fileID: 1411233165246320385}
+  - component: {fileID: 6554388839038543779}
+  m_Layer: 0
+  m_Name: DaddyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7951554613639234691
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143718730987230782}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 764.80365, y: 388.4982, z: -6.9594054}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3512169026257698673}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1411233165246320385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143718730987230782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18a3d9e3e864774687eff134d71b520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orderUi: {fileID: 6273832732810121780, guid: 45995e16ba60a8542a07b7ecc7d2ff00, type: 3}
+  canvas: {fileID: 0}
+  InputBox: {fileID: 7516794672354540762, guid: ddb0baf96a029c3499782a35d8c03670, type: 3}
+  coffeeManager: {fileID: 0}
+  _gameDataStore: {fileID: 0}
+  barista: {fileID: 0}
+  timerScript: {fileID: 3890600733186449878}
+  numberOfOrders: 1
+--- !u!114 &6554388839038543779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8143718730987230782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f318050ed524f7946934ad8de4760742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1411233165246320385}
+        m_TargetAssemblyTypeName: DaddyManager, Assembly-CSharp
+        m_MethodName: OnTextSubmitted
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 87ea384f42073714aa27f8dfdc403ada, type: 2}
+          m_ObjectArgumentAssemblyTypeName: StringGameEvent, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1001 &550681634781460586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7951554613639234691}
+    m_Modifications:
+    - target: {fileID: 2814936800470215024, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_Name
+      value: Timer Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+--- !u!4 &3512169026257698673 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3970434449530865435, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+  m_PrefabInstance: {fileID: 550681634781460586}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3890600733186449878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3628312262978640316, guid: 7c20bbe3bba44884e8700d1c659d74f4, type: 3}
+  m_PrefabInstance: {fileID: 550681634781460586}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9321b4979686d4f90458a1d47661fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
