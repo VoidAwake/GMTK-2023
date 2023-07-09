@@ -44,3 +44,6 @@ TagManager:
   - name: Heart
     uniqueID: 4211042833
     locked: 0
+  - name: GameOver
+    uniqueID: 3248058959
+    locked: 0

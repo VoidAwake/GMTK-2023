@@ -35,6 +35,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private TMP_Text objectiveText;
 
     [Header("Assign in Inspector")]
+    [SerializeField] private GameObject gameOverCanvas;
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
@@ -291,7 +292,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     float IInputValueTimeoutProvider.GetInputTimeoutValue()
         => this.inputTimeoutData.currentInterpolatedValue;
 
-    
+    public void GameOver()
+    {
+        gameOverCanvas.SetActive(true);
+    }
 }
 
 [System.Serializable]
