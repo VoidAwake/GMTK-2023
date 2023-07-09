@@ -84,7 +84,8 @@ public class Barista : MonoBehaviour
             case baristaStates.confused: ChangeState(baristaStates.angry);
                 break;
             default:
-                Debug.Log("GET A GAME OVER HERE");
+                DaddyManager.instance.GameOver(GAME_OVER_TYPE.BARISTA_LOST_PATIENCE);
+                SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Fail").questions.Random(), true);
                 break;
         }
     }
