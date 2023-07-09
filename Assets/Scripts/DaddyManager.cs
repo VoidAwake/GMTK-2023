@@ -332,6 +332,11 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         
         endGameTransition.StartTransition(false);
     }
+
+    public GAME_OVER_TYPE GetGameOverType()
+    {
+        return gameOverType;
+    }
 }
 
 [System.Serializable]
