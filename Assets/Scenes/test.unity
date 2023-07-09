@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: m_RenderingLayerMask
       value: 257
       objectReference: {fileID: 0}
+    - target: {fileID: 2780460475793643291, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7a1ea3604ad181d47aa858fcab481e4d, type: 2}
     - target: {fileID: 3300809805495640878, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -349,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4918959078604141497, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -354.5682
+      value: -338.7
       objectReference: {fileID: 0}
     - target: {fileID: 4918959078604141497, guid: d9dcc403a6e971a43b7bace3da33491a, type: 3}
       propertyPath: m_LocalPosition.y
