@@ -80,7 +80,7 @@ public class Barista : MonoBehaviour
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
-        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random());
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
         DaddyManager.instance.InputBox.EnableTyping();
     }
 
@@ -91,7 +91,7 @@ public class Barista : MonoBehaviour
             return;
         currentQuestion = questions[currentQuestionIndex];
 
-        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random());
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random(), false);
         DaddyManager.instance.InputBox.EnableTyping();
     }
 
@@ -102,7 +102,7 @@ public class Barista : MonoBehaviour
 
     public void DisplayCloseText()
     {
-        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random());
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random(), true);
     }
 
     public void DisplayResponseMatch(bool responseMatched)
@@ -111,21 +111,21 @@ public class Barista : MonoBehaviour
         {
             // TODO: Would be nice if the gameDataStore could take string arguments. Format?
             //baristaText.text = closestResponse + "? Sure.";
-            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random());
+            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random(), true);
         }
         else
         {
             
-            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random());
+            SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random(), true);
             
             // Repeat the last question
             currentQuestionIndex--;
         }
     }
     
-    public void SetText(string text)
+    public void SetText(string text, bool response)
     {
-        textAnim.SetText(text);
+        textAnim.SetText(text, response);
     }
 }
 

@@ -1502,7 +1502,7 @@ MonoBehaviour:
   timeBetweenChars: 0.05
   currentChar: 0
   totalChars: 0
-  textBackground: {fileID: 0}
+  textBackground: {fileID: 1054318596}
 --- !u!1 &2075493002
 GameObject:
   m_ObjectHideFlags: 0
