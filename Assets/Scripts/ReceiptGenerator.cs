@@ -32,6 +32,23 @@ namespace DefaultNamespace
                     score += actualCoffeeProperty.score;
                 }
             }
+            
+            foreach (var actualCoffee in daddyManager.actualCoffees)
+            {
+                leftBodyTemp.text += "\n";
+                rightBodyTemp.text += "\n";
+                mainLeft.text = leftBodyTemp.text;
+                mainRight.text = rightBodyTemp.text;
+
+                foreach (var actualCoffeeProperty in actualCoffee)
+                {
+                    leftBodyTemp.text += actualCoffeeProperty.propertyName + " : " + "\n" + actualCoffeeProperty.value + "\n";
+                    rightBodyTemp.text += actualCoffeeProperty.score + "\n" + "\n";
+                    mainLeft.text = leftBodyTemp.text;
+                    mainRight.text = rightBodyTemp.text;
+                    score += actualCoffeeProperty.score;
+                }
+            }
 
             leftBodyTemp.text += "\n";
             rightBodyTemp.text += "\n";

@@ -1583,6 +1583,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6630474174072280890, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6914518492797949435}
+    - targetCorrespondingSourceObject: {fileID: 6630474174072280890, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6914518492797949440}
   m_SourcePrefab: {fileID: 100100000, guid: daba7a4e2a72ccd4d8a48f9cdf504070, type: 3}
 --- !u!114 &6914518492797949430 stripped
 MonoBehaviour:
@@ -1716,3 +1719,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6914518492797949431}
   m_CullTransparentMesh: 1
+--- !u!114 &6914518492797949440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6914518492797949431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5719c45cb14148a055a4ff29291b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 6914518492797949434}
+  scrollSpeed: 100

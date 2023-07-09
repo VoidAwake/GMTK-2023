@@ -39,7 +39,7 @@ namespace CoffeeJitters.DataStore
 
             var dialogueObjectByIdentifier = baristaDialogueScriptableObject.dialogueObjects
                 .Where(bdo => bdo.identifier == indentifier)
-                .SingleOrDefault();
+                .FirstOrDefault();
 
             if (dialogueObjectByIdentifier == null)
                 Debug.LogWarning($"No dialogue found for {indentifier}");
