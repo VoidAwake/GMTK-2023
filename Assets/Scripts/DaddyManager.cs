@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using DefaultNamespace;
 using CoffeeJitters.Timer.Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
@@ -50,6 +52,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private string coffeeOrderList = "";
 
     private GAME_OVER_TYPE gameOverType = GAME_OVER_TYPE.NONE;
+
+    [NonSerialized] public UnityEvent DaddyStarted = new();
 
     #region - - - - - - Properties - - - - - -
 
@@ -160,6 +164,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         }
 
         temp.OrderInit(coffeeOrderList);
+        
+        DaddyStarted.Invoke();
     }
 
     public void GameStart()
