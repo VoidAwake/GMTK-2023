@@ -42,13 +42,13 @@ namespace DefaultNamespace
                     // rightBodyTemp.text += actualCoffeeProperty.score + "\n" + "\n";
                     // mainLeft.text = leftBodyTemp.text;
                     // mainRight.text = rightBodyTemp.text;
-                    score += actualCoffeeProperty.score;
+                    //score += actualCoffeeProperty.score;
                     mistakes += actualCoffeeProperty.correct == false ? 1 : 0;
                 }
             }
 
             leftBodyTemp.text += "Order Score: \n";
-            rightBodyTemp.text += score + " \n";
+            rightBodyTemp.text += daddyManager.score + " \n";
             leftBodyTemp.text += "Total Score: \n";
             rightBodyTemp.text += daddyManager.highscore + " \n";
             mainLeft.text = leftBodyTemp.text;
