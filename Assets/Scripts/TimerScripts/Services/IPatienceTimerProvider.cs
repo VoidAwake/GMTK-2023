@@ -10,9 +10,7 @@ namespace CoffeeJitters.Timer.Services
 
         #region - - - - - - Methods - - - - - -
 
-        float GetCurrentPatienceTime();
-
-        float GetMaxPatienceTime();
+        float GetPatienceTimerInterpolatedValue();
 
         #endregion Methods
 
