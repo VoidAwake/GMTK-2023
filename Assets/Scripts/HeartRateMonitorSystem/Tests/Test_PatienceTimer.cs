@@ -10,6 +10,8 @@ namespace CoffeeJitters.HeartRateMonitor.Tests
     public class Test_PatienceTimer : MonoBehaviour, IPatienceTimerProvider
     {
 
+        public HeartToECGModifier heartToECGMonitor;
+
         public float maxPatience = 1f;
         public float currentPatience;
 
@@ -26,7 +28,7 @@ namespace CoffeeJitters.HeartRateMonitor.Tests
             currentPatience = maxPatience;
 
             HeartRateMonitor heartRateMonitor = this.GetComponent<HeartRateMonitor>();
-            heartRateMonitor.InitialiseHeartMonitor(this.GetComponent<IHeartRateECG>(), this.GetComponent<IInputValueTimeoutProvider>(), this);
+            heartRateMonitor.InitialiseHeartMonitor(heartToECGMonitor, this.GetComponent<IInputValueTimeoutProvider>(), this);
         }
 
         // Update is called once per frame

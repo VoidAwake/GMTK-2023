@@ -21,7 +21,20 @@ namespace CoffeeJitters.HeartRateMonitor
 
     }
 
-    public class HeartRateMonitor : MonoBehaviour, IHeartRateProvider
+    public interface IHeartRateModifier
+    {
+
+        #region - - - - - - Methods - - - - - -
+
+        void EnableHeartbeatValueMonitoring();
+
+        void DisableHeartbeatValueMonitoring();
+
+        #endregion Methods
+
+    }
+
+    public class HeartRateMonitor : MonoBehaviour, IHeartRateProvider, IHeartRateModifier
     {
 
         #region - - - - - - Fields - - - - - -
@@ -41,6 +54,8 @@ namespace CoffeeJitters.HeartRateMonitor
         [SerializeField]
         [Range(1f, 5f)]
         private float beatEventSpeed = 1f;
+        [SerializeField]
+        private bool enableValueTracking;
 
         private IHeartRateECG heartRateECG;
         private IInputValueTimeoutProvider inputValueTimeoutProvider;
@@ -60,19 +75,18 @@ namespace CoffeeJitters.HeartRateMonitor
                         if (this.heartRateECG == null)
                             return;
 
-                        this.heartRateECG.TriggerHeartRateECG(new HeartState());
+                        this.heartRateECG.TriggerHeartRateECG(new HeartState()
+                        {
+                            BaseHeartRate = minHeartRate,
+                            HeartRate = currentHeartRate,
+                            MaxHeartRate = maxHeartRate
+                        });
                     });
 
         private void Update()
         {
-            float mixedInterpolatedValue = Mathf.Lerp(
-                                            patienceTimerProvider.GetPatienceTimerInterpolatedValue(),
-                                            this.inputValueTimeoutProvider.GetInputTimeoutValue(),
-                                            interpolationBalance);
-
-            currentHeartRate = Mathf.Lerp(minHeartRate, maxHeartRate, this.EaseInOutQuad(mixedInterpolatedValue));
-
-            this.simpleTimer.IntervalLength = (1 / (currentHeartRate / 60f)) / beatEventSpeed;
+            if (enableValueTracking)
+                this.CalculateCurrentHeartRate();
 
             // Run the heartbeat
             if (this.simpleTimer.CheckTimeIsUp())
@@ -101,12 +115,37 @@ namespace CoffeeJitters.HeartRateMonitor
             this.patienceTimerProvider = patienceTimerProvider;
         }
 
+        private void CalculateCurrentHeartRate()
+        {
+            float mixedInterpolatedValue = Mathf.Lerp(
+                                                patienceTimerProvider.GetPatienceTimerInterpolatedValue(),
+                                                this.inputValueTimeoutProvider.GetInputTimeoutValue(),
+                                                interpolationBalance);
+
+            currentHeartRate = Mathf.Lerp(minHeartRate, maxHeartRate, this.EaseInOutQuad(mixedInterpolatedValue));
+
+            this.simpleTimer.IntervalLength = (1 / (currentHeartRate / 60f)) / beatEventSpeed;
+        }
+
         private float EaseInOutQuad(float value)
             => value < 0.5f ? 2 * value * value : 1 - Mathf.Pow(-2 * value + 2, 2) / 2;
 
         public float GetHeartBeatsPerMinute()
             => currentHeartRate;
 
+        public void EnableHeartbeatValueMonitoring()
+            => enableValueTracking = true;
+
+        public void DisableHeartbeatValueMonitoring()
+        {
+            enableValueTracking = false;
+
+            currentHeartRate = minHeartRate;
+        }
+
+        /// <summary>
+        /// Debugger console output for value monitoring.
+        /// </summary>
         private void HeartBeatDebugger(float patienceValue, float inputTimeoutValue, float mixedInterpolatedValue, float heartRatePerSecond, float heartRateInMilliseconds)
             => Debug.Log($" {patienceValue}, {inputTimeoutValue}, {mixedInterpolatedValue}, {currentHeartRate}, {heartRatePerSecond}, {heartRateInMilliseconds}");
 
