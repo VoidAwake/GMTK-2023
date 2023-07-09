@@ -87,6 +87,7 @@ public class DaddyManager : MonoBehaviour
         OrderUI temp = Instantiate(orderUi,canvas.transform);
         
         InputBox.gameObject.SetActive(false);
+        //barista.gameObject.SetActive(false);
         
         difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
         
@@ -118,7 +119,7 @@ public class DaddyManager : MonoBehaviour
             {
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
             }
-            coffeeOrderList+= "\n";
+            coffeeOrderList+= ". \n";
 
         }
         
@@ -141,6 +142,7 @@ public class DaddyManager : MonoBehaviour
         }
         
         InputBox.gameObject.SetActive(true);
+        //barista.gameObject.SetActive(true);
         
         InputBox.Initialise();
         

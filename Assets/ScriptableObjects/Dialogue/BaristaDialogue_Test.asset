@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: BaristaDialogue_Test
   m_EditorClassIdentifier: 
   dialogueObjects:
-  - identifier: Style
+  - identifier: B1Style
     questions:
     - What would you like?
     - What can I get you?
     - Whats ya coffee of the day
     responses: []
-  - identifier: Milk
+  - identifier: B1Milk
     questions:
     - Which milk?
     responses: []
-  - identifier: Size
+  - identifier: B1Size
     questions:
     - Small, regular or large?
     responses:
     - Which milk?
-  - identifier: Close
+  - identifier: B1Close
     questions:
     - No worries, won't be long.
     responses:
     - Which milk?
-  - identifier: Response Match
+  - identifier: B1Response Match
     questions:
     - Sure thing.
     - No worries.
     responses:
     - Which milk?
-  - identifier: Side
+  - identifier: B1Side
     questions:
     - Anything on the side?
     - Anything on the side?
@@ -53,15 +53,56 @@ MonoBehaviour:
     - Anything on the side?
     responses:
     - Which milk?
-  - identifier: Topping
+  - identifier: B1Topping
     questions:
     - Anything on top?
     - What did you want on top?
     responses:
     - Which milk?
-  - identifier: No Response Match
+  - identifier: B1No Response Match
     questions:
     - Sorry?
     - The... what?
+    responses:
+    - Which milk?
+  - identifier: B2Style
+    questions:
+    - Type.
+    responses:
+    - Which milk?
+  - identifier: B2Milk
+    questions:
+    - Milk.
+    responses:
+    - Which milk?
+  - identifier: B2Size
+    questions:
+    - Size.
+    responses:
+    - Which milk?
+  - identifier: B2Close
+    questions:
+    - Wait.
+    responses:
+    - Which milk?
+  - identifier: B2Response Match
+    questions:
+    - OK
+    responses:
+    - Which milk?
+  - identifier: B2Side
+    questions:
+    - Side.
+    responses:
+    - Which milk?
+  - identifier: B2Topping
+    questions:
+    - Topping.
+    - The... what?
+    responses:
+    - Which milk?
+  - identifier: B2No Response Match
+    questions:
+    - I don't understand french.
     responses:
     - Which milk?

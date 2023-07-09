@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 public class Barista : MonoBehaviour
@@ -14,6 +15,17 @@ public class Barista : MonoBehaviour
     public string currentQuestion;
     private int currentQuestionIndex;
     private int questionCount = 3;
+
+    [SerializeField] private Image baristaImage;
+    [SerializeField] private List<BaristaObject> baristas;
+    private BaristaObject currentBarista; 
+    private enum baristaStates
+    {
+        nuetral,
+        confused,
+        angry,
+    };
+    private baristaStates baristaState;
 
     [NonSerialized] public List<string> questions = new()
     {
@@ -29,21 +41,45 @@ public class Barista : MonoBehaviour
     private void Start()
     {
         gameDataStore = DaddyManager.instance.GameDataStore;
-
+        currentBarista = baristas.Random();
+        ChangeState(baristaStates.nuetral);
         var rng = new Random();
 
         if (shuffleQuestionOrder)
             rng.Shuffle(questions);
+        baristaImage.enabled = false;
+        baristaText.enabled = false;
 
         //currentQuestionIndex = 0;
+    }
+
+    private void ChangeState(baristaStates newState)
+    {
+        baristaState = newState;
+        OnStateChange();
+    }
+
+    private void OnStateChange()
+    {
+        switch (baristaState)
+        {
+            case baristaStates.nuetral: baristaImage.sprite = currentBarista.Nuetral;
+                break;
+            case baristaStates.confused: baristaImage.sprite = currentBarista.Confused;
+                break;
+            case baristaStates.angry: baristaImage.sprite = currentBarista.Angry;
+                break;
+        }
     }
     
     public void FirstQuestion(int questionAmount)
     {
+        baristaImage.enabled = true;
+        baristaText.enabled = true;
         currentQuestionIndex = 0;
         questionCount = questionAmount;
         currentQuestion = questions[currentQuestionIndex];
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
+        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random();
         
     }
 
@@ -54,7 +90,7 @@ public class Barista : MonoBehaviour
             return;
         currentQuestion = questions[currentQuestionIndex];
 
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentQuestion).questions.Random();
+        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + currentQuestion).questions.Random();
     }
 
     public bool HasMoreQuestions()
@@ -64,7 +100,7 @@ public class Barista : MonoBehaviour
 
     public void DisplayCloseText()
     {
-        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("Close").questions.Random();
+        baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random();
     }
 
     public void DisplayResponseMatch(bool responseMatched)
@@ -73,11 +109,12 @@ public class Barista : MonoBehaviour
         {
             // TODO: Would be nice if the gameDataStore could take string arguments. Format?
             //baristaText.text = closestResponse + "? Sure.";
-            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("Response Match").questions.Random();
+            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random();
         }
         else
         {
-            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier("No Response Match").questions.Random();
+            
+            baristaText.text = gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "No Response Match").questions.Random();
             
             // Repeat the last question
             currentQuestionIndex--;
