@@ -10,6 +10,8 @@ public class OrderViewer : MonoBehaviour
     public Vector2 _tweenPos;
     public float _tweenTime;
     public RectTransform rect;
+    [SerializeField] private Material smudgeMat;
+    private int smudgeLevel = 0;
 
     private Vector2 startPos;
 
@@ -20,10 +22,13 @@ public class OrderViewer : MonoBehaviour
         startPos = rect.localPosition;
         
         textMesh.text = coffeeOrderList;
+        smudgeLevel = 0;
+        smudgeMat.SetFloat("SmudgeLevel", 0f);
     }
     
     public void OnHoverEnter()
     {
+        print("Entering hover");
         DaddyManager.instance.InputBox.SetOrderViewerActive(true);
         DaddyManager.instance.InputBox.DisableTyping();
         StartCoroutine(ShowOrder());
@@ -31,9 +36,12 @@ public class OrderViewer : MonoBehaviour
     
     public void OnHoverExit()
     {
+        print("Exiting hover");
         DaddyManager.instance.InputBox.SetOrderViewerActive(false);
         DaddyManager.instance.InputBox.EnableTyping();
         StartCoroutine(HideOrder());
+        smudgeLevel++;
+        smudgeMat.SetFloat("_SmudgeLevel", (float)smudgeLevel);
     }
     
     private IEnumerator ShowOrder()
