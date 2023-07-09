@@ -176,6 +176,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     {
         Destroy(kill);
         timerScript.StartTimer(45f);
+        heartRateMonitor.StartIncreaseHeartRate();
         //SceneManager.LoadScene(1);
 
         if (orderViewer != null)
