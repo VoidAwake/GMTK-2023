@@ -50,6 +50,8 @@ public class InputRemapping : MonoBehaviour
                 SwapItems(newVowelOrder, rand1, rand2);  
             }
         }
+        
+        inputField.Select();
     }
     
     private void Update()
@@ -63,8 +65,6 @@ public class InputRemapping : MonoBehaviour
     
     public void OnLetterTyped()
     {
-        Debug.Log("OnValueChanged");
-        
         inputField.text = inputField.text.ToUpper();
         
         currentText = inputField.text;
@@ -112,7 +112,7 @@ public class InputRemapping : MonoBehaviour
                 {
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
-                    Debug.Log(currentText[i].ToString());
+                    //Debug.Log(currentText[i].ToString());
                     break;
                 }
             }
