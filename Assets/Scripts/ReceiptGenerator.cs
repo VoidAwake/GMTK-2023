@@ -6,9 +6,10 @@ namespace DefaultNamespace
 {
     public class ReceiptGenerator : MonoBehaviour
     {
-        [SerializeField] private TMP_Text leftBody;
-        [SerializeField] private TMP_Text rightBody;
-
+        [SerializeField] private TMP_Text leftBodyTemp;
+        [SerializeField] private TMP_Text rightBodyTemp;
+        [SerializeField] private TMP_Text mainLeft;
+        [SerializeField] private TMP_Text mainRight;
         private int score;
 
         private void Awake()
@@ -17,24 +18,29 @@ namespace DefaultNamespace
 
             foreach (var actualCoffee in daddyManager.actualCoffees)
             {
-                leftBody.text += "\n";
-                rightBody.text += "\n";
-            
+                leftBodyTemp.text += "\n";
+                rightBodyTemp.text += "\n";
+                mainLeft.text = leftBodyTemp.text;
+                mainRight.text = rightBodyTemp.text;
+
                 foreach (var actualCoffeeProperty in actualCoffee)
                 {
-                    leftBody.text += actualCoffeeProperty.propertyName + " - " + actualCoffeeProperty.value + "\n";
-                    rightBody.text += actualCoffeeProperty.score + "\n";
-
+                    leftBodyTemp.text += actualCoffeeProperty.propertyName + " : " + "\n" + actualCoffeeProperty.value + "\n";
+                    rightBodyTemp.text += actualCoffeeProperty.score + "\n" + "\n";
+                    mainLeft.text = leftBodyTemp.text;
+                    mainRight.text = rightBodyTemp.text;
                     score += actualCoffeeProperty.score;
                 }
             }
 
-            leftBody.text += "\n";
-            rightBody.text += "\n";
-            
+            leftBodyTemp.text += "\n";
+            rightBodyTemp.text += "\n";
+            mainLeft.text = leftBodyTemp.text;
+            mainRight.text = rightBodyTemp.text;
             // TODO: Full line of dashes
-            
-            leftBody.text += "SCORE: " + score;
+
+            leftBodyTemp.text += "SCORE: " + score;
+            mainLeft.text = leftBodyTemp.text;
         }
     }
 }
