@@ -1,4 +1,5 @@
 using CoffeeJitters.HeartRateMonitor.Entities;
+using CoffeeJitters.HeartRateMonitor.Services;
 using CoffeeJitters.Timer;
 using CoffeeJitters.Timer.Services;
 using System.Collections;
@@ -33,42 +34,45 @@ namespace CoffeeJitters.HeartRateMonitor
         private float minHeartRate;
         [SerializeField]
         private float timerSpeed = 1f;
+        [SerializeField]
+        [Range(0f, 1f)]
+        [Tooltip("Balance between interpolation of patience and inputTimeOut")]
+        private float interpolationBalance = 0.5f;
+        [SerializeField]
+        [Range(1f, 5f)]
+        private float beatEventSpeed = 1f;
 
         private IHeartRateECG heartRateECG;
+        private IInputValueTimeoutProvider inputValueTimeoutProvider;
         private IPatienceTimerProvider patienceTimerProvider;
         private SimpleTimer simpleTimer;
 
         #endregion Fields
 
-        #region - - - - - - Methods - - - - - -
-
-        /// <summary>
-        /// Initialises and a place to perform Dependency Injection to this behaviour. This occurs during the 'Awake' event funciton.
-        /// </summary>
-        public void InitialiseHeartMonitor(IHeartRateECG heartRateECG, IPatienceTimerProvider patienceTimerProvider)
-        {
-            this.heartRateECG = heartRateECG;
-            this.patienceTimerProvider = patienceTimerProvider;
-        }
+        #region - - - - - - MonoBehaviour - - - - - -
 
         private void Start() =>
-            this.simpleTimer = new SimpleTimer(
-                                (1f / (currentHeartRate / 60)) * timerSpeed,
-                                () => this.heartRateECG.TriggerHeartRateECG(new HeartState()));
+            this.simpleTimer =
+                new SimpleTimer(
+                    (1f / (currentHeartRate / 60)) * timerSpeed,
+                    () =>
+                    {
+                        if (this.heartRateECG == null)
+                            return;
+
+                        this.heartRateECG.TriggerHeartRateECG(new HeartState());
+                    });
 
         private void Update()
         {
-            // Shift interpolation value based on the patience value
-            //float anxietyLevel = Mathf.Clamp(
-            //    patienceTimerProvider.GetMaxPatienceTime() - patienceTimerProvider.GetCurrentPatienceTime(),
-            //    0f,
-            //    patienceTimerProvider.GetMaxPatienceTime());
+            float mixedInterpolatedValue = Mathf.Lerp(
+                                            patienceTimerProvider.GetPatienceTimerInterpolatedValue(),
+                                            this.inputValueTimeoutProvider.GetInputTimeoutValue(),
+                                            interpolationBalance);
 
-            //float anxiousHeartRateBPM = Mathf.Lerp(minHeartRate, maxHeartRate, EaseInCirc(anxietyLevel / patienceTimerProvider.GetMaxPatienceTime()));
+            currentHeartRate = Mathf.Lerp(minHeartRate, maxHeartRate, this.EaseInOutQuad(mixedInterpolatedValue));
 
-            // Problem with translation below TODO: properly translate into a heartbeat
-            //float heartRate = 60f / anxiousHeartRateBPM * 1000f;
-            //this.simpleTimer.IntervalLength =  heartRate;
+            this.simpleTimer.IntervalLength = (1 / (currentHeartRate / 60f)) / beatEventSpeed;
 
             // Run the heartbeat
             if (this.simpleTimer.CheckTimeIsUp())
@@ -80,11 +84,31 @@ namespace CoffeeJitters.HeartRateMonitor
             this.simpleTimer.TickTimer(Time.deltaTime);
         }
 
-        private float EaseInCirc(float value)
-            => 1 - Mathf.Sqrt(1 - Mathf.Pow(value, 2));
+        #endregion MonoBehaviour
+
+        #region - - - - - - Methods - - - - - -
+
+        /// <summary>
+        /// Initialises and a place to perform Dependency Injection to this behaviour. This occurs during the 'Awake' event funciton.
+        /// </summary>
+        public void InitialiseHeartMonitor(
+            IHeartRateECG heartRateECG,
+            IInputValueTimeoutProvider inputValueTimeoutProvider,
+            IPatienceTimerProvider patienceTimerProvider)
+        {
+            this.heartRateECG = heartRateECG;
+            this.inputValueTimeoutProvider = inputValueTimeoutProvider;
+            this.patienceTimerProvider = patienceTimerProvider;
+        }
+
+        private float EaseInOutQuad(float value)
+            => value < 0.5f ? 2 * value * value : 1 - Mathf.Pow(-2 * value + 2, 2) / 2;
 
         public float GetHeartBeatsPerMinute()
             => currentHeartRate;
+
+        private void HeartBeatDebugger(float patienceValue, float inputTimeoutValue, float mixedInterpolatedValue, float heartRatePerSecond, float heartRateInMilliseconds)
+            => Debug.Log($" {patienceValue}, {inputTimeoutValue}, {mixedInterpolatedValue}, {currentHeartRate}, {heartRatePerSecond}, {heartRateInMilliseconds}");
 
         #endregion Methods
 

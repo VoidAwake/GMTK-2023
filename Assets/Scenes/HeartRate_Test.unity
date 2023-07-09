@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 725875958}
   - component: {fileID: 725875957}
   - component: {fileID: 725875956}
+  - component: {fileID: 725875960}
   m_Layer: 0
   m_Name: Test_HeartRate
   m_TagString: Untagged
@@ -272,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb2cea2cffbd854d9d2db176d25e9c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHeartRate: 80
   maxHeartRate: 200
   minHeartRate: 60
   timerSpeed: 1
@@ -290,3 +292,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &725875960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725875955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf027f7c244dfad448938db585eba986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTimeoutValue: 0

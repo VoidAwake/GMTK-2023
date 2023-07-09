@@ -51,9 +51,10 @@ public class TimerScript : MonoBehaviour, IPatienceTimerProvider
         Debug.Log("Out of patience, you lose");
     }
 
-    float IPatienceTimerProvider.GetCurrentPatienceTime()
-        => currentPatience;
+    /// <summary>
+    /// Produces patience value between 0 and 1.
+    /// </summary>
+    float IPatienceTimerProvider.GetPatienceTimerInterpolatedValue()
+        => Mathf.Clamp(maxPatienceTime - currentPatience, 0f, maxPatienceTime) / maxPatienceTime;
 
-    float IPatienceTimerProvider.GetMaxPatienceTime()
-        => maxPatienceTime;
 }
