@@ -16,6 +16,9 @@ public class InputRemapping : MonoBehaviour
     [SerializeField] private string[] vowels = {"a", "e", "i", "o", "u"};
     private string[] newVowelOrder = {"a", "e", "i", "o", "u"};
     
+    [SerializeField] private bool doubleLettersEnabled = false;
+    [SerializeField] private float doubleLettersChance = 0.05f;
+    
     public int numberOfRemaps = 1;
     
     [Header("Assign in Inspector")]
@@ -46,10 +49,23 @@ public class InputRemapping : MonoBehaviour
                 SwapItems(newVowelOrder, rand1, rand2);  
             }
         }
+        
+        inputField.Select();
     }
-
+    
+    private void Update()
+    {
+        // Always move caret to end
+        if (inputField.isFocused && inputField.caretPosition != inputField.text.Length)
+        {
+            inputField.caretPosition = inputField.text.Length;
+        }
+    }
+    
     public void OnLetterTyped()
     {
+        inputField.text = inputField.text.ToUpper();
+        
         currentText = inputField.text;
         DaddyManager.instance.OnInput();
         
@@ -67,6 +83,7 @@ public class InputRemapping : MonoBehaviour
 
         GetLastTypedCharacter();
         RandomiseLetterChange();
+        RandomiseDoubleLetterChance();
         previousText = currentText;
     }
 
@@ -86,7 +103,7 @@ public class InputRemapping : MonoBehaviour
             }
         }
         // Edge case check for if words are highlighted and replaced with a single letter
-        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2)
+        else if (currentText.Length < previousText.Length && previousText.Length - currentText.Length >= 2 && currentText != "")
         {
             for (int i = 0; i < previousText.Length; i++)
             {
@@ -94,7 +111,7 @@ public class InputRemapping : MonoBehaviour
                 {
                     lastTypedCharacter = currentText[i].ToString();
                     lastTypedCharacterPosition = i;
-                    Debug.Log(currentText[i].ToString());
+                    //Debug.Log(currentText[i].ToString());
                     break;
                 }
             }
@@ -155,7 +172,58 @@ public class InputRemapping : MonoBehaviour
                 break;
         }
     }
+    
+    private void RandomiseDoubleLetterChance()
+    {
+        if (!doubleLettersEnabled)
+            return;
+        
+        // Don't bother if the last typed character is a space
+        if (lastTypedCharacter == " ")
+            return;
 
+        if (Random.Range(0.0f, 1.0f) < doubleLettersChance)
+        {
+            isProgramChangingText = true;
+            
+            string newText;
+            
+            // This is used later for the letter swapping rules
+            // See comment [Now apply the letter swapping rules if applicable]
+            previousText = currentText;
+            
+            // Modifying the middle of text
+            if (lastTypedCharacterPosition + 1 < currentText.Length)
+            {
+                string unmodifiedText = currentText;
+                
+                newText = currentText.Substring(0, lastTypedCharacterPosition + 1);
+                newText += lastTypedCharacter;
+                
+                // This will inheritly change currentText. This is why unmodifyText is introduced
+                inputField.text = newText;
+                inputField.MoveTextEnd(false);
+                
+                // We add a +1 to the end of text because the word is 1 letter longer
+                inputField.text += unmodifiedText.Substring(lastTypedCharacterPosition + 1, unmodifiedText.Length - newText.Length + 1);
+            }
+            else // Modifying the end of text
+            {
+                newText = currentText + lastTypedCharacter;
+                inputField.text = newText;
+                inputField.MoveTextEnd(false);
+            }
+            
+            isProgramChangingText = false;
+            
+            // Now apply the letter swapping rules if applicable
+            GetLastTypedCharacter();
+            RandomiseLetterChange();
+            
+            //Debug.Log("Double letter");
+        }
+    }
+    
     private void ReplaceLastTypedCharacter()
     {
         isProgramChangingText = true;
