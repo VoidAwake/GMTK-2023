@@ -33,6 +33,7 @@ public class DifficultyManager : MonoBehaviour
         var difficultyLevel = difficultyLevels[currentDifficultyLevelIndex];
         
         coffeeManager.fuzzyMatchThreshold = difficultyLevel.fuzzyMatchThreshold;
+        coffeeManager.coffeeComplexity = difficultyLevel.coffeeComplexity;
         barista.shuffleQuestionOrder = difficultyLevel.shuffleQuestionOrder;
         inputRemapping.remapType = difficultyLevel.remapType;
         inputRemapping.numberOfRemaps = difficultyLevel.numberOfRemaps;
