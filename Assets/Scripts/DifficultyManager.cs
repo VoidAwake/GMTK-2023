@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DifficultyManager : MonoBehaviour
@@ -27,8 +28,7 @@ public class DifficultyManager : MonoBehaviour
         if (completedOrders < difficultyLevels.Count)
             currentDifficultyLevelIndex = completedOrders;
         else
-            currentDifficultyLevelIndex = completedOrders - (difficultyLevels.Count - loopLast) % loopLast +
-                                   (difficultyLevels.Count - loopLast);
+            currentDifficultyLevelIndex = Random.Range(difficultyLevels.Count - loopLast, difficultyLevels.Count);
 
         var difficultyLevel = difficultyLevels[currentDifficultyLevelIndex];
         
