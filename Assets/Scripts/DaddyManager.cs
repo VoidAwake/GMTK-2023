@@ -198,7 +198,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         InputBox.DisableTyping();
         orderHoverTrigger.SetCollision(false);
         
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         
         // Enable typing and hover trigger
         InputBox.IsBaristaResponding(false);
@@ -218,7 +218,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             if (remainingOrders > 0)
             {
                 // TODO: Barista to ask about the next order first
-                barista.DisplayCloseText();
+                
+                barista.DisplayNextOrderText();
+
+                yield return new WaitForSeconds(1.5f);
 
                 Debug.Log("You have NOT reached the end");
 

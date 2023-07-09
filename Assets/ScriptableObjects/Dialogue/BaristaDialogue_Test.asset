@@ -167,3 +167,18 @@ MonoBehaviour:
     - GET OUT!
     responses:
     - Which milk?
+  - identifier: B1Next
+    questions:
+    - Ok, next drink.
+    responses:
+    - Which milk?
+  - identifier: B2Next
+    questions:
+    - Onto the next drink!
+    responses:
+    - Which milk?
+  - identifier: B1Next
+    questions:
+    - Next drink.
+    responses:
+    - Which milk?
