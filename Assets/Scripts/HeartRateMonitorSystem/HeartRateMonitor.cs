@@ -62,6 +62,9 @@ namespace CoffeeJitters.HeartRateMonitor
         private IPatienceTimerProvider patienceTimerProvider;
         private SimpleTimer simpleTimer;
 
+        [SerializeField] private GameEvent enableDoubleLetters;
+        private bool doubleLettersTriggered = false;
+        private float doubleLettersThreshold = 150f;
         private bool stopIncreaseHeartRate = false;
         private float heartRateIncreaseMultiplier = 1.0f;
 
@@ -176,6 +179,12 @@ namespace CoffeeJitters.HeartRateMonitor
             {
                 DaddyManager.instance.GameOver(GAME_OVER_TYPE.HEART_RATE_TOO_HIGH);
                 stopIncreaseHeartRate = true;
+            }
+
+            if (!doubleLettersTriggered && currentHeartRate > doubleLettersThreshold)
+            {
+                enableDoubleLetters.Raise();
+                doubleLettersTriggered = true;
             }
         }
         

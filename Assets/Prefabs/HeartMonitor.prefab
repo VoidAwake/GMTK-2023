@@ -54,6 +54,7 @@ MonoBehaviour:
   interpolationBalance: 0.5
   beatEventSpeed: 1
   enableValueTracking: 0
+  enableDoubleLetters: {fileID: 11400000, guid: b6061779d6cc8584689d5e8b5aa820d3, type: 2}
 --- !u!114 &6366057542695993066
 MonoBehaviour:
   m_ObjectHideFlags: 0
