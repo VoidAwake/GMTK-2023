@@ -54,7 +54,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AspectRatio: 2.2851562
-    - _SmudgeLevel: 4
+    - _SmudgeLevel: 14
     - _SmudgePower: 74.29
     m_Colors: []
   m_BuildTextureStacks: []

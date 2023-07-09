@@ -153,6 +153,8 @@ public class Barista : MonoBehaviour
         {
             // TODO: Would be nice if the gameDataStore could take string arguments. Format?
             //baristaText.text = closestResponse + "? Sure.";
+            remainingPatience = patiencePerState;
+            ChangeState(baristaStates.nuetral);
             SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Response Match").questions.Random(), true);
         }
         else
