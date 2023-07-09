@@ -143,6 +143,11 @@ public class Barista : MonoBehaviour
         SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Close").questions.Random(), true);
     }
 
+    public void DisplayNextOrderText()
+    {
+        SetText(gameDataStore.GetDialogueObjectByIdentifier(currentBarista.Identifier + "Next").questions.Random(), true);
+    }
+
     public void DisplayResponseMatch(bool responseMatched)
     {
         if (responseMatched)
