@@ -174,11 +174,11 @@ MonoBehaviour:
     - Which milk?
   - identifier: B2Next
     questions:
-    - Onto the next drink!
+    - Next Drink.
     responses:
     - Which milk?
-  - identifier: B1Next
+  - identifier: B3Next
     questions:
-    - Next drink.
+    - Onto the next drink!
     responses:
     - Which milk?
