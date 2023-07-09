@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CoffeeJitters.DataStore;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -18,7 +19,7 @@ public class Barista : MonoBehaviour
 
     [SerializeField] private Image baristaImage;
     [SerializeField] private List<BaristaObject> baristas;
-    private BaristaObject currentBarista; 
+    public BaristaObject currentBarista; 
     public TextAnim textAnim;
     private enum baristaStates
     {
@@ -38,6 +39,8 @@ public class Barista : MonoBehaviour
     };
 
     private IGameDataStore gameDataStore;
+
+    [NonSerialized] public UnityEvent<string> textDisplayed = new();
 
     private void Start()
     {
@@ -126,6 +129,8 @@ public class Barista : MonoBehaviour
     public void SetText(string text)
     {
         textAnim.SetText(text);
+        
+        textDisplayed.Invoke(text);
     }
 }
 

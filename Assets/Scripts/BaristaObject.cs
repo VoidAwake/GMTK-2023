@@ -10,6 +10,6 @@ public class BaristaObject : ScriptableObject
     public Sprite Confused;
     public Sprite Angry;
     public string Identifier;
-    
-    
+    public float textSpeed;
+    public AudioClip blip;
 }

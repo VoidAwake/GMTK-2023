@@ -16,3 +16,5 @@ MonoBehaviour:
   Confused: {fileID: -267614656, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
   Angry: {fileID: -656037627, guid: f2abb55e1448d2c4f9b0b0417d84ad66, type: 3}
   Identifier: B1
+  textSpeed: 0
+  blip: {fileID: 8300000, guid: ebc7e772c2b7e8744b0c4d29c2d514d4, type: 3}
