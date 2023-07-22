@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+// TODO: Move to scripts
 public class Highscore : MonoBehaviour
 {
     // Start is called before the first frame update

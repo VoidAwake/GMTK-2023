@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
+// TODO: Move to scripts
 public class CONTWEEN : MonoBehaviour
 {
     [SerializeField] private RectTransform pos;

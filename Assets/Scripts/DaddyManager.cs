@@ -26,6 +26,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     
     public List<List<ActualCoffeeProperty>> actualCoffees = new();
 
+    // TODO: Invert dependency
     [Header("Heart Rate Monitoring")]
     [SerializeField]
     public InputTimeoutData inputTimeoutData;
@@ -283,7 +284,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         
         // End transition before the next screen
         endGameTransition.gameObject.SetActive(true);
-        endGameTransition.StartTransition(true);
+        StartCoroutine(endGameTransition.StartTransition(true));
         
         //yield return new WaitForSeconds(2);
         
@@ -367,7 +368,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         
         gameOverType = _gameOverType;
         
-        endGameTransition.StartTransition(false);
+        StartCoroutine(endGameTransition.StartTransition(false));
     }
 
     public GAME_OVER_TYPE GetGameOverType()

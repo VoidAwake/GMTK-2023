@@ -4,39 +4,24 @@ using UnityEngine.SceneManagement;
 
 public class EndGameTransition : MonoBehaviour
 {
+    // TODO: Transition time should be pulled from the animation clip
     private float transitionTime = 3.5f;
-    private float currentTransitionTime = 3.5f;
 
-    private bool levelWon = false;
-
-    public void StartTransition(bool _levelWon)
+    public IEnumerator StartTransition(bool levelWon)
     {
-        levelWon = _levelWon;
-        currentTransitionTime = transitionTime;
-    }
-
-    private void Update()
-    {
-        currentTransitionTime -= Time.deltaTime;
-
-        if (currentTransitionTime <= 0)
+        yield return new WaitForSeconds(transitionTime);
+        
+        if (levelWon)
         {
-            if (levelWon)
-            {
-                SceneManager.LoadScene("Result_Screen");
-            }
-            else
-            {
-                SceneManager.LoadScene("GameOverScene");
-            }
-            
-            StartCoroutine(HideObject());
+            SceneManager.LoadScene("Result_Screen");
         }
-    }
-
-    private IEnumerator HideObject()
-    {
+        else
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
+        
         yield return null;
+        
         gameObject.SetActive(false);
     }
 }
