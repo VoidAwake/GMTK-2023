@@ -70,6 +70,8 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     #endregion Properties
 
+    #region - - - - - - MonoBehaviour - - - - - -
+
     private void Awake()
     {
         if (instance == null)
@@ -87,17 +89,22 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         highscore = 0; // Might not be necessary
     }
 
-    public void OnInput()
-    {
-        inputTimer = 0f;
-        inputTimeoutData.currentInterpolatedValue = 0;
-    }
     private void Update()
     {
         // Calculate input timeout
         inputTimer += Time.deltaTime;
         if (inputTimer > timerBuffer)
             this.TickInputTimeout();
+    }
+
+    #endregion MonoBehaviour
+
+    #region - - - - - - Methods - - - - - -
+
+    public void OnInput()
+    {
+        inputTimer = 0f;
+        inputTimeoutData.currentInterpolatedValue = 0;
     }
 
     /// <summary>
@@ -110,9 +117,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         CoffeeManager coffeeManager,
         GameDataStore gameDataStore,
         GameObject orderViewer,
-        HeartRateMonitor monitor,
-        HeartToECGModifier modifier,
-        GameObject Object,
+        HeartRateMonitor heartRateMonitor,
+        HeartToECGModifier heartToEcgModifier,
+        GameObject ecgObject,
         GameObject continueObject)
     {
         // Check whether the level has been completed
@@ -131,9 +138,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         this.score = 0;
 
         // Initialise related heart rate fields
-        this.heartRateMonitor = monitor;
-        this.ecgModifier = modifier;
-        this.ecgObject = Object;
+        this.heartRateMonitor = heartRateMonitor;
+        this.ecgModifier = heartToEcgModifier;
+        this.ecgObject = ecgObject;
         this.ecgObject.SetActive(false);
 
         // Initialise user interfaces
@@ -175,10 +182,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
                                             + " and a " + coffeeManager.GetCoffeeAtIndex(i).side
                                             + " on the side";
 
-            else if(coffeeManager.GetCoffeeAtIndex(i).questionAmount == 4)
+            else if (coffeeManager.GetCoffeeAtIndex(i).questionAmount == 4)
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
 
-            coffeeOrderList+= ". \n";
+            coffeeOrderList += ". \n";
 
         }
 
@@ -194,7 +201,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         Destroy(kill);
         timerScript.StartTimer(45f);
         heartRateMonitor.StartIncreaseHeartRate();
-        //SceneManager.LoadScene(1);
 
         if (orderViewer != null)
         {
@@ -210,7 +216,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         gameOverType = GAME_OVER_TYPE.NONE;
 
         InputBox.gameObject.SetActive(true);
-        //barista.gameObject.SetActive(true);
         ecgObject.SetActive(true);
         InputBox.Initialise();
 
@@ -233,19 +238,21 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         var textAnimationComplete = false;
 
         barista.textAnim.animationCompleted.AddListener(() => textAnimationComplete = true);
+
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
         orderHoverTrigger.SetCollision(false);
+
         yield return new WaitUntil(() => textAnimationComplete);
+
         textAnimationComplete = false;
+
         yield return new WaitForSeconds(0.5f);
 
         // Don't continue if it's a game over state
         if (gameOverType != GAME_OVER_TYPE.NONE)
-        {
             yield break;
-        }
 
         // Enable typing and hover trigger
         InputBox.IsBaristaResponding(false);
@@ -258,27 +265,26 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             yield break;
         }
-        else if(remainingOrders > 0)
+        else if (remainingOrders > 0)
         {
             remainingOrders--;
 
             if (remainingOrders > 0)
             {
                 // TODO: Barista to ask about the next order first
-
                 barista.DisplayNextOrderText();
+
                 yield return new WaitUntil(() => textAnimationComplete);
+
                 textAnimationComplete = false;
+
                 yield return new WaitForSeconds(0.5f);
 
-                Debug.Log("You have NOT reached the end");
+                //Debug.Log("You have NOT reached the end");
 
                 difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
-
                 coffeeManager.SetNextCoffee();
-
                 NewActualCoffee();
-
                 barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
 
                 yield break;
@@ -286,8 +292,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         }
 
         barista.DisplayCloseText();
-
-
 
         yield return new WaitUntil(() => textAnimationComplete);
 
@@ -302,35 +306,21 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         endGameTransition.gameObject.SetActive(true);
         endGameTransition.StartTransition(true);
 
-        //yield return new WaitForSeconds(2);
-
         levelsCompleted++;
         highscore += score;
         PlayerPrefs.SetFloat("highscore", highscore);
         PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
-        Debug.Log("We have reached the end");
-        //ResultsScreen();
-    }
-
-
-    public void TweenUiIn()
-    {
-
-    }
-    private void ResultsScreen()
-    {
-        //SceneManager.LoadScene(2);
+        //Debug.Log("We have reached the end");
     }
 
     public void UpdateScore(float amount)
     {
         this.score += amount;
-        Debug.Log(score);
+        //Debug.Log(score);
     }
 
     private List<string> GetQuestionResponses()
-    {
-        return barista.currentQuestion switch
+        => barista.currentQuestion switch
         {
             "Style" => Coffee.styles,
             "Milk" => Coffee.milks,
@@ -339,11 +329,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             "Side" => Coffee.sides,
             _ => new List<string>()
         };
-    }
 
     private string GetExpectedResponse()
-    {
-        return barista.currentQuestion switch
+        => barista.currentQuestion switch
         {
             "Style" => coffeeManager.GetCurrentCoffee().style,
             "Milk" => coffeeManager.GetCurrentCoffee().milk,
@@ -352,7 +340,6 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             "Side" => coffeeManager.GetCurrentCoffee().side,
             _ => ""
         };
-    }
 
     public void SetActualCoffeeProperty(string value, bool correct, int score)
         => actualCoffees.Last().Add(new ActualCoffeeProperty(barista.currentQuestion, correct, score, value));
@@ -360,6 +347,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public void NewActualCoffee()
         => actualCoffees.Add(new List<ActualCoffeeProperty>());
 
+    /// <summary>
+    /// Calculates the input timeout value as the input timer ticks.
+    /// </summary>
     private void TickInputTimeout()
     {
         inputTimeoutData.currentInterpolatedValue = Mathf.Clamp((inputTimer - timerBuffer) / inputTimeoutData.maxTimeoutTime, 0f, 1f);
@@ -384,9 +374,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     }
 
     public GAME_OVER_TYPE GetGameOverType()
-    {
-        return gameOverType;
-    }
+        => gameOverType;
+
+    #endregion Methods
+
 }
 
 [System.Serializable]
