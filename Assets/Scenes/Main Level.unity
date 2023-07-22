@@ -468,6 +468,7 @@ MonoBehaviour:
   ecgModifier: {fileID: 1339019082}
   coffeeManager: {fileID: 2043593832}
   ecgObject: {fileID: 406332672}
+  continueObject: {fileID: 0}
   orderViewer: {fileID: 654781935}
   gameDataStore: {fileID: 946852265}
 --- !u!4 &317337677
@@ -1639,6 +1640,8 @@ MonoBehaviour:
   currentBarista: {fileID: 0}
   textAnim: {fileID: 2043593835}
   baristaPatienceLost: {fileID: 11400000, guid: 46e91ba70b7704248b578031c98a2308, type: 2}
+  patiencePerState: 20
+  audioSource: {fileID: 0}
 --- !u!114 &2043593832 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 852876199118778097, guid: 52910cf9a78141a439aec0462abb748b, type: 3}
@@ -1927,7 +1930,7 @@ PrefabInstance:
     - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: heartRateMonitor
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 556986781}
     - target: {fileID: 1411233165246320385, guid: ec0e70009c61c5147a63927774dad5f1, type: 3}
       propertyPath: difficultyManager
       value: 

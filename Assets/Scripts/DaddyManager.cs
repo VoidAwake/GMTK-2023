@@ -14,47 +14,53 @@ using UnityEngine.SceneManagement;
 
 public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 {
+
+    #region - - - - - - Fields - - - - - -
+
+    public static DaddyManager instance;
+
+    [Header("Level Modifiers")]
     public int levelsCompleted;
-    public OrderUI orderUi;
+    public float inputTimer = 0f;
     public float score = 0f;
     public float highscore;
-    public float inputTimer = 0f;
     [SerializeField] private float timerBuffer;
+
+    [Header("User Interfaces")]
+    public OrderUI orderUi;
     public Canvas canvas;
     public InputRemapping InputBox;
     public CoffeeManager coffeeManager;
-    
-    public List<List<ActualCoffeeProperty>> actualCoffees = new();
 
     [Header("Heart Rate Monitoring")]
-    [SerializeField]
-    public InputTimeoutData inputTimeoutData;
+    [SerializeField] private InputTimeoutData inputTimeoutData;
     public HeartRateMonitor heartRateMonitor;
-    public HeartToECGModifier ecgModifier;
+    [SerializeField] private HeartToECGModifier ecgModifier;
     GameObject ecgObject;
 
+    [Header("Data Context")]
     [SerializeField] private GameDataStore _gameDataStore;
-    public static DaddyManager instance;
-    public Barista barista;
-    [SerializeField] private DifficultyManager difficultyManager;
-
-    private TMP_Text objectiveText;
 
     [Header("Assign in Inspector")]
     [SerializeField] private EndGameTransition endGameTransition;
     [SerializeField] private TimerScript timerScript;
     [SerializeField] public int numberOfOrders = 1;
     [SerializeField] private GameObject orderViewer;
+    public Barista barista;
+    [SerializeField] private DifficultyManager difficultyManager;
     public GameObject kill;
-    
+
+    // Internal fields
+    public List<List<ActualCoffeeProperty>> actualCoffees = new();
     private OrderViewerHoverTrigger orderHoverTrigger;
     private int remainingOrders;
-
     private string coffeeOrderList = "";
-
     private GAME_OVER_TYPE gameOverType = GAME_OVER_TYPE.NONE;
 
+    // Unity Events
     [NonSerialized] public UnityEvent DaddyStarted = new();
+
+    #endregion Fields
 
     #region - - - - - - Properties - - - - - -
 
@@ -77,11 +83,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             Destroy(gameObject);
         }
-        highscore = 0;
 
+        highscore = 0; // Might not be necessary
     }
-
-    //update
 
     public void OnInput()
     {
@@ -90,15 +94,28 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     }
     private void Update()
     {
-
         // Calculate input timeout
         inputTimer += Time.deltaTime;
         if (inputTimer > timerBuffer)
             this.TickInputTimeout();
     }
 
-    public void DaddyStart(Canvas can, Barista bar, InputRemapping inputRemapping, CoffeeManager coffeeManager, GameDataStore gameDataStore, GameObject orderViewer, HeartRateMonitor monitor, HeartToECGModifier modifier, GameObject Object, GameObject continueObject)
+    /// <summary>
+    /// Responsible for initialising the game manager behaviour from the scale of the scene scope.
+    /// </summary>
+    public void DaddyStart(
+        Canvas canvas,
+        Barista barista,
+        InputRemapping inputRemapping,
+        CoffeeManager coffeeManager,
+        GameDataStore gameDataStore,
+        GameObject orderViewer,
+        HeartRateMonitor monitor,
+        HeartToECGModifier modifier,
+        GameObject Object,
+        GameObject continueObject)
     {
+        // Check whether the level has been completed
         if (PlayerPrefs.HasKey("levelsCompleted"))
         {
             levelsCompleted = PlayerPrefs.GetInt("levelsCompleted");
@@ -109,40 +126,41 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             PlayerPrefs.SetInt("levelsCompleted", levelsCompleted);
         }
 
-        kill = continueObject;
-        
-        actualCoffees.Clear();
-        score = 0;
-        heartRateMonitor = monitor;
-        ecgModifier = modifier;
-        ecgObject = Object;
-        //call order generator
-        //insantiate order ui
-        canvas = can;
-        barista = bar;
-        InputBox = inputRemapping;
+        this.kill = continueObject;
+        this.actualCoffees.Clear();
+        this.score = 0;
+
+        // Initialise related heart rate fields
+        this.heartRateMonitor = monitor;
+        this.ecgModifier = modifier;
+        this.ecgObject = Object;
+        this.ecgObject.SetActive(false);
+
+        // Initialise user interfaces
+        this.canvas = canvas;
+        this.barista = barista;
+        this.InputBox = inputRemapping;
+        this.InputBox.gameObject.SetActive(false);
         this.orderViewer = orderViewer;
-        this._gameDataStore = gameDataStore;
         this.coffeeManager = coffeeManager;
-        OrderUI temp = Instantiate(orderUi,canvas.transform);
-        
+
+        // Initialise data store
+        this._gameDataStore = gameDataStore;
+
+        // Initialise heart rate monitor
         this.heartRateMonitor.InitialiseHeartMonitor(this.ecgModifier, this, timerScript);
-        InputBox.gameObject.SetActive(false);
-        ecgObject.SetActive(false);
-        //barista.gameObject.SetActive(false);
-        
-        difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
 
-        difficultyManager.AdjustDifficulty(levelsCompleted);
+        // Initialise difficulty manager
+        this.difficultyManager.Initialise(coffeeManager, barista, InputBox, this);
+        this.difficultyManager.AdjustDifficulty(levelsCompleted);
 
-        remainingOrders = numberOfOrders;
+        this.remainingOrders = numberOfOrders;
 
-        //objectiveLoop.baristaText = InputBox.GetComponentInChildren<TMP_Text>();
-        
-        NewActualCoffee();
-
+        // Creates a new coffee property
+        this.NewActualCoffee();
         coffeeManager.GenerateCoffee(numberOfOrders);
 
+        // Create a new coffee list
         coffeeOrderList = "";
         for (int i = 0; i < coffeeManager.GetAllOrders().Count; i++)
         {
@@ -153,25 +171,24 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
                                + coffeeManager.GetCoffeeAtIndex(i).style;
 
             if (coffeeManager.GetCoffeeAtIndex(i).questionAmount == 5)
-            {
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).topping + " on top"
                                             + " and a " + coffeeManager.GetCoffeeAtIndex(i).side
                                             + " on the side";
 
-            }
             else if(coffeeManager.GetCoffeeAtIndex(i).questionAmount == 4)
-            {
                 coffeeOrderList += " with " + coffeeManager.GetCoffeeAtIndex(i).side + " on the side";
-            }
+
             coffeeOrderList+= ". \n";
 
         }
 
-        temp.OrderInit(coffeeOrderList);
-        
+        // Create a new coffee order interface
+        Instantiate(orderUi, this.canvas.transform).OrderInit(coffeeOrderList);
+
         DaddyStarted.Invoke();
     }
 
+    // TODO: Rename this method to something better
     public void GameStart()
     {
         Destroy(kill);
@@ -214,7 +231,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     private IEnumerator NextQuestionRoutine()
     {
         var textAnimationComplete = false;
-        
+
         barista.textAnim.animationCompleted.AddListener(() => textAnimationComplete = true);
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
@@ -229,14 +246,14 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
         {
             yield break;
         }
-        
+
         // Enable typing and hover trigger
         InputBox.IsBaristaResponding(false);
         InputBox.EnableTyping();
         orderHoverTrigger.SetCollision(true);
-        
+
         barista.NextQuestion();
-        
+
         if (barista.HasMoreQuestions())
         {
             yield break;
@@ -248,7 +265,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
             if (remainingOrders > 0)
             {
                 // TODO: Barista to ask about the next order first
-                
+
                 barista.DisplayNextOrderText();
                 yield return new WaitUntil(() => textAnimationComplete);
                 textAnimationComplete = false;
@@ -259,7 +276,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
                 difficultyManager.AdjustDifficulty(numberOfOrders - remainingOrders);
 
                 coffeeManager.SetNextCoffee();
-                
+
                 NewActualCoffee();
 
                 barista.FirstQuestion(coffeeManager.GetAllOrders()[0].questionAmount);
@@ -270,23 +287,23 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
         barista.DisplayCloseText();
 
-        
+
 
         yield return new WaitUntil(() => textAnimationComplete);
-        
+
         barista.textAnim.animationCompleted.RemoveListener(() => textAnimationComplete = true);
-        
+
         // Disable typing and hover trigger
         InputBox.IsBaristaResponding(true);
         InputBox.DisableTyping();
         orderHoverTrigger.SetCollision(false);
-        
+
         // End transition before the next screen
         endGameTransition.gameObject.SetActive(true);
         endGameTransition.StartTransition(true);
-        
+
         //yield return new WaitForSeconds(2);
-        
+
         levelsCompleted++;
         highscore += score;
         PlayerPrefs.SetFloat("highscore", highscore);
@@ -298,7 +315,7 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
 
     public void TweenUiIn()
     {
-        
+
     }
     private void ResultsScreen()
     {
@@ -338,14 +355,10 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     }
 
     public void SetActualCoffeeProperty(string value, bool correct, int score)
-    {
-        actualCoffees.Last().Add(new ActualCoffeeProperty(barista.currentQuestion, correct, score, value));
-    }
+        => actualCoffees.Last().Add(new ActualCoffeeProperty(barista.currentQuestion, correct, score, value));
 
     public void NewActualCoffee()
-    {
-        actualCoffees.Add(new List<ActualCoffeeProperty>());
-    }
+        => actualCoffees.Add(new List<ActualCoffeeProperty>());
 
     private void TickInputTimeout()
     {
@@ -364,9 +377,9 @@ public class DaddyManager : MonoBehaviour, IInputValueTimeoutProvider
     public void GameOver(GAME_OVER_TYPE _gameOverType)
     {
         endGameTransition.gameObject.SetActive(true);
-        
+
         gameOverType = _gameOverType;
-        
+
         endGameTransition.StartTransition(false);
     }
 
