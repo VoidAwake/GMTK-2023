@@ -22,8 +22,6 @@ public class OrderViewer : MonoBehaviour
 
     private Vector2 startPos;
 
-    private bool tweenRunning = false;
-
     private void Start()
     {
         UICardNouveau.SetActive(false);
@@ -66,24 +64,16 @@ public class OrderViewer : MonoBehaviour
     
     private IEnumerator ShowOrder()
     {
-        tweenRunning = true;
-        
         Tween myTween = rect.DOAnchorPos(_tweenPos, _tweenTime, false).SetEase(Ease.OutCubic);
         yield return myTween.WaitForCompletion();
-        
-        tweenRunning = false;
     }
     
     private IEnumerator HideOrder()
     {
-        tweenRunning = true;
-        
         Vector2 newPosition = new Vector2(startPos.x, startPos.y);
         
         Tween myTween = rect.DOAnchorPos(newPosition, _tweenTime, false).SetEase(Ease.OutCubic);
         yield return myTween.WaitForCompletion();
-        
-        tweenRunning = false;
     }
 
     private IEnumerator UhBuffer()
